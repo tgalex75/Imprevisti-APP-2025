@@ -1,0 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --clr-prim: #fffffc;
+  --clr-sec: #1d1c2f;
+  --clr-ter: #e9ba02;
+}
+
+body {
+  margin: 0;
+  /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;*/
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #1d1c2f;
+  color: #eeeeee;
+  overflow: hidden;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+/* Font descrizione */
+
+.andika-regular {
+  font-family: "Andika", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.andika-regular-italic {
+  font-family: "Andika", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.anton-regular {
+  font-family: "Anton", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.montserrat {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+h1 {
+  font-family: "Anton", sans-serif;
+  font-size: clamp(1.2rem, 2.5vw, 3rem);
+}
+
+.t-deGdmh {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 25vw;
+  height: 60vh;
+  border: 0.3rem solid var(--clr-ter);
+  padding: 1rem;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  justify-items: center;
+}
+
+.t-deGdmh button {
+  background-color: transparent;
+  border-color: var(--clr-ter);
+  color: var(--clr-ter);
+}
+
+.c-bOcPnF-cmFMMs-color-primary:hover {
+  background-color: var(--clr-ter) !important;
+  color: black;
+}
+
+@media screen and (max-width: 767px) {
+  .t-deGdmh {
+    width: 75vw;
+    height: 70vh;
+  }
+}
+
+.temporary-bounce {
+  -webkit-animation-iteration-count: 3;
+  animation-iteration-count: 3;
+}
