@@ -6,22 +6,6 @@ import { supabase } from "../supabaseClient";
 const Footer = () => {
   // const { session } = props;
 
-  const [loggedUser, setLoggedUser] = useState(null);
-
-  const myUser = async () => {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    setLoggedUser({ user });
-  };
-
-  const isTestUser =
-    loggedUser?.user.email === "test@test.com" ? "Utente di Test" : "";
-
-  useEffect(() => {
-    myUser();
-  }, []);
-
   return (
     <footer
       className={
@@ -33,9 +17,6 @@ const Footer = () => {
       <small className="z-10 ps-4 opacity-20">
         coded by tgalex75 - Falconero Community - beta version
       </small>
-      <span className="text-xs font-bold bg-green-600 text-white opacity-75 me-32">
-        {isTestUser}
-      </span>
     </footer>
   );
 };

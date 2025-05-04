@@ -448,8 +448,8 @@ services:
       - db-config:/etc/postgresql-custom
       # >>> AGGIUNGI QUESTE LINEE PER I TUOI SPECIFICI FILE IN ./init-db <<<
       # Questi file si trovano in ./supabase-project/init-db/
-      # - ./init-db/user-init/200-schema.sql:/docker-entrypoint-initdb.d/user-init/200-schema.sql
-      # - ./init-db/user-init/201-data.sql:/docker-entrypoint-initdb.d/user-init/201-data.sql
+      - ./init-db/user-init/9999-remote_schema.sql:/docker-entrypoint-initdb.d/migrations/9999-remote_schema.sql
+
     healthcheck:
       test:
         [

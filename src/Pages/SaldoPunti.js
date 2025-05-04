@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import { supabase } from "../supabaseClient";
 import {
@@ -9,12 +10,28 @@ import {
 } from "../Data/datiSaldoPunti";
 import { GrPowerReset } from "react-icons/gr";
 import { LuArrowUpWideNarrow, LuArrowDownWideNarrow } from "react-icons/lu";
+import { v4 as uuidv4 } from "uuid";
 
 const SaldoPunti = () => {
   const [data, setData] = useState([]);
   const [isOver32, setIsOver32] = useState(false);
   const [isSerieMinore, setIsSerieMinore] = useState(false);
   const isSerieMinoreOver = isOver32 && isSerieMinore;
+
+  const [loggedUser, setLoggedUser] = useState(null);
+
+  const myUser = async () => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    setLoggedUser({ user });
+  };
+
+  const userId = loggedUser?.user.id;
+
+  useEffect(() => {
+    myUser();
+  }, []);
 
   const checkisOver = () => {
     setIsOver32(!isOver32);
@@ -27,43 +44,56 @@ const SaldoPunti = () => {
     let { data: saldo_punti, error } = await supabase
       .from("saldo-punti")
       .select("*");
-    setData(saldo_punti ? saldo_punti[0] : console.log(error));
+    setData(saldo_punti ? saldo_punti[0] : []);
+    error && console.log("error: ", error);
   };
 
-  const { id, punti } = data ? data : {};
-
-  const updateSaldoPunti = async (val) => {
+  const insPuntiBase = async () => {
     const { error } = await supabase
       .from("saldo-punti")
-      .update({
-        punti: punti + val,
-      })
-      .eq("id", id)
+      .insert([{ punti: 10, user_id: userId }])
       .select();
+    error && console.log("error: ", error);
+    fetchSaldo()
+  };
+
+  
+  const { id, punti } = data ? data : {id: uuidv4(), punti: 10}
+
+  !data && insPuntiBase()
+  
+  const updateSaldoPunti = async (val) => {
+    const { error } = await supabase
+    .from("saldo-punti")
+    .update({
+      punti: punti + val,
+    })
+    .eq("id", id)
+    .select();
     error && console.log("error: ", error);
     fetchSaldo();
   };
-
+  
   useEffect(() => {
     fetchSaldo();
   }, []);
-
+  
   const resetPunti = async () => {
     const { error } = await supabase
-      .from("saldo-punti")
-      .update({ punti: 10 })
-      .eq("id", id)
-      .select();
+    .from("saldo-punti")
+    .update({ punti: 10 })
+    .eq("id", id)
+    .select();
     error && console.log("error: ", error);
     fetchSaldo();
   };
-
+  
   const bonusMalusStyle =
-    "flex flex-col cursor-pointer text-center text-base p-2 border-none hover:border items-center justify-center rounded-xl hover:text-black hover:bg-[--clr-ter]";
-
+  "flex flex-col cursor-pointer text-center text-base p-2 border-none hover:border items-center justify-center rounded-xl hover:text-black hover:bg-[--clr-ter]";
+  
   const mappedCessioni = bonusCessioni.map((el) => (
     <div
-      key={el.id}
+    key={el.id}
       onClick={() => updateSaldoPunti(el.valore)}
       className={bonusMalusStyle}
     >
@@ -138,7 +168,7 @@ const SaldoPunti = () => {
           className="hover:bg-700/80 flex h-1/4 w-full flex-col items-center justify-around font-bold"
         >
           <h1 className="relative">Saldo Punti</h1>
-          <h3 className="text-9xl xl:text-7xl font-black italic">{punti}</h3>
+          <h3 className="text-9xl font-black italic xl:text-7xl">{punti}</h3>
           <div className="absolute right-2 mt-12 flex flex-col items-center justify-around p-2">
             <GrPowerReset
               size={32}
@@ -154,9 +184,9 @@ const SaldoPunti = () => {
 
         <section
           id="acquistiCessioni"
-          className="flex xl:flex-row flex-col h-1/4 xl:h-1/4 w-full items-center gap-1 text-lg font-bold"
+          className="flex h-1/4 w-full flex-col items-center gap-1 text-lg font-bold xl:h-1/4 xl:flex-row"
         >
-          <div className="flex h-full w-full xl:w-1/2 flex-col items-center justify-around rounded-xl border-2 border-purple-700/60 transition-all duration-300 ease-in-out hover:border-gray-200 hover:bg-purple-800/30">
+          <div className="flex h-full w-full flex-col items-center justify-around rounded-xl border-2 border-purple-700/60 transition-all duration-300 ease-in-out hover:border-gray-200 hover:bg-purple-800/30 xl:w-1/2">
             <h2 className="inline-flex items-center text-2xl xl:text-lg">
               Cessioni Mercato
               <LuArrowUpWideNarrow className="mx-3 inline-block" size={28} />
@@ -165,7 +195,7 @@ const SaldoPunti = () => {
               {mappedCessioni}
             </div>
           </div>
-          <div className="relative flex h-full w-full xl:w-1/2 flex-col items-center justify-around rounded-xl border-2 border-purple-700/60 transition-all duration-300 ease-in-out hover:border-gray-200 hover:bg-purple-800/30">
+          <div className="relative flex h-full w-full flex-col items-center justify-around rounded-xl border-2 border-purple-700/60 transition-all duration-300 ease-in-out hover:border-gray-200 hover:bg-purple-800/30 xl:w-1/2">
             <h2 className="inline-flex items-center text-2xl xl:text-lg">
               Acquisti Mercato
               <LuArrowDownWideNarrow className="mx-3 inline-block" size={28} />
@@ -174,7 +204,7 @@ const SaldoPunti = () => {
               {mappedAcquisti}
             </div>
             {/* TOGGLE SERIE MINORE */}
-            <div className="absolute left-1 top-1 flex items-center gap-2 p-4 xl:p-2 text-xs">
+            <div className="absolute left-1 top-1 flex items-center gap-2 p-4 text-xs xl:p-2">
               <label
                 htmlFor="switch-link"
                 className={`cursor-pointer font-sans antialiased ${isSerieMinore && "border-b-2 border-b-[--clr-ter] text-[--clr-ter]"}`}
@@ -190,7 +220,7 @@ const SaldoPunti = () => {
               />
             </div>
             {/* TOGGLE OVER 32 */}
-            <div className="absolute right-1 top-1 flex items-center gap-2 p-4 xl:p-2 text-xs">
+            <div className="absolute right-1 top-1 flex items-center gap-2 p-4 text-xs xl:p-2">
               <label
                 htmlFor="switch-link"
                 className={`cursor-pointer font-sans antialiased ${isOver32 && "border-b-2 border-b-[--clr-ter] text-[--clr-ter]"}`}
@@ -212,7 +242,7 @@ const SaldoPunti = () => {
 
         <section
           id="trendPrestazioni"
-          className="flex h-1/5 xl:h-1/4 w-full flex-col items-center justify-around rounded-xl border-2 border-purple-700/60 p-1 text-lg font-bold transition-all duration-300 ease-in-out hover:border-gray-200 hover:bg-purple-800/30"
+          className="flex h-1/5 w-full flex-col items-center justify-around rounded-xl border-2 border-purple-700/60 p-1 text-lg font-bold transition-all duration-300 ease-in-out hover:border-gray-200 hover:bg-purple-800/30 xl:h-1/4"
         >
           <h2 className="text-2xl xl:text-lg">Trend delle Prestazioni</h2>
           <div className="grid h-auto w-full grid-cols-2 justify-center">
@@ -224,7 +254,7 @@ const SaldoPunti = () => {
           className="flex h-1/4 w-full flex-col items-center justify-around rounded-xl border-2 border-purple-700/60 p-1 text-lg font-bold transition-all duration-300 ease-in-out hover:border-gray-200 hover:bg-purple-800/30"
         >
           <h2 className="text-2xl xl:text-lg">Risultati Campionato</h2>
-          <div className="grid h-auto w-full grid-cols-3 xl:grid-cols-9 items-center justify-center">
+          <div className="grid h-auto w-full grid-cols-3 items-center justify-center xl:grid-cols-9">
             {mappedPiazzamento}
           </div>
         </section>
