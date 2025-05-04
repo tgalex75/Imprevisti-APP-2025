@@ -244,6 +244,10 @@ CREATE POLICY "Enable users to view their own data only" ON "public"."saldo-punt
 
 
 
+CREATE POLICY "Enable insert for users based on user_id" ON "public"."saldo-punti" FOR INSERT TO "authenticated" WITH CHECK ((( SELECT "auth"."uid"() AS "uid") = "user_id"));
+
+
+
 CREATE POLICY "Select for auth only" ON "public"."salvaxdopo" FOR SELECT TO "authenticated" USING (("auth"."uid"() = "user_id"));
 
 
