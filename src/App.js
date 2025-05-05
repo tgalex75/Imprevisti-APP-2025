@@ -8,16 +8,25 @@ import AnimatedRoutes from "./Components/AnimatedRoutes";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { supabase } from "./supabaseClient";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import ColorContext from "./context/colorContext";
 
 function App(props) {
+  const {primary, secondary, tertiary} = useContext(ColorContext)
+
+  useEffect(() => {
+    document.documentElement.style.setProperty('--clr-prim', primary);
+    document.documentElement.style.setProperty('--clr-sec', secondary);
+    document.documentElement.style.setProperty('--clr-ter', tertiary);
+  }, [primary, secondary, tertiary]);
+  
   const [session, setSession] = useState(null);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
     });
-
+    
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {

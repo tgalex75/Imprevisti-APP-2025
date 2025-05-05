@@ -11,6 +11,7 @@ import SaldoPunti from "../Pages/SaldoPunti";
 import SerieNegativa from "../Pages/SerieNegativa";
 import ErrorPage from "../Pages/ErrorPage";
 import EditorImprevisti from "../Pages/EditorImprevisti";
+import EditorInterfaccia from "../Pages/EditorInterfaccia";
 import EstrazioneLibera from "../Pages/EstrazioneLibera";
 
 const AnimatedRoutes = () => {
@@ -23,6 +24,7 @@ const AnimatedRoutes = () => {
         <Route path="/prepartita" element={<Prepartita />} />
         <Route path="/settimana" element={<Settimana />} />
         <Route path="/editor-imprevisti" element={<EditorImprevisti />} />
+        <Route path="/editor-interfaccia" element={<EditorInterfaccia />} />
         <Route path="/riepilogo-imprevisti" element={<RiepilogoImprevisti />} />
         <Route path="/imprevisti-sospesi" element={<SalvaPerDopo />} />
         <Route path="/saldo-punti" element={<SaldoPunti />} />

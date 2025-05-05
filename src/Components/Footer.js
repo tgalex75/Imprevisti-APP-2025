@@ -1,7 +1,5 @@
 //import { color } from "framer-motion";
-import { useState, useEffect } from "react";
 import { isMobile } from "react-device-detect";
-import { supabase } from "../supabaseClient";
 
 const Footer = () => {
   // const { session } = props;
