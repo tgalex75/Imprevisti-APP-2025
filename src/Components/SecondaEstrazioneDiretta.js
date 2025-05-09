@@ -14,57 +14,42 @@ const SecondaEstrazioneDiretta = (props) => {
   return (
     <section
       id="secEstrDiretta"
-      className="mb-12 flex h-fit w-full flex-col items-center justify-around rounded-md border-2 border-gray-300/20 px-1 md:min-h-[40%] xl:px-6"
+      className="mb-12 flex w-full flex-col items-center justify-around rounded-md border-2 border-gray-300/20 px-1 min-h-[50%] xl:px-6"
     >
-      <h4 className="my-1 text-xs font-bold uppercase text-gray-300 md:my-0 md:mb-1 md:text-lg xl:self-start">
+      <h4 className="my-1 text-xs font-bold uppercase text-gray-300 xl:my-0 xl:mb-1 xl:text-lg xl:self-start">
         {numbExtrPlayer === 1 ? "Giocatore estratto" : "Giocatori estratti"}
       </h4>
       <main
         id="mainSecEstrDiretta"
-        className="flex h-full w-full items-center justify-between xl:gap-2"
+        className="flex h-full w-full items-center justify-around xl:gap-2 flex-col xl:flex-row pt-8 xl:pt-0"
       >
         <div
           id="extractedPlayers"
-          className="flex h-full w-3/4 flex-wrap items-center justify-end gap-2 rounded-lg md:flex-nowrap xl:w-1/2 xl:gap-4"
+          className="flex h-fit xl:h-full w-fit flex-wrap items-center rounded-lg xl:gap-4"
         >
           {extractedPlayer?.map((player, i) => {
             return (
               <div
                 key={i}
-                className="relative flex w-full flex-col items-center justify-center overflow-hidden rounded transition-all md:h-4/5"
-                /* style={{
-                  backgroundImage:
-                     `url(${<JerseySVGBg fillColor={primary} />})` : `url(${<JerseySVGBg fillColor={secondary} />})`,
-                }} */
+                className={`relative flex flex-col items-center overflow-hidden rounded p-6 transition-all ${numbExtrPlayer > 2 ? "w-40 xl:w-60 h-fit xl:h-1/2" : "xl:h-3/5"}`}
               >
-                {player === 1 ? (
-                  <>
-                    <JerseySVGBg
-                      fillColor={primary}
-                      strokeColor={secondary}
-                      className="stroke-2"
-                    />
-                    <span className={`absolute left-1/2 top-1/2 z-50 -translate-x-1/2 -translate-y-1/2 font-['Anton'] text-slate-800 ${numbExtrPlayer > 3 ? "pb-4 text-7xl xl:text-8xl" : "pb-20 text-9xl xl:text-8xl"}`}>
-                      {player}
-                    </span>
-                  </>
-                ) : (
-                  <>
-                    <JerseySVGBg
-                      fillColor={secondary}
-                      strokeColor={primary}
-                      className="stroke-2"
-                    />
-                    <span className={`absolute left-1/2 top-1/2 z-50 -translate-x-1/2 -translate-y-1/2 font-['Anton'] text-slate-800 ${numbExtrPlayer > 3 ? "pb-4 text-7xl xl:text-8xl" : "pb-20 text-9xl xl:text-8xl"}`}>
-                      {player}
-                    </span>
-                  </>
-                )}
+                <JerseySVGBg
+                  fillColor={player === 1 ? primary : secondary}
+                  strokeColor={player === 1 ? secondary : primary}
+                  className="stroke-2"
+                />
+                <span
+                  className={`absolute left-1/2 top-1/3 z-50 -translate-x-1/2 -translate-y-1/3 font-['Anton'] text-slate-800 ${numbExtrPlayer > 2 ? "text-[4rem] xl:text-[5rem]" : "text-[5rem] xl:text-[9.5rem]"}`}
+                >
+                  {player}
+                </span>
               </div>
             );
           })}
         </div>
-        <IndicatoreGiocatoriImpr extractedPlayer={extractedPlayer} />
+        <div className="h-5/6 w-full xl:w-fit">
+          <IndicatoreGiocatoriImpr extractedPlayer={extractedPlayer} />
+        </div>
       </main>
     </section>
   );

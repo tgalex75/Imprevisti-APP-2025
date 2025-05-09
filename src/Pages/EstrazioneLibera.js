@@ -14,7 +14,7 @@ const EstrazioneLibera = () => {
         transition={{ delay: 0.4, duration: 0.4, type: "spring" }}
         key={random.float()}
         id="containerPrimaEstrazione"
-        className="flex h-1/2 xl:h-full w-full select-none flex-col items-center justify-around gap-4 rounded-xl bg-black/30 px-4 py-2 text-center shadow-lg ring ring-inset ring-white/75 md:justify-evenly md:gap-2 md:px-10"
+        className="flex h-full w-full select-none flex-col items-center justify-around gap-4 rounded-xl bg-black/30 px-4 py-2 text-center shadow-lg ring ring-inset ring-white/75 md:justify-evenly md:gap-2 md:px-10"
       >
         <SecondaEstrazione />
 </motion.div>

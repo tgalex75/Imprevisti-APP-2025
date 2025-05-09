@@ -20,7 +20,7 @@ export const mySelect = (labelText, ref, func, arr, defaultVal) => {
     <div className="flex gap-1 flex-col">
       <label
         htmlFor="tattica"
-        className="block text-sm xl:text-xs font-medium text-gray-300"
+        className="block text-sm xl:text-xs text-center xl:text-start font-medium text-gray-300"
       >
         {labelText}
       </label>

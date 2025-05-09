@@ -39,6 +39,7 @@ const Navbar = () => {
     { id: 10, voceLi: "Riepilogo Imprevisti", linkTo: "/riepilogo-imprevisti" },
     { id: 11, voceLi: "Imprevisti Sospesi", linkTo: "/imprevisti-sospesi" },
     { id: 12, voceLi: "Estrazione Libera", linkTo: "/estrazione-libera" },
+    { id: 8, voceLi: "Editor Interfaccia", linkTo: "/editor-interfaccia" },
   ];
 
   //Sostituire div con <Link> from react-router
@@ -55,7 +56,7 @@ const Navbar = () => {
               ease: "easeIn",
               stiffness: 200,
             }}
-            className="p-4 px-8 text-lg font-bold uppercase hover:text-purple-700 md:text-xl"
+            className="p-4 px-8 text-lg font-bold uppercase hover:text-purple-700 xl:text-3xl"
           >
             {voce.voceLi}
           </motion.li>
@@ -65,7 +66,7 @@ const Navbar = () => {
   });
 
   return (
-    <nav className="fixed z-[1000] flex h-auto w-full select-none items-center justify-between px-2 py-1 md:px-6 md:py-3">
+    <nav className="fixed z-[1000] flex h-auto w-full select-none items-center justify-between px-2 py-1 xl:px-6 xl:py-3">
       <div
         style={isMobile ? { visibility: "hidden" } : {}}
         className="flex cursor-pointer items-center justify-center rounded-full p-2 hover:bg-gray-300/30"
@@ -117,7 +118,7 @@ const Navbar = () => {
         <ul
           style={isOpenMenu ? { right: 0 } : { right: "-100%" }}
           onClick={handleClick}
-          className="absolute top-0 z-[-1] flex h-[50vh] xl:h-screen w-full flex-col items-center justify-start xl:justify-around bg-black/95 py-12 xl:py-6 text-center text-gray-300 transition-[0.5s] md:w-[30vw]"
+          className="absolute top-0 z-[-1] flex h-screen w-full flex-col items-center justify-start bg-black/95 py-12 text-center text-gray-300 transition-[0.5s] xl:w-[30vw] xl:h-screen xl:justify-around xl:py-18"
         >
           {linksMenu}
         </ul>

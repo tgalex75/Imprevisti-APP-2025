@@ -18,7 +18,7 @@ const Settimana = () => {
   const titoloH1 = "Peggiore della Settimana n. ";
 
   return (
-    <div className="flex h-full w-full flex-col items-center justify-center xl:flex-row p-2 xl-p-0">
+    <div className="flex h-full w-full flex-col text-center items-center justify-center xl:flex-row p-2 xl-p-0">
       {!casuale && (
         <h2 className="andika-regular-italic flex h-full items-center justify-center text-5xl italic">
           Buzzzz it!...
@@ -40,7 +40,7 @@ const Settimana = () => {
               }}
               className={
                 array.isImprev
-                  ? "text-7xl font-extrabold uppercase md:relative md:top-2 md:flex-1 xl:text-5xl"
+                  ? "text-7xl font-extrabold uppercase relative top-2 flex-1 xl:text-5xl"
                   : "hidden"
               }
             >
@@ -48,11 +48,11 @@ const Settimana = () => {
             </h2>
             <h3
               style={{ filter: "drop-shadow(.05rem .05rem 0.1rem #000)" }}
-              className="left-1/2 top-1/3 -translate-x-1/2 -translate-y-1/2 text-6xl font-extrabold uppercase md:absolute md:flex-1 xl:text-4xl"
+              className="left-1/2 top-1/3 -translate-x-1/2 -translate-y-1/2 text-6xl font-extrabold uppercase absolute flex-1 xl:text-4xl"
             >
               {array.title}
             </h3>
-            <p className="andika-regular left-1/2 top-2/3 mt-4 -translate-x-1/2 -translate-y-1/2 text-3xl md:absolute md:flex-1 xl:text-xl">
+            <p className="andika-regular left-1/2 top-2/3 mt-4 -translate-x-1/2 -translate-y-1/2 text-3xl absolute flex-1 xl:text-xl">
               {array.description}
             </p>
           </>

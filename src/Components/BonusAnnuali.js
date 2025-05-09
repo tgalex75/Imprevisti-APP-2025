@@ -4,7 +4,7 @@ import { supabase } from "../supabaseClient";
 
 const BonusAnnuali = () => {
   const [vociBonus, setVociBonus] = useState([]);
-  
+
   const limiteRaggiunto = vociBonus.length > 2;
 
   useEffect(() => {
@@ -51,7 +51,7 @@ const BonusAnnuali = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ delay: 0.7, duration: 0.7 }}
-      className="xl:absolute xl:right-1 xl:top-1 mb-4 xl:mb-0 xl:mt-2 xl:h-1/4 h-40 w-3/4 xl:w-[20vw] items-center justify-between overflow-hidden rounded-lg bg-black/50 xl:bg-black/20 p-2 uppercase text-gray-300 flex flex-col"
+      className="mb-4 flex h-40 w-3/4 flex-col items-center justify-between overflow-hidden rounded-lg bg-black/50 p-2 uppercase text-gray-300 xl:absolute xl:right-1 xl:top-1 xl:mb-0 xl:mt-2 xl:h-1/4 xl:w-[20vw] xl:bg-black/20"
     >
       <h6 className="font-bold uppercase text-[--clr-prim]">Bonus Annuali</h6>
       <section className="flex w-full items-center justify-around gap-4 xl:gap-1 xl:p-1">
@@ -65,7 +65,7 @@ const BonusAnnuali = () => {
             className="flex h-full w-1/3 items-center justify-center rounded p-2 xl:py-1"
             key={item.id}
           >
-            <div className="flex min-h-full w-full xl:flex-col p-2 text-[--clr-sec] items-center justify-center rounded-t-lg bg-[--clr-ter] text-center">
+            <div className="flex min-h-full w-full items-center justify-center rounded-t-lg bg-[--clr-ter] p-2 text-center text-[--clr-sec] xl:flex-col">
               <h3 className="mx-2 text-xl font-bold uppercase xl:text-base">
                 {item.id}
               </h3>

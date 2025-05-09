@@ -37,7 +37,7 @@ const IndicatoreGiocatoriImpr = (props) => {
           {arr.slice(start, end).map((el) => (
             <div
               key={uuidv4()}
-              className="my-2 flex w-2 items-center justify-center rounded-full border px-4  py-2 text-xs font-semibold text-gray-200"
+              className="my-2 flex w-2 items-center justify-center rounded-full border px-3 py-[.3rem] xl:px-4 xl:py-2 text-xs font-semibold text-gray-200"
               style={
                 extractedPlayer?.find((item) => item === el.nome) &&
                 extractedPlayerStyle
@@ -52,7 +52,7 @@ const IndicatoreGiocatoriImpr = (props) => {
   };
 
   return (
-    <div className="flex h-full w-1/4 flex-col items-center justify-around pb-4">
+    <div className="flex h-full w-full xl:w-auto flex-row xl:flex-col items-center xl:justify-around px-8 xl:px-2 pb-4 ">
       <h5>{schema}</h5>
       <div className="flex w-full flex-col-reverse justify-center">
         {filteredTactics[0].formazione.map((el, i, array) =>

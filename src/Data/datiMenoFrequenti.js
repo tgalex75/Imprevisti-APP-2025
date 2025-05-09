@@ -44,15 +44,6 @@ export const datiMenoFrequenti = [
     weight: 7,
   },
   {
-    id: 5,
-    title: "PAROLA ALLA COMMUNITY!",
-    description: "",
-    isImprev: true,
-    ultEstrazione: false,
-    numbExtrPlayer: 0,
-    weight: 15,
-  },
-  {
     id: 999,
     title: "Nessun imprevisto",
     isImprev: false,
