@@ -10,6 +10,7 @@ const ColorPickerComponent = (props) => {
       <Sketch
         onChange={updateFunc}
         color={defaultColor}
+        width={"80%"}
       />
     </div>
   );

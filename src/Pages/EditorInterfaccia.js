@@ -1,7 +1,9 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import ColorPickerComponent from "../Components/ColorPickerComponent";
 import ColorContext from "../context/colorContext";
+import Accordion from "../Components/Accordion";
 import Tshirt from "../Components/Tshirt";
+import ImgSfondo from "../Components/ImgSfondo";
 
 const EditorInterfaccia = () => {
   const {
@@ -25,69 +27,77 @@ const EditorInterfaccia = () => {
     <main className="flex h-full w-full flex-col items-center gap-12 overflow-y-auto p-4 font-bold">
       <h1>Editor interfaccia</h1>
       <h3>Scegli le tue preferenze da applicare nella App</h3>
-      <section
-        id="main-colors"
-        className="grid w-full grid-cols-3 items-center gap-2 rounded-lg bg-black/50 p-4 text-gray-300 xl:flex"
-      >
-        <ColorPickerComponent
-          defaultColor={primary}
-          updateFunc={updatePrimary}
-          testoColore="PRIMARIO"
-        />
-        <ColorPickerComponent
-          defaultColor={secondary}
-          updateFunc={updateSecondary}
-          testoColore="SECONDARIO"
-        />
-        <ColorPickerComponent
-          defaultColor={tertiary}
-          updateFunc={updateTertiary}
-          testoColore="TERZIARIO"
-        />
-      </section>
-      <section
-        id="tshirt-colors"
-        className="grid w-full grid-cols-3 items-center gap-2 rounded-lg bg-black/50 p-4 text-gray-300 xl:flex"
-      >
-        <ColorPickerComponent
-          defaultColor={colorPl}
-          updateFunc={updateColorPl}
-          testoColore="CASACCA GIOCATORI"
-        />
-        <ColorPickerComponent
-          defaultColor={colorNumPl}
-          updateFunc={updateColorNumPl}
-          testoColore="NUMERO GIOCATORI"
-        />
-        <Tshirt
-          keyId="PlayerTShirt"
-          numPlayer={10}
-          colorGK={colorGK}
-          colorPl={colorPl}
-          colorNumGK={colorNumGK}
-          colorNumPl={colorNumPl}
-          extrPlayers={1}
-        />
-        <ColorPickerComponent
-          defaultColor={colorGK}
-          updateFunc={updateColorGK}
-          testoColore="CASACCA PORTIERE"
-        />
-        <ColorPickerComponent
-          defaultColor={colorNumGK}
-          updateFunc={updateColorNumGK}
-          testoColore="NUMERO PORTIERE"
-        />
-        <Tshirt
-          keyId="GKTShirt"
-          numPlayer={1}
-          colorGK={colorGK}
-          colorPl={colorPl}
-          colorNumGK={colorNumGK}
-          colorNumPl={colorNumPl}
-          extrPlayers={1}
-        />
-      </section>
+      <Accordion
+        title="Colori Principali della APP"
+        content={
+          <div className="grid w-full grid-cols-3 items-center gap-2 overflow-y-auto rounded-lg bg-slate-100/10 p-4 text-gray-300 xl:grid-cols-6 xl:gap-0 xl:p-0">
+            <ColorPickerComponent
+              defaultColor={primary}
+              updateFunc={updatePrimary}
+              testoColore="PRIMARIO"
+            />
+            <ColorPickerComponent
+              defaultColor={secondary}
+              updateFunc={updateSecondary}
+              testoColore="SECONDARIO"
+            />
+            <ColorPickerComponent
+              defaultColor={tertiary}
+              updateFunc={updateTertiary}
+              testoColore="TERZIARIO"
+            />
+          </div>
+        }
+      />
+
+      <Accordion
+        title={"Colori Casacche Giocatori"}
+        content={
+          <div className="grid w-full grid-cols-3 items-center gap-2 overflow-y-auto rounded-lg bg-slate-100/10 p-4 text-gray-300 xl:grid-cols-6 xl:gap-0 xl:p-0">
+            <ColorPickerComponent
+              defaultColor={colorPl}
+              updateFunc={updateColorPl}
+              testoColore="CASACCA GIOCATORI"
+            />
+            <ColorPickerComponent
+              defaultColor={colorNumPl}
+              updateFunc={updateColorNumPl}
+              testoColore="NUMERO GIOCATORI"
+            />
+            <Tshirt
+              keyId="PlayerTShirt"
+              numPlayer={10}
+              colorGK={colorGK}
+              colorPl={colorPl}
+              colorNumGK={colorNumGK}
+              colorNumPl={colorNumPl}
+              extrPlayers={1}
+            />
+            <ColorPickerComponent
+              defaultColor={colorGK}
+              updateFunc={updateColorGK}
+              testoColore="CASACCA PORTIERE"
+            />
+            <ColorPickerComponent
+              defaultColor={colorNumGK}
+              updateFunc={updateColorNumGK}
+              testoColore="NUMERO PORTIERE"
+            />
+            <Tshirt
+              keyId="GKTShirt"
+              numPlayer={1}
+              colorGK={colorGK}
+              colorPl={colorPl}
+              colorNumGK={colorNumGK}
+              colorNumPl={colorNumPl}
+              extrPlayers={1}
+            />
+          </div>
+        }
+      />
+      <div className="h-auto w-full">
+        <Accordion title={"Logo sfondo"} content={<ImgSfondo />} />
+      </div>
     </main>
   );
 };

@@ -14,7 +14,7 @@ const Tshirt = (props) => {
   return (
     <div
       key={keyId}
-      className={`relative flex flex-col items-center overflow-hidden rounded p-6 transition-all ${extrPlayers > 2 ? "h-fit w-40 xl:h-1/2 xl:w-60" : "xl:h-3/5"}`}
+      className={`relative flex flex-col items-center overflow-hidden rounded p-6 transition-all ${extrPlayers > 2 ? "h-fit xl:h-1/2" : "xl:h-3/5"}`}
     >
       <JerseySVGBg
         fillColor={numPlayer === 1 ? colorGK : colorPl}
@@ -22,7 +22,7 @@ const Tshirt = (props) => {
         className="stroke-2"
       />
       <span
-        className={`absolute left-1/2 top-1/3 z-50 -translate-x-1/2 -translate-y-1/3 font-['Anton'] ${extrPlayers > 2 ? "text-[4rem] xl:text-[5rem]" : "text-[5rem] xl:text-[9.5rem]"}`}
+        className={`absolute left-1/2 top-1/3 z-50 -translate-x-1/2 -translate-y-1/3 font-['Anton'] ${extrPlayers > 2 ? "text-[4rem] xl:text-[5rem]" : "text-[5rem] xl:text-[6rem]"}`}
         style={{ color: numPlayer === 1 ? colorNumGK : colorNumPl }}
       >
         {numPlayer}
