@@ -3,8 +3,7 @@ import ColorPickerComponent from "../Components/ColorPickerComponent";
 import ColorContext from "../context/colorContext";
 import Accordion from "../Components/Accordion";
 import Tshirt from "../Components/Tshirt";
-import ImgSfondo from "../Components/ImgSfondo";
-
+import ImageUploader from "../Funzioni/ImageUploader";
 const EditorInterfaccia = () => {
   const {
     primary,
@@ -96,7 +95,7 @@ const EditorInterfaccia = () => {
         }
       />
       <div className="h-auto w-full">
-        <Accordion title={"Logo sfondo"} content={<ImgSfondo />} />
+        <Accordion title={"Scelta del Logo per lo sfondo"} content={<ImageUploader />} />
       </div>
     </main>
   );
