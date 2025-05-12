@@ -1,15 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useContext } from "react";
-//import firstKit from "../assets/imgs/firstKit.png";
-//import gkKit from "../assets/imgs/gkKit.png";
-//import firstKit from "../assets/imgs/jersey.svg";
 import IndicatoreGiocatoriImpr from "./IndicatoreGiocatoriImpr";
 import JerseySVGBg from "./JerseySVGBg";
 import ColorContext from "../context/colorContext";
 
 const SecondaEstrazioneDiretta = (props) => {
   const { numbExtrPlayer, extractedPlayer } = props;
-  const { primary, secondary } = useContext(ColorContext);
+  const { colorPl, colorGK, colorNumPl, colorNumGK } = useContext(ColorContext);
 
   return (
     <section
@@ -31,15 +28,15 @@ const SecondaEstrazioneDiretta = (props) => {
             return (
               <div
                 key={i}
-                className={`relative flex flex-col items-center overflow-hidden rounded p-6 transition-all ${numbExtrPlayer > 2 ? "w-40 xl:w-60 h-fit xl:h-1/2" : "xl:h-3/5"}`}
-              >
+                className={`relative flex flex-col items-center overflow-hidden rounded p-6 transition-all ${numbExtrPlayer > 2 ? "min-w-60 h-fit xl:h-1/2" : "min-w-60 xl:w-96 h-full xl:h-3/5"}`}>
                 <JerseySVGBg
-                  fillColor={player === 1 ? primary : secondary}
-                  strokeColor={player === 1 ? secondary : primary}
+                  fillColor={player === 1 ? colorGK : colorPl}
+                  strokeColor="white"
                   className="stroke-2"
                 />
                 <span
-                  className={`absolute left-1/2 top-1/3 z-50 -translate-x-1/2 -translate-y-1/3 font-['Anton'] text-slate-800 ${numbExtrPlayer > 2 ? "text-[4rem] xl:text-[5rem]" : "text-[5rem] xl:text-[9.5rem]"}`}
+                  className={`absolute left-1/2 top-1/3 z-50 -translate-x-1/2 -translate-y-1/3 font-['Anton'] ${numbExtrPlayer > 2 ? "text-[4rem] xl:text-[4rem]" : "text-[5rem] xl:text-[7rem]"}`}
+                  style={player === 1 ? {color: colorNumGK} : {color: colorNumPl}}
                 >
                   {player}
                 </span>

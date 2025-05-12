@@ -1,4 +1,3 @@
-import React from "react";
 import { motion } from "framer-motion";
 import { MdClear } from "react-icons/md";
 
@@ -29,7 +28,7 @@ const RegistroMercato = (props) => {
           </li>
         ))}
       </ul>
-      <button className="block h-8 w-full bg-purple-700" onClick={deleteListDB}>
+      <button className="block h-8 w-full bg-[--clr-btn]" onClick={deleteListDB}>
         Resetta lista
       </button>
     </motion.div>

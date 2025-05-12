@@ -51,11 +51,11 @@ function ImageUploader() {
   return (
     <div
       {...getRootProps()}
-      style={{ border: "2px dashed #ccc", padding: "20px" }}
+      className="bg-slate-100/10 min-h-24 p-5 flex items-center justify-center"
     >
       <input {...getInputProps()} />
 
-      <p>Fai clic per selezionare un file esclusivamente in formato PNG (consigliato con sfondo trasparente ed inferiore ai 2 MB di dimesione)</p>
+      <p className="cursor-pointer py-4 px-16 hover:bg-black/30">Fai clic per selezionare un file esclusivamente in formato PNG (consigliato con sfondo trasparente ed inferiore ai 2 MB di dimesione)</p>
 
       {fileError && <div style={{ color: "red" }}>{fileError}</div>}
       {uploadCompleteMessage && (

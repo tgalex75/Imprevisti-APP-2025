@@ -65,8 +65,8 @@ const BonusAnnuali = () => {
             className="flex h-full w-1/3 items-center justify-center rounded p-2 xl:py-1"
             key={item.id}
           >
-            <div className="flex min-h-full w-full items-center justify-center rounded-t-lg bg-[--clr-ter] p-2 text-center text-[--clr-sec] xl:flex-col">
-              <h3 className="mx-2 text-xl font-bold uppercase xl:text-base">
+            <div className="flex h-12 xl:h-20 w-12 xl:w-20 items-center justify-center rounded-full bg-[--clr-ter] p-2 text-center text-[--clr-sec] xl:flex-col">
+              <h3 className="mx-2 text-xl font-bold uppercase xl:text-lg">
                 {item.id}
               </h3>
             </div>
@@ -76,7 +76,7 @@ const BonusAnnuali = () => {
       <div className="flex h-1/3 w-full items-center justify-between gap-2 px-4 text-[.8rem] font-semibold">
         <button
           type="button"
-          className="flex h-3/4 w-full items-center justify-center rounded border border-purple-700 px-3 text-center text-white shadow-md transition duration-200 ease-in hover:bg-purple-700"
+          className="flex h-3/4 w-full items-center justify-center rounded border border-[--clr-btn] px-3 text-center text-white shadow-md transition duration-200 ease-in hover:bg-[--clr-btn]"
           style={limiteRaggiunto ? { pointerEvents: "none", opacity: 0.3 } : {}}
           onClick={() =>
             addVociBonus({

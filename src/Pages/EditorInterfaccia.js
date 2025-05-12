@@ -2,16 +2,22 @@ import { useContext } from "react";
 import ColorPickerComponent from "../Components/ColorPickerComponent";
 import ColorContext from "../context/colorContext";
 import Accordion from "../Components/Accordion";
-import Tshirt from "../Components/Tshirt";
+import JerseySVGBg from "../Components/JerseySVGBg";
 import ImageUploader from "../Funzioni/ImageUploader";
 const EditorInterfaccia = () => {
   const {
     primary,
     secondary,
     tertiary,
+    colorBG,
+    colorTxt,
+    colorBtn,
     updatePrimary,
     updateSecondary,
     updateTertiary,
+    updateBgColor,
+    updateTxt,
+    updateBtn,
     colorGK,
     colorNumGK,
     colorPl,
@@ -45,6 +51,21 @@ const EditorInterfaccia = () => {
               updateFunc={updateTertiary}
               testoColore="TERZIARIO"
             />
+            <ColorPickerComponent
+              defaultColor={colorBG}
+              updateFunc={updateBgColor}
+              testoColore="SFONDO"
+            />
+            <ColorPickerComponent
+              defaultColor={colorTxt}
+              updateFunc={updateTxt}
+              testoColore="TESTO"
+            />
+            <ColorPickerComponent
+              defaultColor={colorBtn}
+              updateFunc={updateBtn}
+              testoColore="PULSANTI"
+            />
           </div>
         }
       />
@@ -63,15 +84,16 @@ const EditorInterfaccia = () => {
               updateFunc={updateColorNumPl}
               testoColore="NUMERO GIOCATORI"
             />
-            <Tshirt
-              keyId="PlayerTShirt"
-              numPlayer={10}
-              colorGK={colorGK}
-              colorPl={colorPl}
-              colorNumGK={colorNumGK}
-              colorNumPl={colorNumPl}
-              extrPlayers={1}
-            />
+            {/* T-SHIRT */}
+            <div className="relative flex flex-col items-center justify-around gap-4">
+              <JerseySVGBg fillColor={colorPl} strokeColor="white" />
+              <span
+                className="absolute left-1/2 top-1/3 z-50 -translate-x-1/2 -translate-y-1/3 p-2 font-['Anton'] text-7xl xl:text-9xl"
+                style={{ color: colorNumPl }}
+              >
+                10
+              </span>
+            </div>
             <ColorPickerComponent
               defaultColor={colorGK}
               updateFunc={updateColorGK}
@@ -82,20 +104,24 @@ const EditorInterfaccia = () => {
               updateFunc={updateColorNumGK}
               testoColore="NUMERO PORTIERE"
             />
-            <Tshirt
-              keyId="GKTShirt"
-              numPlayer={1}
-              colorGK={colorGK}
-              colorPl={colorPl}
-              colorNumGK={colorNumGK}
-              colorNumPl={colorNumPl}
-              extrPlayers={1}
-            />
+            {/* T-SHIRT */}
+            <div className="relative flex flex-col items-center justify-around gap-4">
+              <JerseySVGBg fillColor={colorGK} strokeColor="white" />
+              <span
+                className="absolute left-1/2 top-1/3 z-50 -translate-x-1/2 -translate-y-1/3 stroke-2 p-2 font-['Anton'] text-7xl xl:text-9xl"
+                style={{ color: colorNumGK }}
+              >
+                1
+              </span>
+            </div>
           </div>
         }
       />
       <div className="h-auto w-full">
-        <Accordion title={"Scelta del Logo per lo sfondo"} content={<ImageUploader />} />
+        <Accordion
+          title={"Scelta del Logo per lo sfondo"}
+          content={<ImageUploader />}
+        />
       </div>
     </main>
   );

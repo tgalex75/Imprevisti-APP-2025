@@ -15,7 +15,7 @@ const LayoutBase = ({ titoloH1, isImprev, casuale, children }) => {
         transition={{ delay: 0.4, duration: 0.4, type: "spring" }}
         key={random.float()}
         style={isImprev && { color: "var(--clr-ter)" }}
-        className="flex h-full w-full select-none flex-col items-center justify-around gap-4 rounded-xl bg-black/30 px-4 py-2 shadow-lg ring ring-inset ring-white/75 xl:justify-evenly xl:gap-2 xl:px-10"
+        className="flex h-full w-full select-none flex-col items-center text-center justify-around gap-4 rounded-xl bg-black/30 px-4 py-2 shadow-lg ring ring-inset ring-white/75 xl:justify-evenly xl:gap-2 xl:px-10"
       >
         {!casuale && (
           <h2 className="andika-regular-italic flex h-full items-center justify-center text-5xl italic">

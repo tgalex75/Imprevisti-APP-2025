@@ -6,7 +6,7 @@ import random from "random";
 
 const SecondaEstrazione = () => {
   const [refState, setRefState] = useState(11);
-  const { colorPl, colorGK } = useContext(ColorContext);
+  const { colorPl, colorGK, colorNumPl, colorNumGK } = useContext(ColorContext);
 
   const ref = useRef(null);
 
@@ -39,7 +39,7 @@ const SecondaEstrazione = () => {
         <button
           type="button"
           onClick={() => randomNumber()}
-          className="flex h-12 w-full items-center justify-center rounded-lg bg-purple-700 p-2 px-4 text-center text-sm font-semibold text-gray-100 shadow-md transition duration-200 ease-in hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-[--clr-ter] focus:ring-offset-2 focus:ring-offset-sky-800 xl:h-auto"
+          className="flex h-12 w-full items-center justify-center rounded-lg bg-[--clr-btn] p-2 px-4 text-center text-sm font-semibold text-gray-100 shadow-md transition duration-200 ease-in hover:bg-[--clr-ter] focus:outline-none focus:ring-2 focus:ring-[--clr-ter] focus:ring-offset-2 focus:ring-offset-sky-800 xl:h-auto"
         >
           Estrai
         </button>
@@ -56,7 +56,7 @@ const SecondaEstrazione = () => {
           fillColor={secondExtractedNumber === 1 ? colorGK : colorPl}
           className="stroke-2"
         />
-        <span className="absolute left-1/2 top-1/2 z-50 -translate-x-1/2 -translate-y-1/2 pb-14 font-['Anton'] text-7xl xl:text-9xl xl:pb-24 text-slate-300">
+        <span className="absolute left-1/2 top-1/2 z-50 -translate-x-1/2 -translate-y-1/2 pb-14 font-['Anton'] text-7xl xl:text-9xl xl:pb-24 text-slate-300" style={secondExtractedNumber === 1 ? {color: colorNumGK} : {color: colorNumPl}}>
           {secondExtractedNumber}
         </span>
       </div>

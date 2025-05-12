@@ -11,6 +11,9 @@
   --clr-prim: #fffffc;
   --clr-sec: #1d1c2f;
   --clr-ter: #e9ba02;
+  --clr-bg: #1d1c2f;
+  --clr-txt: #eeeeee;
+  --clr-btn: #4b147c;
 }
 
 body {
@@ -23,8 +26,8 @@ body {
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #1d1c2f;
-  color: #eeeeee;
+  background-color: var(--clr-bg);
+  color: var(--clr-txt);
   overflow: hidden;
 }
 

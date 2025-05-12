@@ -312,7 +312,7 @@ const EditorImprevisti = () => {
           </div>
           <button
             type="submit"
-            className="w-2/3 xl:h-12 h-16 xl:w-1/3 rounded-lg bg-purple-700 py-1 font-semibold hover:bg-purple-600"
+            className="w-2/3 xl:h-12 h-16 xl:w-1/3 rounded-lg bg-[--clr-btn] py-1 font-semibold hover:bg-[--clr-ter]"
           >
             Salva ed Invia
           </button>

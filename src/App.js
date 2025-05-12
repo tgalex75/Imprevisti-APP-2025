@@ -12,13 +12,16 @@ import { useState, useEffect, useContext } from "react";
 import ColorContext from "./context/colorContext";
 
 function App(props) {
-  const {primary, secondary, tertiary} = useContext(ColorContext)
+  const {primary, secondary, tertiary, colorBG, colorTxt, colorBtn} = useContext(ColorContext)
 
   useEffect(() => {
     document.documentElement.style.setProperty('--clr-prim', primary);
     document.documentElement.style.setProperty('--clr-sec', secondary);
     document.documentElement.style.setProperty('--clr-ter', tertiary);
-  }, [primary, secondary, tertiary]);
+    document.documentElement.style.setProperty('--clr-bg', colorBG);
+    document.documentElement.style.setProperty('--clr-txt', colorTxt);
+    document.documentElement.style.setProperty('--clr-btn', colorBtn);
+  }, [primary, secondary, tertiary, colorBG, colorTxt, colorBtn]);
   
   const [session, setSession] = useState(null);
 

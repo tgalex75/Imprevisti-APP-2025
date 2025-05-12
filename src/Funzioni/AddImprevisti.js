@@ -380,7 +380,7 @@ export function AddImprevisti(props) {
           </section>
           <button
             type="submit"
-            className="w-full rounded-lg bg-purple-700 py-1 font-semibold hover:bg-purple-600 md:w-1/3"
+            className="w-full rounded-lg bg-[--clr-btn] py-1 font-semibold hover:bg-[--clr-ter] md:w-1/3"
           >
             Salva ed Invia
           </button>

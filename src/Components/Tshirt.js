@@ -1,4 +1,3 @@
-import React from "react";
 import JerseySVGBg from "./JerseySVGBg";
 
 const Tshirt = (props) => {
@@ -14,7 +13,7 @@ const Tshirt = (props) => {
   return (
     <div
       key={keyId}
-      className={`relative flex flex-col items-center overflow-hidden rounded p-6 transition-all ${extrPlayers > 2 ? "h-fit xl:h-1/2" : "xl:h-3/5"}`}
+      className={`relative flex flex-col items-center overflow-hidden rounded p-6 transition-all w-full ${extrPlayers > 2 ? "h-fit xl:h-1/2" : "h-full xl:h-3/5"}`}
     >
       <JerseySVGBg
         fillColor={numPlayer === 1 ? colorGK : colorPl}

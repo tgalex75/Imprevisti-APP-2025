@@ -14,6 +14,15 @@ export const ColorProvider = ({ children }) => {
   const [tertiary, setTertiary] = useState(
     localStorage.getItem("tertiaryColor") || "#FFA500",
   );
+  const [colorBG, setColorBG] = useState(
+    localStorage.getItem("colorBG") || "#1d1c2f",
+  );
+  const [colorTxt, setColorTxt] = useState(
+    localStorage.getItem("colorTxt") || "#eeeeee",
+  );
+  const [colorBtn, setColorBtn] = useState(
+    localStorage.getItem("colorBtn") || "#4b147c",
+  );
   const [colorGK, setColorGK] = useState(
     localStorage.getItem("colorGK") || "#2C4F04",
   );
@@ -43,6 +52,23 @@ export const ColorProvider = ({ children }) => {
   const updateTertiary = (newColor) => {
     setTertiary(newColor.hex);
     localStorage.setItem("tertiaryColor", newColor.hex);
+  };
+
+  // Funzione per aggiornare il colore dello sfondo
+  const updateBgColor = (newColor) => {
+    setColorBG(newColor.hex);
+    localStorage.setItem("colorBG", newColor.hex);
+  };
+
+  // Funzione per aggiornare il colore del testo
+  const updateTxt = (newColor) => {
+    setColorTxt(newColor.hex);
+    localStorage.setItem("colorTxt", newColor.hex);
+  };
+  // Funzione per aggiornare il colore dei Bottoni
+  const updateBtn = (newColor) => {
+    setColorBtn(newColor.hex);
+    localStorage.setItem("colorBtn", newColor.hex);
   };
 
   // Funzione per aggiornare il colore della T-Shirt del Portiere
@@ -75,9 +101,15 @@ export const ColorProvider = ({ children }) => {
         primary,
         secondary,
         tertiary,
+        colorBG,
+        colorTxt,
+        colorBtn,
         updatePrimary,
         updateSecondary,
         updateTertiary,
+        updateBgColor,
+        updateTxt,
+        updateBtn,
         colorGK,
         colorNumGK,
         colorPl,
