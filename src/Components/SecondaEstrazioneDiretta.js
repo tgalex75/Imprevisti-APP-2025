@@ -28,14 +28,14 @@ const SecondaEstrazioneDiretta = (props) => {
             return (
               <div
                 key={i}
-                className={`relative flex flex-col items-center overflow-hidden rounded p-6 transition-all ${numbExtrPlayer > 2 ? "min-w-60 h-fit xl:h-1/2" : "min-w-60 xl:w-96 h-full xl:h-3/5"}`}>
+                className={`relative flex flex-col items-center overflow-hidden rounded p-6 transition-all ${numbExtrPlayer > 2 ? "min-w-60 h-fit xl:h-1/2" : numbExtrPlayer === 1 ? "min-w-60 xl:w-96 h-full xl:h-3/5" : "min-w-52 xl:w-80 h-full xl:h-3/5"}`}>
                 <JerseySVGBg
                   fillColor={player === 1 ? colorGK : colorPl}
                   strokeColor="white"
                   className="stroke-2"
                 />
                 <span
-                  className={`absolute left-1/2 top-1/3 z-50 -translate-x-1/2 -translate-y-1/3 font-['Anton'] ${numbExtrPlayer > 2 ? "text-[4rem] xl:text-[4rem]" : "text-[5rem] xl:text-[7rem]"}`}
+                  className={`absolute left-1/2 top-1/3 z-50 -translate-x-1/2 -translate-y-1/3 font-['Anton'] ${numbExtrPlayer > 2 ? "text-[4rem] xl:text-[4rem]" : numbExtrPlayer === 1 ? "text-[5rem] xl:text-[7rem]" : "text-[4rem] xl:text-[5rem]"}`}
                   style={player === 1 ? {color: colorNumGK} : {color: colorNumPl}}
                 >
                   {player}

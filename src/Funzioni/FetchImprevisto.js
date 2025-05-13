@@ -16,7 +16,7 @@ const FetchImprevisto = (props) => {
     casualeCommunity;
 
   const delElemento = async () => {
-    const { error } = await supabase.from("imprevisti").delete().eq("id", id);
+    const { error } = await supabase.from("speciali").delete().eq("id", id);
     error && console.log(error);
   };
   

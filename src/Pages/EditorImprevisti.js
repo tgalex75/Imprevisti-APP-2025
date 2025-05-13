@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import useFetchData from "../Hooks/useFetchData";
 
 const EditorImprevisti = () => {
-  const { data, fetchRegistryList } = useFetchData("imprevisti");
+  const { data, fetchRegistryList } = useFetchData("speciali");
 
   const aggiornaTitoloImprRef = useRef([]);
   const aggiornaDescImprRef = useRef([]);
@@ -16,7 +16,7 @@ const EditorImprevisti = () => {
 
   const removeVociRegistro = async (element) => {
     const { error } = await supabase
-      .from("imprevisti")
+      .from("speciali")
       .delete()
       .eq("id", element);
     error && console.log(error);
@@ -32,7 +32,7 @@ const EditorImprevisti = () => {
     refTitRosa,
   ) => {
     const { error } = await supabase
-      .from("imprevisti")
+      .from("speciali")
       .update({
         titolo: refTitolo.toUpperCase(),
         descrizione: refDescr,
@@ -52,7 +52,7 @@ const EditorImprevisti = () => {
     const { titolo, descrizione, ultEstrazione, qtGiocatori, titolariRosa } =
       objForm;
     const { error } = await supabase
-      .from("imprevisti")
+      .from("speciali")
       .insert([
         {
           titolo: titolo.toUpperCase(),

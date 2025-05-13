@@ -1,9 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useCallback, useState, useEffect } from "react";
-import useFetchData from "../Hooks/useFetchData";
-import { datiPrepartita } from "../Data/datiPrepartita";
+import { useCallback, useState, useEffect, useContext } from "react";
 import UploadRegistro from "../Funzioni/UploadRegistro";
-import { datiMenoFrequenti } from "../Data/datiMenoFrequenti";
 import FetchImprevisto from "../Funzioni/FetchImprevisto";
 import LayoutBase from "../Components/LayoutBase";
 import Dado from "../Components/Dado";
@@ -14,9 +11,10 @@ import rnd from "random-weight";
 import random from "random";
 import { numbers } from "../Funzioni/schemi";
 import pickRandom from "pick-random";
+import DatiImprevistiContext from "../context/datiImprevisti";
 
 const Prepartita = () => {
-  const { data: dataCommunity, fetchRegistryList } = useFetchData("imprevisti");
+  const { prepartita, speciali, fetchSpeciali } = useContext(DatiImprevistiContext);
   const [casuale, setCasuale] = useState(null);
   const [casualeCommunity, setCasualeCommunity] = useState(null);
 
@@ -25,11 +23,11 @@ const Prepartita = () => {
   
   useEffect(() => {
     setCasualeCommunity(
-      dataCommunity?.length > 0
-      ? random.choice(dataCommunity)
-        : { id: 0, descrizione: "LISTA VUOTA!!!" },
-      );
-    fetchRegistryList();
+      speciali?.length > 0
+      ? random.choice(speciali)
+      : { id: 0, descrizione: "LISTA VUOTA!!!" },
+    );
+    fetchSpeciali();
     let timeout = setTimeout(() => {
       setExtractedPlayer(pickRandom(numbersEx, { count: numbExtrPlayer }));
     }, 200);
@@ -39,13 +37,7 @@ const Prepartita = () => {
   // Prima Estrazione
 
   const estraiNumeroCasuale = useCallback(() => {
-    const randomDatiPrepartita = rnd(datiPrepartita, (i) => i.weight);
-    const randomDatiMenoFrequenti = rnd(datiMenoFrequenti, (i) => i.weight);
-    const listaEstrazione = [
-      { ...randomDatiPrepartita, weight: 25 },
-      { ...randomDatiMenoFrequenti, weight: 10 },
-    ];
-    const estratto = rnd(listaEstrazione, (i) => i.weight);
+    const estratto = rnd(prepartita, (i) => i.weight);
     setCasuale(estratto);
   }, []);
   

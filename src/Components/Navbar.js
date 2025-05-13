@@ -56,7 +56,7 @@ const Navbar = () => {
               ease: "easeIn",
               stiffness: 200,
             }}
-            className="p-4 px-8 text-lg font-bold uppercase hover:text-purple-700 xl:text-3xl"
+            className="p-4 px-8 text-lg font-bold uppercase hover:text-[--clr-btn] lg :text-xl xl:text-2xl"
           >
             {voce.voceLi}
           </motion.li>
