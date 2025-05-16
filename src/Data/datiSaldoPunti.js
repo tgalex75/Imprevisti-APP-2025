@@ -9,31 +9,31 @@ import { GiGoalKeeper } from "react-icons/gi";
 export const bonusTrofei = [
     {
         id: "cnz10",
-        nome: "Coppa Nazionale +10",
+        nome: "Coppa Nazionale",
         valore: 10,
       icon: <GiTrophyCup size={28} className="mb-1" />,
     },
     {
       id: "scd18",
-      nome: "Scudetto +18",
+      nome: "Scudetto",
       valore: 18,
       icon: <LiaTrophySolid size={28} className="mb-1" />,
     },
     {
       id: "chl30",
-      nome: "Champions League +30",
+      nome: "Champions League",
       valore: 30,
       icon: <GiTrophy size={28} className="mb-1" />,
     },
     {
       id: "eul20",
-      nome: "Europa League +20",
+      nome: "Europa League",
       valore: 20,
       icon: <GiDiamondTrophy size={28} className="mb-1" />,
     },
     {
       id: "ecl15",
-      nome: "Conference League +15",
+      nome: "Conference League",
       valore: 15,
       icon: <GiLaurelsTrophy size={28} className="mb-1" />,
     },

@@ -1,0 +1,68 @@
+SET session_replication_role = replica;
+
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 15.6
+-- Dumped by pg_dump version 15.6
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Data for Name: imprevisti; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO "public"."speciali" ("id", "titolo", "descrizione", "ultEstrazione", "qtGiocatori", "titolariRosa") VALUES
+	('628b2f97-52c6-40c8-b433-79b3303fcfec', 'CALCIO CAMMINATO', 'Mister Finazzi esige ordine e calma in campo. Schiera titolare in ogni ruolo per questa partita il giocatore con la statistica di velocità più bassa.', false, 0, 11),
+	('7e4826b0-de17-417e-a992-ae4105726428', 'COSTE TO COSTE 2.0', 'È andato via Coste? Nessun problema. Prendi palla col difensore che lo sostituisce e portala Coste to Coste, obiettivo gol/assist. Se riesci prossima partita le nostre slide velocità avranno un +5, altrimenti - 5', false, 0, 11),
+	('e3de199c-5e56-4aef-afa0-fe1e06276610', 'CHI HA FATTO PALO?', 'Un grande imprenditore Arabo, Nalir Colbuk, si è appassionato alle ultime vicende della Juve Stabia. Non potendo fare a meno di ridere di gusto ad ogni legno colpito dalla squadra, decide di investire su di essa: ad ogni palo colpito durante l''episodio, aggiungi un punto al saldo mercato. ', false, 0, 30),
+	('575a00f9-4955-43a6-8932-42959cba8b83', 'BRACCIA TOLTE A...', 'Il presidente della Juve Stabia decide di assumere nella sua ditta edilizia, la Abusivismo S.p.a,  i 5 giocatori più scarsi della primavera. Acquisisci 0,5 punti per ogni giocatore mandato in cantiere.', false, 0, 30),
+	('b37331d5-9272-40ed-bcb2-5b444e50fa4c', 'PAPERINO', 'Dalle visite mediche si scopre Kwakman sia il frutto di una tresca in Olanda di Pato, il “Papero” per eccellenza della serie A, finto infortunio e vacanza per un mese a Rio con il padre.', false, 0, 30),
+	('556a0776-8275-430e-b54d-bc31c88ef0ed', 'PINTO FOOTBALL LIFE', 'Il prode Pinto dopo aver visto cosa accade nei bagni di Football Life invita 3 dei suoi compagni di squadra per una notte folle lui ed i 3 sorteggiati salteranno le prossime 2 partite in casa.', true, 3, 30),
+	('8e9595c7-a83f-4941-b758-c0edaf444c7a', 'AUDIO IN QUESTURA', 'Mister Finazzi è stato squalificato dopo il recupero dell''audio compromettente registrato dopo il secondo gol dell''Atalanta, simula la prossima partita senza possibilità di intervenire.', false, 0, 11),
+	('c6dd148e-3d9c-498a-ab5e-8955ffbcfe08', 'COME MOTTA', 'Fai debuttare 3 giovani dal vivaio, 1 per reparto e schierarli fuori ruolo. Se vinci guadagni 3 punti per il mercato, se perdi la partita perdi 3 punti. Se invece pareggi devi rifare l''imprevisto.', false, 0, 30),
+	('6be5214b-771f-49ac-b8f3-fbe259e2d104', 'GIORGIONE', 'Il noto cuoco, si emoziona per le gesta della Juve Stabia e decide di offrire un pasto alla squadra. I giocatori finiscono per avere le vene imburrate, alterando le loro prestazioni. (aumenta di 10 velocità, accelerazione e velocità tiro ma anche errore passagi, errore tiri e errore primo controllo)', false, 0, 30),
+	('8d8fcdb3-ac7d-48e6-aacc-ea0e3211deff', 'CASSANATA', 'Il giocatore estratto combina una "cassanata" nei confronti dello staff e di mister Finazzi. Fuori tutto l''episodio.', true, 1, 30),
+	('ad977ba2-1b10-4f5f-a836-ccace96b3481', 'DFGDFG', 'ewrwer', true, 1, 30),
+	('bfffa169-fecf-47a3-88b8-044d91f73b2c', 'NOSTALGIA CANAGLIA', 'Lim, dopo aver trascorso le vacanze estive nel Brunei, tornato a Castellammare lamenta una profondissima nostalgia del suo paese, specialmente per la mancanza di un suo caro amico: Tam. Acquistalo e schieralo titolare in coppia con Lim per tre partite. Ad ogni assist/gol eseguiti da uno dei due, aggiungi un punto mercato, in segno del loro meraviglioso legame.', false, 0, 11),
+	('e4f564a8-8e0d-4428-8121-e8bfd5921b24', 'VOLARE', 'La dirigenza, stanca delle prestazioni di Pinto, decide di farlo "Volare" come la nota canzone di Modugno. Metti Pinto sul mercato in uscita nella prima sessione di mercato disponibile.
+Se decidi di venderlo i punti raccolti dalla cessione diventano doppi!', false, 0, 30),
+	('8d63b66c-ded2-47c0-9200-ca4a5744fda9', 'VITALE NO BOMBER ACADEMIA', 'Con l''addio di Pedrito "All Might" Mendes, "Deku" Vitale ha studiato un piano riuscendo a convincere "Bakougo" Bonneau: ingaggia un preparatore per gli Attaccanti e schiera il tridente stretto (AT-ATT-AT) Vitale-Pinto-Bonneau per tre partite.', false, 0, 30);
+
+
+--
+-- Data for Name: registroo; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO "public"."registroo" ("id", "name", "description", "tipo") VALUES
+	('bdc86ea7-982a-4120-a1bf-75b60a26d5e5', 'Saeed', 'Bilancio in Ordine', 'Mercato'),
+	('e6f2108b-e6e1-42c5-896c-e22bb4bb4c7d', 'De Souza', 'Bilancio in Ordine', 'Mercato'),
+	('4e13c83f-04a1-4cc3-aa19-4da9db9575c8', 'Cordoba', 'Bilancio in Ordine', 'Mercato'),
+	('5bf81205-ddbe-4bd1-b6c7-15f6344c6033', 'Vitale', 'Mercenario', 'Mercato'),
+
+
+--
+-- Data for Name: saldo-punti; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO "public"."saldo-punti" ("id", "punti") VALUES
+	('fcb5bacd-93d5-48e5-94b4-29b48d744251', 10);
+
+
+--
+-- Data for Name: salvaxdopo; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO "public"."salvaxdopo" ("id", "titolo", "descrizione") VALUES
+	('3fbcc1c2-36d1-4aea-89ca-3104255816f9', 'MOSTRO DAL PASSATO', 'Hai un sogno rivelatore. Riacquista Koren entro l''ultima stagione della serie e schieralo capitano titolare in una finale di una competizione. Sarà un sogno o un incubo?'),
+	('9bc995b4-8705-4d6a-9fd6-65c6eae1ebaa', 'MERCATO DELLE IDEE', 'Il Direttore sportivo in un momento di illuminazione, decide di acquistare un giocatore con la sola forza delle parole e del coinvolgimento nel progetto Juve Stabia: acquista un centrocampista dagli svincolati di qualsiasi overall e fallo giocare 2 partite di fila senza mai toglierlo. I punti per il suo acquisto saranno ridotti della metà arrotondati per difetto grazie alle idee proposte.');

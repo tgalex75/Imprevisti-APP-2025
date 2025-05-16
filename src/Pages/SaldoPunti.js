@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "../supabaseClient";
 import {
   bonusCessioni,
@@ -18,20 +18,7 @@ const SaldoPunti = () => {
   const [isSerieMinore, setIsSerieMinore] = useState(false);
   const isSerieMinoreOver = isOver32 && isSerieMinore;
 
-  const [loggedUser, setLoggedUser] = useState(null);
 
-  const myUser = async () => {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    setLoggedUser({ user });
-  };
-
-  const userId = loggedUser?.user.id;
-
-  useEffect(() => {
-    myUser();
-  }, []);
 
   const checkisOver = () => {
     setIsOver32(!isOver32);
@@ -51,7 +38,7 @@ const SaldoPunti = () => {
   const insPuntiBase = async () => {
     const { error } = await supabase
       .from("saldo-punti")
-      .insert([{ punti: 10, user_id: userId }])
+      .insert([{ punti: 10}])
       .select();
     error && console.log("error: ", error);
     fetchSaldo()
@@ -133,7 +120,7 @@ const SaldoPunti = () => {
       className={bonusMalusStyle}
     >
       {el.icon}
-      {el.nome}
+      {el.nome}{el.valore}
     </div>
   ));
   const mappedTrend = trendPrestazioni.map((el) => (

@@ -9,6 +9,12 @@ export const DatiImprevistiProvider = ({ children }) => {
   
     const { data: speciali, fetchRegistryList: fetchSpeciali } =
     useFetchData("speciali");
+    
+    const { data: settimana, fetchRegistryList: fetchSettimana } =
+    useFetchData("settimana");
+    
+    const { data: serieNegativa, fetchRegistryList: fetchSerieNegativa } =
+    useFetchData("serie-negativa");
 
   return (
     <DatiImprevistiContext.Provider
@@ -17,6 +23,10 @@ export const DatiImprevistiProvider = ({ children }) => {
         fetchPrepartita,
         speciali,
         fetchSpeciali,
+        settimana,
+        fetchSettimana,
+        serieNegativa,
+        fetchSerieNegativa,
       }}
     >
       {children}

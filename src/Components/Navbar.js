@@ -1,8 +1,7 @@
-import React, { useState } from "react";
-import { MdHome, MdMenu, MdClose, MdLogout } from "react-icons/md";
+import { useState } from "react";
+import { MdHome, MdMenu, MdClose } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { supabase } from "../supabaseClient";
 import { isMobile } from "react-device-detect";
 
 const Navbar = () => {
@@ -10,13 +9,6 @@ const Navbar = () => {
 
   const handleClick = () => {
     setIsOpenMenu((prevMenu) => !prevMenu);
-  };
-
-  const logOut = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (error) {
-      console.log(error);
-    }
   };
 
   const dettagliMenu = [
@@ -56,7 +48,7 @@ const Navbar = () => {
               ease: "easeIn",
               stiffness: 200,
             }}
-            className="p-4 px-8 text-lg font-bold uppercase hover:text-[--clr-btn] lg :text-xl xl:text-2xl"
+            className="lg :text-xl p-4 px-8 text-lg font-bold uppercase hover:text-[--clr-btn] xl:text-2xl"
           >
             {voce.voceLi}
           </motion.li>
@@ -74,27 +66,10 @@ const Navbar = () => {
         <Link to="/">
           <MdHome
             size={36}
-            style={
-              isOpenMenu
-                ? { display: "none" }
-                : {
-                    filter: "drop-shadow(.25rem .25rem 0.15rem #222)",
-                  }
-            }
+            style={{
+              filter: "drop-shadow(.25rem .25rem 0.15rem #222)",
+            }}
             className="fill-gray-300 hover:fill-gray-200"
-          />
-          <MdLogout
-            style={
-              !isOpenMenu
-                ? { display: "none" }
-                : {
-                    display: "block",
-                    filter: "drop-shadow(.25rem .25rem 0.15rem #222)",
-                  }
-            }
-            size={36}
-            className="fill-gray-300 hover:fill-gray-200"
-            onClick={logOut}
           />
         </Link>
       </div>
@@ -118,7 +93,7 @@ const Navbar = () => {
         <ul
           style={isOpenMenu ? { right: 0 } : { right: "-100%" }}
           onClick={handleClick}
-          className="absolute top-0 z-[-1] flex h-screen w-full flex-col items-center justify-start bg-black/95 py-12 text-center text-gray-300 transition-[0.5s] xl:w-[30vw] xl:h-screen xl:justify-around xl:py-18"
+          className="xl:py-18 absolute top-0 z-[-1] flex h-screen w-full flex-col items-center justify-start bg-black/95 py-12 text-center text-gray-300 transition-[0.5s] xl:h-screen xl:w-[30vw] xl:justify-around"
         >
           {linksMenu}
         </ul>
