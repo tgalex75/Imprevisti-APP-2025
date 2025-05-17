@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Dado from "../Components/Dado";
 import rnd from "random-weight";
 import datiSettimana from "../Data/datiSettimana";

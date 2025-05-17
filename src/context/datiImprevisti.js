@@ -15,6 +15,21 @@ export const DatiImprevistiProvider = ({ children }) => {
     
     const { data: serieNegativa, fetchRegistryList: fetchSerieNegativa } =
     useFetchData("serie-negativa");
+    
+    const { data: bonusTrofei, fetchRegistryList: fetchBonusTrofei } =
+    useFetchData("bonus-trofei");
+    
+    const { data: bonusCessioni, fetchRegistryList: fetchBonusCessioni } =
+    useFetchData("bonus-cessioni");
+    
+    const { data: malusAcquisti, fetchRegistryList: fetchMalusAcquisti } =
+    useFetchData("malus-acquisti");
+    
+    const { data: trendPrestazioni, fetchRegistryList: fetchTrendPrestazioni } =
+    useFetchData("trend-prestazioni");
+    
+    const { data: fineCampionato, fetchRegistryList: fetchFineCampionato } =
+    useFetchData("fine-campionato");
 
   return (
     <DatiImprevistiContext.Provider
@@ -27,6 +42,16 @@ export const DatiImprevistiProvider = ({ children }) => {
         fetchSettimana,
         serieNegativa,
         fetchSerieNegativa,
+        bonusTrofei,
+        fetchBonusTrofei,
+        bonusCessioni,
+        fetchBonusCessioni,
+        malusAcquisti,
+        fetchMalusAcquisti,
+        trendPrestazioni,
+        fetchTrendPrestazioni,
+        fineCampionato,
+        fetchFineCampionato
       }}
     >
       {children}

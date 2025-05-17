@@ -1,16 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { supabase } from "../supabaseClient";
-import {
-  bonusCessioni,
-  bonusTrofei,
-  malusAcquisti,
-  trendPrestazioni,
-  piazzamentoCampionato,
-} from "../Data/datiSaldoPunti";
 import { GrPowerReset } from "react-icons/gr";
 import { LuArrowUpWideNarrow, LuArrowDownWideNarrow } from "react-icons/lu";
 import { v4 as uuidv4 } from "uuid";
+import DatiImprevistiContext from "../context/datiImprevisti";
 
 const SaldoPunti = () => {
   const [data, setData] = useState([]);
@@ -18,7 +12,13 @@ const SaldoPunti = () => {
   const [isSerieMinore, setIsSerieMinore] = useState(false);
   const isSerieMinoreOver = isOver32 && isSerieMinore;
 
-
+  const {
+    bonusCessioni,
+    malusAcquisti,
+    bonusTrofei,
+    trendPrestazioni,
+    fineCampionato,
+  } = useContext(DatiImprevistiContext);
 
   const checkisOver = () => {
     setIsOver32(!isOver32);
@@ -35,57 +35,44 @@ const SaldoPunti = () => {
     error && console.log("error: ", error);
   };
 
-  const insPuntiBase = async () => {
-    const { error } = await supabase
-      .from("saldo-punti")
-      .insert([{ punti: 10}])
-      .select();
-    error && console.log("error: ", error);
-    fetchSaldo()
-  };
+  const { id, punti } = data ? data : { id: uuidv4(), punti: 10 };
 
-  
-  const { id, punti } = data ? data : {id: uuidv4(), punti: 10}
-
-  !data && insPuntiBase()
-  
   const updateSaldoPunti = async (val) => {
     const { error } = await supabase
-    .from("saldo-punti")
-    .update({
-      punti: punti + val,
-    })
-    .eq("id", id)
-    .select();
+      .from("saldo-punti")
+      .update({
+        punti: punti + val,
+      })
+      .eq("id", id)
+      .select();
     error && console.log("error: ", error);
     fetchSaldo();
   };
-  
+
   useEffect(() => {
     fetchSaldo();
   }, []);
-  
+
   const resetPunti = async () => {
     const { error } = await supabase
-    .from("saldo-punti")
-    .update({ punti: 10 })
-    .eq("id", id)
-    .select();
+      .from("saldo-punti")
+      .update({ punti: 10 })
+      .eq("id", id)
+      .select();
     error && console.log("error: ", error);
     fetchSaldo();
   };
-  
+
   const bonusMalusStyle =
-  "flex flex-col cursor-pointer text-center text-base p-2 border-none hover:border items-center justify-center rounded-xl hover:text-black hover:bg-[--clr-ter]";
-  
+    "flex flex-col cursor-pointer text-center text-base p-2 border-none hover:border items-center justify-center rounded-xl hover:text-black hover:bg-[--clr-ter]";
+
   const mappedCessioni = bonusCessioni.map((el) => (
     <div
-    key={el.id}
+      key={el.id}
       onClick={() => updateSaldoPunti(el.valore)}
       className={bonusMalusStyle}
     >
-      {el.icon}
-      {el.nome}
+      {"≥" + el.nome} +{el.valore}
     </div>
   ));
   const mappedAcquisti = malusAcquisti.map((el) => (
@@ -104,13 +91,20 @@ const SaldoPunti = () => {
       }
       className={bonusMalusStyle}
     >
+      ≥
       {isSerieMinoreOver
         ? el.nomeSerieMinoriOver
         : isOver32
           ? el.nomeOver
           : isSerieMinore
             ? el.nomeSerieMinori
-            : el.nomeUnder}
+            : el.nomeUnder} {isSerieMinoreOver
+        ? el.valoreSerieMinoreOver
+        : isOver32
+          ? el.valoreOver
+          : isSerieMinore
+            ? el.valoreSerieMinore
+            : el.valoreUnder}
     </div>
   ));
   const mappedTrofei = bonusTrofei.map((el) => (
@@ -119,8 +113,7 @@ const SaldoPunti = () => {
       onClick={() => updateSaldoPunti(el.valore)}
       className={bonusMalusStyle}
     >
-      {el.icon}
-      {el.nome}{el.valore}
+      {el.nome} +{el.valore}
     </div>
   ));
   const mappedTrend = trendPrestazioni.map((el) => (
@@ -129,18 +122,16 @@ const SaldoPunti = () => {
       onClick={() => updateSaldoPunti(el.valore)}
       className={bonusMalusStyle}
     >
-      {el.icon}
-      {el.nome}
+      {el.nome} {el.valore > 0 ? `+${el.valore}` : el.valore}
     </div>
   ));
-  const mappedPiazzamento = piazzamentoCampionato.map((el) => (
+  const mappedPiazzamento = fineCampionato.map((el) => (
     <div
       key={el.id}
       onClick={() => updateSaldoPunti(el.valore)}
       className={bonusMalusStyle}
     >
-      {el.icon}
-      {el.nome}
+      {el.nome}° p. +{el.valore}
     </div>
   ));
 
@@ -159,10 +150,10 @@ const SaldoPunti = () => {
           <div className="absolute right-2 mt-12 flex flex-col items-center justify-around p-2">
             <GrPowerReset
               size={32}
-              className="peer cursor-pointer hover:animate-spin hover:stroke-purple-700 active:scale-150"
+              className="peer cursor-pointer hover:animate-spin hover:stroke-[--clr-btn] active:scale-150"
               onClick={resetPunti}
             />
-            <span className="invisible text-purple-700 transition-all duration-500 ease-in-out peer-hover:visible">
+            <span className="invisible text-[--clr-btn] transition-all duration-500 ease-in-out peer-hover:visible">
               Reset{" "}
             </span>
           </div>
@@ -173,21 +164,21 @@ const SaldoPunti = () => {
           id="acquistiCessioni"
           className="flex h-1/4 w-full flex-col items-center gap-1 text-lg font-bold xl:h-1/4 xl:flex-row"
         >
-          <div className="flex h-full w-full flex-col items-center justify-around rounded-xl border-2 border-purple-700/60 transition-all duration-300 ease-in-out hover:border-gray-200 hover:bg-purple-800/30 xl:w-1/2">
+          <div className="flex h-full w-full flex-col items-center justify-around rounded-xl border-2 border-[--clr-btn] transition-all duration-300 ease-in-out hover:border-gray-200 hover:bg-[--clr-btn] xl:w-1/2">
             <h2 className="inline-flex items-center text-2xl xl:text-lg">
               Cessioni Mercato
               <LuArrowUpWideNarrow className="mx-3 inline-block" size={28} />
             </h2>
-            <div className="grid h-auto w-full grid-cols-5 justify-center">
+            <div className={`grid h-auto w-full grid-cols-${mappedCessioni.length} justify-center`}>
               {mappedCessioni}
             </div>
           </div>
-          <div className="relative flex h-full w-full flex-col items-center justify-around rounded-xl border-2 border-purple-700/60 transition-all duration-300 ease-in-out hover:border-gray-200 hover:bg-purple-800/30 xl:w-1/2">
+          <div className="relative flex h-full w-full flex-col items-center justify-around rounded-xl border-2 border-[--clr-btn] transition-all duration-300 ease-in-out hover:border-gray-200 hover:bg-[--clr-btn] xl:w-1/2">
             <h2 className="inline-flex items-center text-2xl xl:text-lg">
               Acquisti Mercato
               <LuArrowDownWideNarrow className="mx-3 inline-block" size={28} />
             </h2>
-            <div className="grid h-auto w-full grid-cols-5 justify-center">
+            <div className={`grid h-auto w-full grid-cols-${mappedAcquisti.length} justify-center`}>
               {mappedAcquisti}
             </div>
             {/* TOGGLE SERIE MINORE */}
@@ -229,28 +220,28 @@ const SaldoPunti = () => {
 
         <section
           id="trendPrestazioni"
-          className="flex h-1/5 w-full flex-col items-center justify-around rounded-xl border-2 border-purple-700/60 p-1 text-lg font-bold transition-all duration-300 ease-in-out hover:border-gray-200 hover:bg-purple-800/30 xl:h-1/4"
+          className="flex h-1/5 w-full flex-col items-center justify-around rounded-xl border-2 border-[--clr-btn] p-1 text-lg font-bold transition-all duration-300 ease-in-out hover:border-gray-200 hover:bg-[--clr-btn] xl:h-1/4"
         >
           <h2 className="text-2xl xl:text-lg">Trend delle Prestazioni</h2>
-          <div className="grid h-auto w-full grid-cols-2 justify-center">
+            <div className={`grid h-auto w-full grid-cols-${mappedTrend.length} justify-center`}>
             {mappedTrend}
           </div>
         </section>
         <section
-          id="piazzamentoCampionato"
-          className="flex h-1/4 w-full flex-col items-center justify-around rounded-xl border-2 border-purple-700/60 p-1 text-lg font-bold transition-all duration-300 ease-in-out hover:border-gray-200 hover:bg-purple-800/30"
+          id="fineCampionato"
+          className="flex h-1/4 w-full flex-col items-center justify-around rounded-xl border-2 border-[--clr-btn] p-1 text-lg font-bold transition-all duration-300 ease-in-out hover:border-gray-200 hover:bg-[--clr-btn]"
         >
           <h2 className="text-2xl xl:text-lg">Risultati Campionato</h2>
-          <div className="grid h-auto w-full grid-cols-3 items-center justify-center xl:grid-cols-9">
+          <div className={`grid h-auto w-full grid-cols-3 items-center justify-center xl:grid-cols-${mappedPiazzamento.length}`}>
             {mappedPiazzamento}
           </div>
         </section>
         <section
           id="bonusTrofei"
-          className="flex h-1/4 w-full flex-col items-center justify-around rounded-xl border-2 border-purple-700/60 p-1 text-lg font-bold transition-all duration-300 ease-in-out hover:border-gray-200 hover:bg-purple-800/30"
+          className="flex h-1/4 w-full flex-col items-center justify-around rounded-xl border-2 border-[--clr-btn] p-1 text-lg font-bold transition-all duration-300 ease-in-out hover:border-gray-200 hover:bg-[--clr-btn]"
         >
           <h2 className="text-2xl xl:text-lg">Trofei Conquistati</h2>
-          <div className="grid h-auto w-full grid-cols-5 justify-center">
+            <div className={`grid h-auto w-full grid-cols-${mappedTrofei.length} justify-center`}>
             {mappedTrofei}
           </div>
         </section>
