@@ -11,9 +11,9 @@ const SecondaEstrazioneDiretta = (props) => {
   return (
     <section
       id="secEstrDiretta"
-      className="mb-12 flex w-full flex-col items-center justify-around rounded-md border-2 border-gray-300/20 px-1 min-h-[50%] xl:px-6"
+      className="mb-12 flex w-full flex-col items-center justify-around rounded-md border-2 border-[--clr-txt]/20 px-1 min-h-[50%] xl:px-6"
     >
-      <h4 className="my-1 text-xs font-bold uppercase text-gray-300 xl:my-0 xl:mb-1 xl:text-lg xl:self-start">
+      <h4 className="my-1 text-xs font-bold uppercase text-[--clr-txt] xl:my-0 xl:mb-1 xl:text-lg xl:self-start">
         {numbExtrPlayer === 1 ? "Giocatore estratto" : "Giocatori estratti"}
       </h4>
       <main

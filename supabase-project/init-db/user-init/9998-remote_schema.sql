@@ -94,7 +94,7 @@ CREATE TABLE IF NOT EXISTS "public"."speciali" (
     "descrizione" "text" NOT NULL,
     "ultEstrazione" boolean,
     "qtGiocatori" smallint DEFAULT '0'::smallint,
-    "titolariRosa" smallint DEFAULT '30'::smallint
+    "" smallint DEFAULT '30'::smallint
 );
 
 

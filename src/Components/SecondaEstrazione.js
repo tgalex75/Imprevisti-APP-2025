@@ -23,7 +23,7 @@ const SecondaEstrazione = () => {
 
 
   return (
-    <section className="flex h-auto w-full flex-col items-center justify-around gap-2 rounded-md border-2 border-gray-300/20 p-4 xl:w-3/4 xl:flex-row xl:p-4 xl:px-12">
+    <section className="flex h-auto w-full flex-col items-center justify-around gap-2 rounded-md border-2 border-[--clr-txt]/20 p-4 xl:w-3/4 xl:flex-row xl:p-4 xl:px-12">
       <div className="flex h-fit w-3/4 flex-col items-center justify-around gap-2 rounded-lg px-2 xl:w-auto">
         <div className="flex h-12 w-full flex-col items-center justify-around xl:h-auto">
           <input
@@ -31,7 +31,7 @@ const SecondaEstrazione = () => {
             ref={ref}
             type="number"
             id="input-estrazione-giocatore"
-            className="w-full flex-1 appearance-none rounded-lg border-gray-300 bg-white p-2 text-center text-sm text-gray-800 placeholder-gray-400 shadow-sm focus:border-transparent focus:outline-none focus:ring-4 focus:ring-sky-700"
+            className="w-full flex-1 appearance-none rounded-lg border-[--clr-txt] bg-white p-2 text-center text-sm text-[--clr-txt] placeholder-[--clr-txt] shadow-sm focus:border-transparent focus:outline-none focus:ring-4 focus:ring-sky-700"
             name="randomPlayerNum"
             placeholder="Su quanti giocatori?"
           />
@@ -39,7 +39,7 @@ const SecondaEstrazione = () => {
         <button
           type="button"
           onClick={() => randomNumber()}
-          className="flex h-12 w-full items-center justify-center rounded-lg bg-[--clr-btn] p-2 px-4 text-center text-sm font-semibold text-gray-100 shadow-md transition duration-200 ease-in hover:bg-[--clr-ter] focus:outline-none focus:ring-2 focus:ring-[--clr-ter] focus:ring-offset-2 focus:ring-offset-sky-800 xl:h-auto"
+          className="flex h-12 w-full items-center justify-center rounded-lg bg-[--clr-btn] p-2 px-4 text-center text-sm font-semibold text-[--clr-txt] shadow-md transition duration-200 ease-in hover:bg-[--clr-ter] focus:outline-none focus:ring-2 focus:ring-[--clr-ter] focus:ring-offset-2 focus:ring-offset-sky-800 xl:h-auto"
         >
           Estrai
         </button>

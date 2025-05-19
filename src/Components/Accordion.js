@@ -5,10 +5,10 @@ const Accordion = ({ title, content }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="w-full border-b border-gray-200">
+    <div className="w-full border-b border-[--clr-txt]">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex w-full justify-between bg-black/50 px-4 py-6 text-left text-lg font-bold uppercase text-gray-300 hover:bg-black/75 focus:outline-none"
+        className="flex w-full justify-between bg-black/50 px-4 py-6 text-left text-lg font-bold uppercase text-[--clr-txt] hover:bg-black/75 focus:outline-none"
       >
         {title}
         <IoMdArrowDropdown

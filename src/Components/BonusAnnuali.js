@@ -51,7 +51,7 @@ const BonusAnnuali = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ delay: 0.7, duration: 0.7 }}
-      className="mb-4 flex h-40 w-3/4 flex-col items-center justify-between overflow-hidden rounded-lg bg-black/50 p-2 uppercase text-gray-300 xl:absolute xl:right-1 xl:top-1 xl:mb-0 xl:mt-2 xl:h-1/4 xl:w-[20vw] xl:bg-black/20"
+      className="mb-4 flex h-40 w-3/4 flex-col items-center justify-between overflow-hidden rounded-lg bg-black/50 p-2 uppercase text-[--clr-txt] xl:absolute xl:right-1 xl:top-1 xl:mb-0 xl:mt-2 xl:h-1/4 xl:w-[20vw] xl:bg-black/20"
     >
       <h6 className="font-bold uppercase text-[--clr-prim]">Bonus Annuali</h6>
       <section className="flex w-full items-center justify-around gap-4 xl:gap-1 xl:p-1">
@@ -76,7 +76,7 @@ const BonusAnnuali = () => {
       <div className="flex h-1/3 w-full items-center justify-between gap-2 px-4 text-[.8rem] font-semibold">
         <button
           type="button"
-          className="flex h-3/4 w-full items-center justify-center rounded border border-[--clr-btn] px-3 text-center text-white shadow-md transition duration-200 ease-in hover:bg-[--clr-btn]"
+          className="flex h-3/4 w-full items-center justify-center rounded border border-[--clr-btn] px-3 text-center text-[--clr-txt] shadow-md transition duration-200 ease-in hover:bg-[--clr-btn]"
           style={limiteRaggiunto ? { pointerEvents: "none", opacity: 0.3 } : {}}
           onClick={() =>
             addVociBonus({
@@ -88,7 +88,7 @@ const BonusAnnuali = () => {
         </button>
         <button
           type="button"
-          className="flex h-3/4 w-full items-center justify-center rounded border border-red-700 px-3 text-center text-white shadow-md transition duration-200 ease-in hover:bg-red-700"
+          className="flex h-3/4 w-full items-center justify-center rounded border border-red-700 px-3 text-center text-[--clr-txt] shadow-md transition duration-200 ease-in hover:bg-red-700"
           onClick={azzeraVociBonus}
         >
           Azzera

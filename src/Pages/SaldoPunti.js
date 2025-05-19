@@ -164,7 +164,7 @@ const SaldoPunti = () => {
           id="acquistiCessioni"
           className="flex h-1/4 w-full flex-col items-center gap-1 text-lg font-bold xl:h-1/4 xl:flex-row"
         >
-          <div className="flex h-full w-full flex-col items-center justify-around rounded-xl border-2 border-[--clr-btn] transition-all duration-300 ease-in-out hover:border-gray-200 hover:bg-[--clr-btn] xl:w-1/2">
+          <div className="flex h-full w-full flex-col items-center justify-around rounded-xl border-2 border-[--clr-btn] transition-all duration-300 ease-in-out hover:border-[--clr-txt] hover:bg-[--clr-btn] xl:w-1/2">
             <h2 className="inline-flex items-center text-2xl xl:text-lg">
               Cessioni Mercato
               <LuArrowUpWideNarrow className="mx-3 inline-block" size={28} />
@@ -173,7 +173,7 @@ const SaldoPunti = () => {
               {mappedCessioni}
             </div>
           </div>
-          <div className="relative flex h-full w-full flex-col items-center justify-around rounded-xl border-2 border-[--clr-btn] transition-all duration-300 ease-in-out hover:border-gray-200 hover:bg-[--clr-btn] xl:w-1/2">
+          <div className="relative flex h-full w-full flex-col items-center justify-around rounded-xl border-2 border-[--clr-btn] transition-all duration-300 ease-in-out hover:border-[--clr-txt] hover:bg-[--clr-btn] xl:w-1/2">
             <h2 className="inline-flex items-center text-2xl xl:text-lg">
               Acquisti Mercato
               <LuArrowDownWideNarrow className="mx-3 inline-block" size={28} />
@@ -220,7 +220,7 @@ const SaldoPunti = () => {
 
         <section
           id="trendPrestazioni"
-          className="flex h-1/5 w-full flex-col items-center justify-around rounded-xl border-2 border-[--clr-btn] p-1 text-lg font-bold transition-all duration-300 ease-in-out hover:border-gray-200 hover:bg-[--clr-btn] xl:h-1/4"
+          className="flex h-1/5 w-full flex-col items-center justify-around rounded-xl border-2 border-[--clr-btn] p-1 text-lg font-bold transition-all duration-300 ease-in-out hover:border-[--clr-txt] hover:bg-[--clr-btn] xl:h-1/4"
         >
           <h2 className="text-2xl xl:text-lg">Trend delle Prestazioni</h2>
             <div className={`grid h-auto w-full grid-cols-${mappedTrend.length} justify-center`}>
@@ -229,7 +229,7 @@ const SaldoPunti = () => {
         </section>
         <section
           id="fineCampionato"
-          className="flex h-1/4 w-full flex-col items-center justify-around rounded-xl border-2 border-[--clr-btn] p-1 text-lg font-bold transition-all duration-300 ease-in-out hover:border-gray-200 hover:bg-[--clr-btn]"
+          className="flex h-1/4 w-full flex-col items-center justify-around rounded-xl border-2 border-[--clr-btn] p-1 text-lg font-bold transition-all duration-300 ease-in-out hover:border-[--clr-txt] hover:bg-[--clr-btn]"
         >
           <h2 className="text-2xl xl:text-lg">Risultati Campionato</h2>
           <div className={`grid h-auto w-full grid-cols-3 items-center justify-center xl:grid-cols-${mappedPiazzamento.length}`}>
@@ -238,7 +238,7 @@ const SaldoPunti = () => {
         </section>
         <section
           id="bonusTrofei"
-          className="flex h-1/4 w-full flex-col items-center justify-around rounded-xl border-2 border-[--clr-btn] p-1 text-lg font-bold transition-all duration-300 ease-in-out hover:border-gray-200 hover:bg-[--clr-btn]"
+          className="flex h-1/4 w-full flex-col items-center justify-around rounded-xl border-2 border-[--clr-btn] p-1 text-lg font-bold transition-all duration-300 ease-in-out hover:border-[--clr-txt] hover:bg-[--clr-btn]"
         >
           <h2 className="text-2xl xl:text-lg">Trofei Conquistati</h2>
             <div className={`grid h-auto w-full grid-cols-${mappedTrofei.length} justify-center`}>

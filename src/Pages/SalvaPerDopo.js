@@ -22,7 +22,7 @@ const SalvaPerDopo = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.7, duration: 0.7 }}
-        className="h-full w-full items-center gap-2 overflow-hidden rounded-lg bg-black/50 p-2 text-gray-300 md:flex"
+        className="h-full w-full items-center gap-2 overflow-hidden rounded-lg bg-black/50 p-2 text-[--clr-txt] md:flex"
       >
         <div className="flex h-full w-full flex-col gap-2">
           <h3 className="text-center uppercase text-[--clr-ter]">
@@ -35,7 +35,7 @@ const SalvaPerDopo = () => {
             {vociRegistro.map((el) => (
               <li
                 key={el.id}
-                className="flex items-center justify-between bg-gray-700/20 even:bg-gray-500/20 py-1 ps-2 text-left text-sm font-semibold uppercase"
+                className="flex items-center justify-between bg-[--clr-txt]/20 even:bg-[--clr-txt]/20 py-1 ps-2 text-left text-sm font-semibold uppercase"
               >
                 <span className="w-1/6">{el.titolo}</span>
                 <span className="w-5/6 pe-2">{el.descrizione}</span>

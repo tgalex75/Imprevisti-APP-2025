@@ -65,28 +65,28 @@ export function AddImprevisti(props) {
     <>
       {isMobile ? (
         <ul className="flex h-1/2 w-full flex-col gap-1 overflow-y-auto rounded-lg border p-2">
-          <div className="flex min-h-8 items-center bg-gray-700/80 ps-2 text-[.5rem] font-bold uppercase italic leading-none">
+          <div className="flex min-h-8 items-center bg-[--clr-txt]/80 ps-2 text-[.5rem] font-bold uppercase italic leading-none">
             <div className="w-full">
-              <span className="block w-full border-gray-300/20 bg-transparent p-1">
+              <span className="block w-full border-[--clr-txt]/20 bg-transparent p-1">
                 Impr.S/N
               </span>
-              <span className="block w-full border-gray-300/20 bg-transparent p-1">
+              <span className="block w-full border-[--clr-txt]/20 bg-transparent p-1">
                 Titolo
               </span>
             </div>
             <div className="w-full">
               <span
-                className={`border-gray-300/20 bg-transparent p-1 ${isListaSpeciali ? "inline-block w-1/2" : "block w-full"}`}
+                className={`border-[--clr-txt]/20 bg-transparent p-1 ${isListaSpeciali ? "inline-block w-1/2" : "block w-full"}`}
                 style={isListaSettimana ? { visibility: "hidden" } : {}}
               >
                 {isListaSpeciali ? "Ult.Estr." : "Ulteriore Estrazione"}
               </span>
               {isListaSpeciali && (
-                <span className="w-1/2 border-gray-300/20 bg-transparent p-1">
+                <span className="w-1/2 border-[--clr-txt]/20 bg-transparent p-1">
                   El. Dopo Estr.
                 </span>
               )}
-              <span className="block w-full border-gray-300/20 bg-transparent p-1">
+              <span className="block w-full border-[--clr-txt]/20 bg-transparent p-1">
                 Descrizione
               </span>
             </div>
@@ -96,7 +96,7 @@ export function AddImprevisti(props) {
           {registro?.map((el) => (
             <li
               key={el.id}
-              className="flex h-12 gap-2 bg-gray-400/20 ps-2 text-[.6rem] font-semibold uppercase leading-none odd:bg-gray-700/20 hover:bg-[--clr-prim] hover:text-black"
+              className="flex h-12 gap-2 bg-[--clr-txt]/20 ps-2 text-[.6rem] font-semibold uppercase leading-none odd:bg-[--clr-txt]/20 hover:bg-[--clr-prim] hover:text-black"
             >
               <div className="flex w-full flex-col p-1">
                 <span className="block h-full w-full bg-transparent">
@@ -109,13 +109,13 @@ export function AddImprevisti(props) {
               <div className="flex w-full flex-col justify-around py-1">
                 <div className="w-full h-full">
                   <span
-                    className={`border-gray-300/20 bg-transparent p-1 ${isListaSpeciali ? "inline-block w-1/2" : "block w-full"}`}
+                    className={`border-[--clr-txt]/20 bg-transparent p-1 ${isListaSpeciali ? "inline-block w-1/2" : "block w-full"}`}
                     style={isListaSettimana ? { visibility: "hidden" } : {}}
                   >
                     {el.ultEstrazione === 1 ? "SI" : "NO"}
                   </span>
                   {isListaSpeciali && (
-                    <span className="inline w-1/2 border-gray-300/20 bg-transparent p-1 ms-1">
+                    <span className="inline w-1/2 border-[--clr-txt]/20 bg-transparent p-1 ms-1">
                       {el.eliminaDopoEstrazione === 1 ? "SI" : "NO"}
                     </span>
                   )}
@@ -136,18 +136,18 @@ export function AddImprevisti(props) {
         /* DESKTOP */
       ) : (
         <ul className="flex h-full w-full flex-col gap-1 overflow-y-auto rounded-lg border p-2">
-          <div className="flex min-h-4 items-center justify-between gap-2 bg-gray-700/80 ps-2 text-center text-xs font-bold uppercase italic">
-            <span className="h-full w-1/6 border-gray-300/20 bg-transparent p-1">
+          <div className="flex min-h-4 items-center justify-between gap-2 bg-[--clr-txt]/80 ps-2 text-center text-xs font-bold uppercase italic">
+            <span className="h-full w-1/6 border-[--clr-txt]/20 bg-transparent p-1">
               Imprevisto S/N
             </span>
-            <span className="h-full w-1/6 border-gray-300/20 bg-transparent p-1 text-left">
+            <span className="h-full w-1/6 border-[--clr-txt]/20 bg-transparent p-1 text-left">
               Titolo
             </span>
-            <span className="h-full w-3/6 border-gray-300/20 bg-transparent p-1 text-left">
+            <span className="h-full w-3/6 border-[--clr-txt]/20 bg-transparent p-1 text-left">
               Descrizione
             </span>
             <span
-              className="h-full w-1/6 border-gray-300/20 bg-transparent p-1"
+              className="h-full w-1/6 border-[--clr-txt]/20 bg-transparent p-1"
               style={isListaSettimana ? { visibility: "hidden" } : {}}
             >
               Ulteriore Estrazione
@@ -166,26 +166,26 @@ export function AddImprevisti(props) {
           {registro?.map((el) => (
             <li
               key={el.id}
-              className="text-md flex min-h-4 items-center justify-between gap-2 bg-gray-700/20 ps-2 text-center uppercase font-semibold hover:bg-[--clr-prim] hover:text-black"
+              className="text-md flex min-h-4 items-center justify-between gap-2 bg-[--clr-txt]/20 ps-2 text-center uppercase font-semibold hover:bg-[--clr-prim] hover:text-black"
             >
-              <span className="h-full w-1/6 rounded border border-gray-300/20 bg-transparent p-1 ">
+              <span className="h-full w-1/6 rounded border border-[--clr-txt]/20 bg-transparent p-1 ">
                 {el.isImprev === 1 ? "SI" : "NO"}
               </span>
-              <span className="h-full w-1/6 rounded border border-gray-300/20 bg-transparent p-1 text-start">
+              <span className="h-full w-1/6 rounded border border-[--clr-txt]/20 bg-transparent p-1 text-start">
                 {el.titolo}
               </span>
-              <span className="h-full w-3/6 overflow-auto rounded border border-gray-300/20 bg-transparent p-1 text-start">
+              <span className="h-full w-3/6 overflow-auto rounded border border-[--clr-txt]/20 bg-transparent p-1 text-start">
                 {el.descrizione}
               </span>
               <span
-                className="h-full w-1/6 rounded border border-gray-300/20 bg-transparent p-1"
+                className="h-full w-1/6 rounded border border-[--clr-txt]/20 bg-transparent p-1"
                 style={isListaSettimana ? { visibility: "hidden" } : {}}
               >
                 {el.ultEstrazione === 1 ? "SI" : "NO"}
               </span>
               {isListaSpeciali && (
                 <span
-                  className="h-full w-1/6 rounded border border-gray-300/20 bg-transparent p-1"
+                  className="h-full w-1/6 rounded border border-[--clr-txt]/20 bg-transparent p-1"
                   style={isListaSettimana ? { visibility: "hidden" } : {}}
                 >
                   {el.eliminaDopoEstrazione === 1 ? "SI" : "NO"}
@@ -228,7 +228,7 @@ export function AddImprevisti(props) {
               defaultChecked
               ref={ref}
               onChange={handleRefState}
-              className="w-fit self-center rounded-md border p-1 text-xs font-semibold md:text-sm dark:border-gray-300/80 dark:bg-black/30 dark:text-gray-300 dark:placeholder-black/10 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+              className="w-fit self-center rounded-md border p-1 text-xs font-semibold md:text-sm dark:border-[--clr-txt]/80 dark:bg-black/30 dark:text-[--clr-txt] dark:placeholder-black/10 dark:focus:border-blue-500 dark:focus:ring-blue-500"
             >
               <option value="imprevisto">IMPREVISTO</option>
               <option
@@ -293,7 +293,7 @@ export function AddImprevisti(props) {
                 <div className="flex items-center gap-1 py-1 text-xs md:gap-2 md:py-2 md:text-sm">
                   <label
                     htmlFor="ultEstrazione"
-                    className="font-semibold text-gray-300 md:me-4"
+                    className="font-semibold text-[--clr-txt] md:me-4"
                   >
                     Ulteriore estrazione necessaria dopo la prima?
                   </label>
@@ -306,7 +306,7 @@ export function AddImprevisti(props) {
                     defaultChecked
                     type="radio"
                     value={1}
-                    className="ms-2 h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 md:m-0 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
+                    className="ms-2 h-4 w-4 rounded border-[--clr-txt] border-[--clr-txt] text-blue-600 focus:ring-2 focus:ring-blue-500 md:m-0 dark:border-[--clr-txt] dark:bg-[--clr-txt] dark:ring-offset-[--clr-txt] dark:focus:ring-blue-600"
                   />
                   <label htmlFor="ultEstrazioneNO">No</label>
                   <input
@@ -316,7 +316,7 @@ export function AddImprevisti(props) {
                     name="ultEstrazione"
                     type="radio"
                     value={0}
-                    className="ms-2 h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 md:m-0 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
+                    className="ms-2 h-4 w-4 rounded border-[--clr-txt] border-[--clr-txt] text-blue-600 focus:ring-2 focus:ring-blue-500 md:m-0 dark:border-[--clr-txt] dark:bg-[--clr-txt] dark:ring-offset-[--clr-txt] dark:focus:ring-blue-600"
                   />
                 </div>
 
@@ -326,7 +326,7 @@ export function AddImprevisti(props) {
                   <div className="flex items-center gap-1 py-1 text-xs md:gap-2 md:py-2 md:px-2 md:text-sm">
                     <label
                       htmlFor="eliminaDopoEstrazione"
-                      className="font-semibold text-gray-300 md:me-4"
+                      className="font-semibold text-[--clr-txt] md:me-4"
                     >
                       Vuoi eliminare la voce dopo l'estrazione?
                     </label>
@@ -338,7 +338,7 @@ export function AddImprevisti(props) {
                       defaultChecked
                       type="radio"
                       value={1}
-                      className="ms-2 h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 md:m-0 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
+                      className="ms-2 h-4 w-4 rounded border-[--clr-txt] border-[--clr-txt] text-blue-600 focus:ring-2 focus:ring-blue-500 md:m-0 dark:border-[--clr-txt] dark:bg-[--clr-txt] dark:ring-offset-[--clr-txt] dark:focus:ring-blue-600"
                     />
                     <label htmlFor="eliminaDopoEstrazioneNO">No</label>
                     <input
@@ -347,7 +347,7 @@ export function AddImprevisti(props) {
                       name="eliminaDopoEstrazione"
                       type="radio"
                       value={0}
-                      className="ms-2 h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 md:m-0 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
+                      className="ms-2 h-4 w-4 rounded border-[--clr-txt] border-[--clr-txt] text-blue-600 focus:ring-2 focus:ring-blue-500 md:m-0 dark:border-[--clr-txt] dark:bg-[--clr-txt] dark:ring-offset-[--clr-txt] dark:focus:ring-blue-600"
                     />
                   </div>
                 )}

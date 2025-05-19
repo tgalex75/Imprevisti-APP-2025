@@ -31,14 +31,14 @@ export function AddImprIngaggi(props) {
   return (
     <>
       <ul className="flex h-1/2 md:h-full w-full flex-col gap-1 overflow-y-auto rounded-lg border py-1 md:p-2">
-        <div className="flex min-h-4 items-center justify-between bg-gray-700/80 py-1 text-center text-xs font-bold uppercase italic md:gap-2 md:ps-2">
-          <span className="h-full min-w-fit border-gray-300/20 bg-transparent px-1 text-left">
+        <div className="flex min-h-4 items-center justify-between bg-[--clr-txt]/80 py-1 text-center text-xs font-bold uppercase italic md:gap-2 md:ps-2">
+          <span className="h-full min-w-fit border-[--clr-txt]/20 bg-transparent px-1 text-left">
             Imp.S/N
           </span>
-          <span className="h-full w-16 border-gray-300/20 bg-transparent text-left md:w-1/3">
+          <span className="h-full w-16 border-[--clr-txt]/20 bg-transparent text-left md:w-1/3">
             Titolo
           </span>
-          <span className="h-full w-48 border-gray-300/20 bg-transparent text-left md:w-2/3">
+          <span className="h-full w-48 border-[--clr-txt]/20 bg-transparent text-left md:w-2/3">
             Descrizione
           </span>
           <MdClear size={isMobile ? 18 : 24} className="me-2 md:mx-2" />
@@ -49,15 +49,15 @@ export function AddImprIngaggi(props) {
         {registro?.map((el) => (
           <li
             key={el.id}
-            className="flex min-h-4 items-center justify-between gap-4 bg-gray-700/20 text-center text-xs font-normal hover:bg-[--clr-prim] hover:text-black md:gap-2 md:ps-2 md:text-base"
+            className="flex min-h-4 items-center justify-between gap-4 bg-[--clr-txt]/20 text-center text-xs font-normal hover:bg-[--clr-prim] hover:text-black md:gap-2 md:ps-2 md:text-base"
           >
-            <span className="h-full min-w-fit rounded bg-transparent p-1 px-2 font-semibold uppercase md:w-14 md:border md:border-gray-300/20">
+            <span className="h-full min-w-fit rounded bg-transparent p-1 px-2 font-semibold uppercase md:w-14 md:border md:border-[--clr-txt]/20">
               {el.isImprev === 1 ? "SI" : "NO"}
             </span>
-            <span className="h-full w-16 rounded bg-transparent p-1 text-start font-semibold uppercase md:w-1/3 md:border md:border-gray-300/20">
+            <span className="h-full w-16 rounded bg-transparent p-1 text-start font-semibold uppercase md:w-1/3 md:border md:border-[--clr-txt]/20">
               {el.titolo}
             </span>
-            <span className="h-full w-48 overflow-auto rounded bg-transparent p-1 text-start font-semibold md:w-2/3 md:border md:border-gray-300/20">
+            <span className="h-full w-48 overflow-auto rounded bg-transparent p-1 text-start font-semibold md:w-2/3 md:border md:border-[--clr-txt]/20">
               {el.descrizione}
             </span>
             <MdDeleteForever
@@ -108,7 +108,7 @@ export function AddImprIngaggi(props) {
           >
             <label
               htmlFor="isImprevTRUE"
-              className="text-xs font-semibold text-gray-300 md:me-4 md:text-sm"
+              className="text-xs font-semibold text-[--clr-txt] md:me-4 md:text-sm"
             >
               È un imprevisto?
             </label>
@@ -119,7 +119,7 @@ export function AddImprIngaggi(props) {
               name="isImprev"
               type="radio"
               value={1}
-              className="ms-2 h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 md:m-0 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
+              className="ms-2 h-4 w-4 rounded border-[--clr-txt] border-[--clr-txt] text-blue-600 focus:ring-2 focus:ring-blue-500 md:m-0 dark:border-[--clr-txt] dark:bg-[--clr-txt] dark:ring-offset-[--clr-txt] dark:focus:ring-blue-600"
             />
             <label htmlFor="isImprevFALSE">No</label>
             <input
@@ -129,7 +129,7 @@ export function AddImprIngaggi(props) {
               name="isImprev"
               type="radio"
               value={0}
-              className="ms-2 h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 md:m-0 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
+              className="ms-2 h-4 w-4 rounded border-[--clr-txt] border-[--clr-txt] text-blue-600 focus:ring-2 focus:ring-blue-500 md:m-0 dark:border-[--clr-txt] dark:bg-[--clr-txt] dark:ring-offset-[--clr-txt] dark:focus:ring-blue-600"
             />
           </div>
             </div>

@@ -21,7 +21,7 @@ function App(props) {
   }, [primary, secondary, tertiary, colorBG, colorTxt, colorBtn]);
 
   return (
-    <main className="h-dvh w-screen overflow-hidden">
+    <main className="h-dvh w-screen xl:overflow-hidden">
       <Router>
         <Navbar />
         <AnimatedRoutes />

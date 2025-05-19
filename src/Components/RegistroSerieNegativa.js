@@ -12,7 +12,7 @@ const RegistroSerieNegativa = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ delay: 0.7, duration: 0.7 }}
-      className="flex h-72 w-full flex-col items-center gap-2 rounded-xl bg-black/90 text-gray-300 xl:absolute xl:left-1 xl:top-1 xl:h-96 xl:w-[24vw]"
+      className="flex h-72 w-full flex-col items-center gap-2 rounded-xl bg-black/90 text-[--clr-txt] xl:absolute xl:left-1 xl:top-1 xl:h-96 xl:w-[24vw]"
     >
       <h6 className="uppercase text-[--clr-prim]">Registro Giocatori</h6>
       <AnimatePresence initial={false} mode="popLayout">
@@ -30,7 +30,7 @@ const RegistroSerieNegativa = () => {
                   ? { backgroundColor: "orange", color: "black" }
                   : {}
               }
-              className="flex items-center justify-between bg-gray-700/20 ps-1 text-left text-[0.6rem] uppercase"
+              className="flex items-center justify-between bg-[--clr-txt]/20 ps-1 text-left text-[0.6rem] uppercase"
             >
               <small className="text-xs font-semibold uppercase md:text-sm">
                 {item.title}
