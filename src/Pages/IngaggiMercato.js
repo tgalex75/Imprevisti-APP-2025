@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { isMobile } from "react-device-detect";
 import BonusAnnuali from "../Components/BonusAnnuali";
 
-const IngaggiMercatoRinnovi = (props) => {
+const IngaggiMercato = (props) => {
   const [casuale, setCasuale] = useState(null);
 
   const estraiNumeroCasuale = () => {
@@ -98,4 +98,4 @@ const IngaggiMercatoRinnovi = (props) => {
   );
 };
 
-export default IngaggiMercatoRinnovi;
+export default IngaggiMercato;

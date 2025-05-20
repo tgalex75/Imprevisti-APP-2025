@@ -85,53 +85,51 @@ VALUES (
 		11
 	),
 	(
-		'c6dd148e-3d9c-498a-ab5e-8955ffbcfe08',
-		'COME MOTTA',
-		'Fai debuttare 3 giovani dal vivaio, 1 per reparto e schierarli fuori ruolo. Se vinci guadagni 3 punti per il mercato, se perdi la partita perdi 3 punti. Se invece pareggi devi rifare l''imprevisto.',
-		false,
-		0,
-		30
-	),
-	(
-		'6be5214b-771f-49ac-b8f3-fbe259e2d104',
-		'GIORGIONE',
-		'Il noto cuoco, si emoziona per le gesta della Juve Stabia e decide di offrire un pasto alla squadra. I giocatori finiscono per avere le vene imburrate, alterando le loro prestazioni. (aumenta di 10 velocità, accelerazione e velocità tiro ma anche errore passagi, errore tiri e errore primo controllo)',
-		false,
-		0,
-		30
-	),
-	(
-		'8d8fcdb3-ac7d-48e6-aacc-ea0e3211deff',
-		'CASSANATA',
-		'Il giocatore estratto combina una "cassanata" nei confronti dello staff e di mister Finazzi. Fuori tutto l''episodio.',
-		true,
-		1,
-		30
-	),
-	(
-		'bfffa169-fecf-47a3-88b8-044d91f73b2c',
-		'NOSTALGIA CANAGLIA',
-		'Lim, dopo aver trascorso le vacanze estive nel Brunei, tornato a Castellammare lamenta una profondissima nostalgia del suo paese, specialmente per la mancanza di un suo caro amico: Tam. Acquistalo e schieralo titolare in coppia con Lim per tre partite. Ad ogni assist/gol eseguiti da uno dei due, aggiungi un punto mercato, in segno del loro meraviglioso legame.',
-		false,
-		0,
-		11
-	),
-	(
-		'e4f564a8-8e0d-4428-8121-e8bfd5921b24',
-		'VOLARE',
-		'La dirigenza, stanca delle prestazioni di Pinto, decide di farlo "Volare" come la nota canzone di Modugno. Metti Pinto sul mercato in uscita nella prima sessione di mercato disponibile.
-Se decidi di venderlo i punti raccolti dalla cessione diventano doppi!',
-		false,
-		0,
-		30
-	),
-	(
 		'8d63b66c-ded2-47c0-9200-ca4a5744fda9',
 		'VITALE NO BOMBER ACADEMIA',
 		'Con l''addio di Pedrito "All Might" Mendes, "Deku" Vitale ha studiato un piano riuscendo a convincere "Bakougo" Bonneau: ingaggia un preparatore per gli Attaccanti e schiera il tridente stretto (AT-ATT-AT) Vitale-Pinto-Bonneau per tre partite.',
 		false,
 		0,
 		30
+	);
+
+--
+-- Data for Name: ingaggi-mercato; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+INSERT INTO "public"."ingaggi-mercato" (
+        "tipo",
+		"titolo",
+		"descrizione",
+		"isImprev",
+        "weight"
+	)
+VALUES (
+		'ingaggi',
+		'Visite OK',
+        'La trattativa viene chiusa senza conseguenze.',
+		false,
+		15
+	),
+    (
+		'ingaggi',
+		'Visite NON superate!',
+        'La trattativa salta e non può essere ritentata fino alla prossima finestra di mercato.',
+		true,
+		15
+	),
+    (
+		'mercato',
+		'Visite OK',
+        'Totale libertà di scelta.',
+		false,
+		15
+	),
+    (
+		'mercato',
+		'Visite NON superate!',
+        'Accetta offerta o raddoppia ingaggio appena possibile.',
+		true,
+		15
 	);
 
 --

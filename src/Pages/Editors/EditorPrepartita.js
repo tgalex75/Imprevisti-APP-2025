@@ -1,18 +1,18 @@
 import { useContext, useEffect, useState } from "react";
-import { supabase } from "../supabaseClient";
+import { supabase } from "../../supabaseClient";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { v4 as uuidv4 } from "uuid";
 import { HiTrash } from "react-icons/hi2";
-import DatiImprevistiContext from "../context/datiImprevisti";
+import DatiImprevistiContext from "../../context/datiImprevisti";
 
-const EditorSpeciali = () => {
-  const { speciali, fetchSpeciali } = useContext(DatiImprevistiContext);
+const EditorPrepartita = () => {
+  const { prepartita, fetchPrepartita } = useContext(DatiImprevistiContext);
 
   // Stato per memorizzare l'elemento attualmente in modifica (null se nessuno)
   const [editingItem, setEditingItem] = useState(null);
 
-  const isListaVuota = speciali.length < 1;
+  const isListaVuota = prepartita.length < 1;
 
   // Configurazione di react-hook-form
   const {
@@ -41,22 +41,23 @@ const EditorSpeciali = () => {
   // Gestore dell'invio del form (qui simuleremo l'aggiornamento in Supabase)
   const handleUpdateSubmit = async (data) => {
     console.log("Dati aggiornati dal form:", data);
-    console.log("ID dell'elemento da aggiornare:", editingItem.id);
 
     const { error } = await supabase
-      .from("speciali")
+      .from("prepartita")
       .upsert({
         id: isListaVuota ? uuidv4() : data.id,
-        titolo: data.titolo,
-        descrizione: data.descrizione,
+        title: data.title,
+        description: data.description,
+        isImprev: data.isImprev,
         ultEstrazione: data.ultEstrazione,
-        qtGiocatori: data.qtGiocatori,
-        titolariRosa: data.titolariRosa,
+        baseEstrazione: data.baseEstrazione,
+        numbExtrPlayer: data.numbExtrPlayer,
+        notaBene: data.notaBene,
+        weight: data.weight,
       })
       .select();
     error && console.log(error);
-    fetchSpeciali();
-
+    fetchPrepartita();
     // *** QUI FINISCE LA LOGICA DI AGGIORNAMENTO PER SUPABASE ***
 
     // Dopo l'aggiornamento, resettiamo lo stato di modifica per tornare alla lista
@@ -74,12 +75,13 @@ const EditorSpeciali = () => {
       .delete()
       .eq("id", element);
     error && console.log(error);
-    fetchSpeciali();
+    fetchPrepartita()
   };
+
 
   return (
     <section className="flex h-full w-full flex-col items-center overflow-y-auto p-2 font-semibold xl:overflow-y-hidden xl:font-bold">
-      <h1 className="h-fit">Editor Imprevisti Speciali</h1>
+      <h1 className="h-fit">Editor Imprevisti Prepartita</h1>
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -88,20 +90,19 @@ const EditorSpeciali = () => {
       >
         {/* LISTA ELEMENTI */}
         <div className="h-full w-full overflow-y-auto pb-2">
-          {speciali?.map((item) => (
+          {prepartita?.map((item) => (
             <div
               key={item.id} // Importante per le liste in React
               onClick={() => handleEditClick(item)} // Al click, imposta l'elemento in modifica
-              className="group relative m-2 cursor-pointer border-[--clr-txt] p-2 hover:bg-[--clr-btn]"
+              className="m-2 cursor-pointer border-[--clr-txt] p-2 hover:bg-[--clr-btn] relative group"
             >
-              <h3> {item.titolo}</h3>
-              <p className="pe-8"> {item.descrizione}</p>
+              <h3>{item.title}</h3>
+              <p className="pe-2 xl:pe-8">{item.description}</p>
               <HiTrash
                 size={28}
                 className="absolute right-0 top-1/2 me-0 xl:me-2 h-full w-8 -translate-y-1/2 cursor-pointer transition-all group-hover:fill-red-600 hover:scale-125"
                 onClick={() => rmVoceDB(item.id)}
-              />
-
+                />
               {/* Mostra altri dettagli dell'elemento */}
             </div>
           ))}
@@ -117,42 +118,88 @@ const EditorSpeciali = () => {
             onSubmit={handleSubmit(handleUpdateSubmit)}
             className="flex h-full w-full flex-col items-center justify-around rounded-md font-normal xl:justify-between"
           >
-            <div className="flex h-1/3 w-full flex-col items-start justify-between gap-2 px-2 xl:flex-row">
+            <div className="flex h-2/3 w-full flex-col items-start justify-between gap-2 px-2 xl:flex-row">
               <label className="my-1 flex w-full flex-col items-start self-start text-sm font-semibold xl:gap-4">
                 Titolo Imprevisto
-                {errors.titolo && (
+                {errors.title && (
                   <span className="font-normal italic text-[--clr-ter]">
-                    Il campo "Titolo" è obbligatorio - max 50 caratteri
+                    Il campo "titolo" è obbligatorio - max 60 caratteri
                   </span>
                 )}
                 <input
-                  name="titolo"
-                  {...register("titolo", { required: true, maxLength: 60 })}
+                  name="title"
+                  {...register("title", { required: true, maxLength: 60 })}
                   className="block w-2/3 self-start rounded p-1 text-sm font-semibold uppercase text-black placeholder:normal-case placeholder:italic"
                   placeholder="Titolo dell'imprevisto"
                 />
               </label>
               <label className="my-1 flex w-full flex-col items-start self-start text-sm font-semibold xl:gap-4">
                 Descrizione Imprevisto
-                {errors.descrizione && (
+                {errors.description && (
                   <span className="font-normal italic text-[--clr-ter]">
                     Il campo "Descrizione" è obbligatorio
                   </span>
                 )}
                 <textarea
-                  name="descrizione"
-                  {...register("descrizione", { required: true })}
+                  name="description"
+                  {...register("description", { required: true })}
                   rows={4}
-                  id="descrizione"
+                  id="description"
                   placeholder="Descrizione dell'imprevisto"
                   className="w-full rounded p-1 text-sm font-semibold text-black placeholder:italic"
                 />
               </label>
+              <label className="my-1 flex w-full flex-col self-start text-sm font-semibold xl:items-end xl:gap-4">
+                Nota bene... compilare se è un caso particolare
+                {errors.notaBene && (
+                  <span className="font-normal italic text-[--clr-ter]">
+                    Il campo "Nota Bene" è errato
+                  </span>
+                )}
+                <input
+                  name="notaBene"
+                  {...register("notaBene", { required: false })}
+                  id="notaBene"
+                  placeholder="Scrivi una nota"
+                  className="block w-2/3 rounded p-1 text-sm font-semibold uppercase text-black placeholder:normal-case placeholder:italic xl:self-end"
+                />
+              </label>
             </div>
-            <div className="flex h-1/3 w-full flex-col items-start justify-between px-2 xl:flex-row xl:gap-2">
+            <div className="flex h-1/3 w-full flex-col items-start justify-between px-2 xl:grid xl:grid-cols-2 xl:items-center xl:gap-4 xl:px-4">
+              <label
+                htmlFor="isImprev"
+                className="my-1 flex w-full items-center justify-between xl:justify-start gap-2 text-sm font-semibold xl:ms-4 xl:self-start"
+              >
+                È un imprevisto?
+                {errors.isImprev && (
+                  <span className="font-normal italic text-[--clr-ter]">
+                    Il campo "È un imprevisto" è obbligatorio
+                  </span>
+                )}
+                <div className="ms-4 flex h-fit w-1/4 items-center justify-around px-4 xl:gap-2">
+                  <label htmlFor="isImprevYES">Sì</label>
+                  <input
+                    {...register("isImprev", { required: true })}
+                    id="isImprevYES"
+                    name="isImprev"
+                    type="radio"
+                    value={true}
+                    className="ms-2 h-4 w-4 rounded border-[--clr-txt] text-[--clr-btn] focus:ring-2 focus:ring-[--clr-btn] md:m-0 dark:border-[--clr-txt] dark:bg-[--clr-txt] dark:ring-offset-[--clr-txt] dark:focus:ring-[--clr-btn]"
+                  />
+                  <label htmlFor="isImprevNO">No</label>
+                  <input
+                    {...register("isImprev", { required: true })}
+                    id="isImprevNO"
+                    name="isImprev"
+                    type="radio"
+                    value={false}
+                    className="ms-2 h-4 w-4 rounded border-[--clr-txt] text-[--clr-btn] focus:ring-2 focus:ring-[--clr-btn] md:m-0 dark:border-[--clr-txt] dark:bg-[--clr-txt] dark:ring-offset-[--clr-txt] dark:focus:ring-[--clr-btn]"
+                  />
+                </div>
+              </label>
               <label
                 htmlFor="ultEstrazione"
-                className="my-1 flex w-full items-center justify-between gap-2 text-sm font-semibold xl:ms-4 xl:self-start"
+                className="my-1 flex w-full items-center justify-between xl:justify-start gap-2 text-sm font-semibold xl:ms-4 xl:self-start"
               >
                 Bisogna estrarre uno o più giocatori?
                 {errors.ultEstrazione && (
@@ -168,6 +215,7 @@ const EditorSpeciali = () => {
                     name="ultEstrazione"
                     type="radio"
                     value={true}
+                    defaultChecked={editingItem?.ultEstrazione === true}
                     className="ms-2 h-4 w-4 rounded border-[--clr-txt] text-[--clr-btn] focus:ring-2 focus:ring-[--clr-btn] md:m-0 dark:border-[--clr-txt] dark:bg-[--clr-txt] dark:ring-offset-[--clr-txt] dark:focus:ring-[--clr-btn]"
                   />
                   <label htmlFor="ultEstrazioneNO">No</label>
@@ -177,58 +225,80 @@ const EditorSpeciali = () => {
                     name="ultEstrazione"
                     type="radio"
                     value={false}
+                    defaultChecked={editingItem?.ultEstrazione === false}
                     className="ms-2 h-4 w-4 rounded border-[--clr-txt] text-[--clr-btn] focus:ring-2 focus:ring-[--clr-btn] md:m-0 dark:border-[--clr-txt] dark:bg-[--clr-txt] dark:ring-offset-[--clr-txt] dark:focus:ring-[--clr-btn]"
                   />
                 </div>
               </label>
               <label
-                htmlFor="qtGiocatori"
-                className="my-1 flex w-full items-center justify-between gap-2 text-sm font-semibold xl:ms-4 xl:self-start"
+                htmlFor="numbExtrPlayer"
+                className="my-1 flex w-full items-center justify-between xl:justify-start gap-2 text-sm font-semibold xl:ms-4 xl:self-start"
               >
                 Quanti giocatori saranno estratti?
-                {errors.qtGiocatori && (
+                {errors.numbExtrPlayer && (
                   <span className="font-normal italic text-[--clr-ter]">
                     Il campo "Quanti Giocatori" è obbligatorio - Inserisci un
                     numero da 0 a 10
                   </span>
                 )}
                 <input
-                  {...register("qtGiocatori", {
+                  {...register("numbExtrPlayer", {
                     required: true,
                     min: 0,
                   })}
-                  id="qtGiocatori"
-                  name="qtGiocatori"
+                  id="numbExtrPlayer"
+                  name="numbExtrPlayer"
                   type="number"
                   placeholder="Quanti giocatori?"
                   className="ms-4 min-w-20 rounded p-1 text-sm font-semibold text-black placeholder:italic xl:w-48"
                 />
               </label>
               <label
-                htmlFor="qtGiocatori"
-                className="my-1 flex w-full items-center justify-between gap-2 text-sm font-semibold xl:ms-4 xl:self-start"
+                htmlFor="baseEstrazione"
+                className="my-1 flex w-full items-center justify-between xl:justify-start gap-2 text-sm font-semibold xl:ms-4 xl:self-start"
               >
                 Su quanti giocatori effettuare l'estrazione?
-                {errors.titolariRosa && (
+                {errors.baseEstrazione && (
                   <span className="font-normal italic text-[--clr-ter]">
                     Il campo "Su quanti giocatori?" è obbligatorio
                   </span>
                 )}
                 <input
-                  {...register("titolariRosa", {
+                  {...register("baseEstrazione", {
                     required: true,
-                    min: 11,
+                    min: 0,
                     max: 40,
                   })}
-                  id="titolariRosa"
-                  name="titolariRosa"
+                  id="baseEstrazione"
+                  name="baseEstrazione"
                   type="number"
                   placeholder="11"
                   className="ms-4 min-w-20 rounded p-1 text-sm font-semibold text-black placeholder:italic xl:w-48"
                 ></input>
               </label>
+              <label
+                htmlFor="weight"
+                className="my-1 flex w-full items-center justify-between xl:justify-start gap-2 text-sm font-semibold xl:ms-4 xl:self-start"
+              >
+                Quale è il "peso" di questo imprevisto?
+                {errors.weight && (
+                  <span className="font-normal italic text-[--clr-ter]">
+                    Il campo "Peso Imprevisto" è obbligatorio
+                  </span>
+                )}
+                <input
+                  {...register("weight", {
+                    required: true,
+                  })}
+                  id="weight"
+                  name="weight"
+                  type="number"
+                  placeholder="Inserisci un numero"
+                  className="ms-4 min-w-20 rounded p-1 text-sm font-semibold text-black placeholder:italic xl:w-48"
+                ></input>
+              </label>
             </div>
-            <div className="flex h-1/3 w-full flex-col items-center justify-center gap-1 xl:flex-row xl:gap-2">
+            <div className="flex h-full w-full flex-col items-center justify-center gap-1 xl:flex-row xl:gap-2">
               <button
                 className="flex h-12 w-full flex-col items-center justify-center rounded-lg border-2 border-red-700 py-1 font-semibold hover:bg-red-700 xl:h-16 xl:w-1/3"
                 type="button"
@@ -249,4 +319,4 @@ const EditorSpeciali = () => {
     </section>
   );
 };
-export default EditorSpeciali;
+export default EditorPrepartita;

@@ -94,7 +94,7 @@ CREATE TABLE IF NOT EXISTS "public"."speciali" (
     "descrizione" "text" NOT NULL,
     "ultEstrazione" boolean,
     "qtGiocatori" smallint DEFAULT '0'::smallint,
-    "" smallint DEFAULT '30'::smallint
+    "titolariRosa" smallint DEFAULT '30'::smallint
 );
 
 
@@ -170,12 +170,27 @@ CREATE TABLE IF NOT EXISTS "public"."settimana" (
 ALTER TABLE "public"."settimana" OWNER TO "postgres";
 
 
+CREATE TABLE IF NOT EXISTS "public"."ingaggi-mercato" (
+    "id" "uuid" DEFAULT "gen_random_uuid"() NOT NULL,
+    "tipo" "text" NOT NULL,
+    "titolo" "text" NOT NULL,
+    "descrizione" "text" NOT NULL,
+    "isImprev" boolean NOT NULL,
+    "weight" integer NOT NULL
+);
+
+
+ALTER TABLE "public"."ingaggi-mercato" OWNER TO "postgres";
+
+
 CREATE TABLE IF NOT EXISTS "public"."serie-negativa" (
     "id" "uuid" DEFAULT "gen_random_uuid"() NOT NULL,
     "title" "text",
     "description" "text" NULL,
     "isImprev" boolean NULL,
     "ultEstrazione" boolean NULL,
+    "baseEstrazione" smallint NOT NULL,
+    "numbExtrPlayer" smallint NOT NULL,
     "weight" integer NULL
 );
 
@@ -275,6 +290,11 @@ ALTER TABLE ONLY "public"."settimana"
 
 
 
+ALTER TABLE ONLY "public"."ingaggi-mercato"
+    ADD CONSTRAINT "ingaggi-mercato_pkey" PRIMARY KEY ("id");
+
+
+
 ALTER TABLE ONLY "public"."serie-negativa"
     ADD CONSTRAINT "serie-negativa_pkey" PRIMARY KEY ("id");
 
@@ -331,6 +351,9 @@ ALTER TABLE "public"."prepartita" DISABLE ROW LEVEL SECURITY;
 
 
 ALTER TABLE "public"."settimana" DISABLE ROW LEVEL SECURITY;
+
+
+ALTER TABLE "public"."ingaggi-mercato" DISABLE ROW LEVEL SECURITY;
 
 
 ALTER TABLE "public"."serie-negativa" DISABLE ROW LEVEL SECURITY;
@@ -413,6 +436,12 @@ GRANT ALL ON TABLE "public"."prepartita" TO "service_role";
 GRANT ALL ON TABLE "public"."settimana" TO "anon";
 GRANT ALL ON TABLE "public"."settimana" TO "authenticated";
 GRANT ALL ON TABLE "public"."settimana" TO "service_role";
+
+
+
+GRANT ALL ON TABLE "public"."ingaggi-mercato" TO "anon";
+GRANT ALL ON TABLE "public"."ingaggi-mercato" TO "authenticated";
+GRANT ALL ON TABLE "public"."ingaggi-mercato" TO "service_role";
 
 
 

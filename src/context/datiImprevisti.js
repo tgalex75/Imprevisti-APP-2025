@@ -30,7 +30,13 @@ export const DatiImprevistiProvider = ({ children }) => {
     
     const { data: fineCampionato, fetchRegistryList: fetchFineCampionato } =
     useFetchData("fine-campionato");
-
+    
+    const { data: ingaggiMercato, fetchRegistryList: fetchIngaggiMercato } =
+    useFetchData("ingaggi-mercato");
+    
+    //const { data: saldoPunti, fetchRegistryList: fetchSaldoPunti } =
+    //useFetchData("ingaggi-mercato");
+    
   return (
     <DatiImprevistiContext.Provider
       value={{
@@ -40,6 +46,8 @@ export const DatiImprevistiProvider = ({ children }) => {
         fetchSpeciali,
         settimana,
         fetchSettimana,
+        ingaggiMercato,
+        fetchIngaggiMercato,
         serieNegativa,
         fetchSerieNegativa,
         bonusTrofei,

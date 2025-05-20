@@ -5,17 +5,17 @@ import Prepartita from "../Pages/Prepartita";
 import Settimana from "../Pages/Settimana";
 import SalvaPerDopo from "../Pages/SalvaPerDopo";
 import RiepilogoImprevisti from "../Pages/RiepilogoImprevisti";
-import IngaggiMercatoRinnovi from "../Pages/IngaggiMercatoRinnovi";
+import IngaggiMercato from "../Pages/IngaggiMercato";
 import SaldoPunti from "../Pages/SaldoPunti";
 import SerieNegativa from "../Pages/SerieNegativa";
 import ErrorPage from "../Pages/ErrorPage";
 import EditorImprevisti from "../Pages/EditorImprevisti";
-import EditorPrepartita from "../Funzioni/EditorPrepartita";
-import EditorSettimana from "../Funzioni/EditorSettimana";
-import EditorSerieNegativa from "../Funzioni/EditorSerieNegativa";
-import EditorIngaggi from "../Funzioni/EditorIngaggi";
-import EditorSpeciali from "../Funzioni/EditorSpeciali";
-import EditorSaldoPunti from "../Funzioni/EditorSaldoPunti";
+import EditorPrepartita from "../Pages/Editors/EditorPrepartita";
+import EditorSettimana from "../Pages/Editors/EditorSettimana";
+import EditorSerieNegativa from "../Pages/Editors/EditorSerieNegativa";
+import EditorIngaggi from "../Pages/Editors/EditorIngaggi";
+import EditorSpeciali from "../Pages/Editors/EditorSpeciali";
+import EditorSaldoPunti from "../Pages/Editors/EditorSaldoPunti";
 import EditorInterfaccia from "../Pages/EditorInterfaccia";
 import EstrazioneLibera from "../Pages/EstrazioneLibera";
 
@@ -41,13 +41,13 @@ const AnimatedRoutes = () => {
         <Route path="/saldo-punti" element={<SaldoPunti />} />
         <Route
           path="/ingaggio"
-          element={<IngaggiMercatoRinnovi tipoImprevisto="Ingaggio" />}
+          element={<IngaggiMercato tipoImprevisto="Ingaggio" />}
         />
         <Route path="/estrazione-libera" element={<EstrazioneLibera />} />
         <Route path="/serie-negativa" element={<SerieNegativa />} />
         <Route
           path="/offerte-mercato"
-          element={<IngaggiMercatoRinnovi tipoImprevisto="Mercato" />}
+          element={<IngaggiMercato tipoImprevisto="Mercato" />}
         />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
