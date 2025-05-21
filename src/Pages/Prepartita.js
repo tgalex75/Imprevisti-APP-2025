@@ -14,18 +14,19 @@ import pickRandom from "pick-random";
 import DatiImprevistiContext from "../context/datiImprevisti";
 
 const Prepartita = () => {
-  const { prepartita, speciali, fetchSpeciali } = useContext(DatiImprevistiContext);
+  const { prepartita, speciali, fetchSpeciali } = useContext(
+    DatiImprevistiContext,
+  );
   const [casuale, setCasuale] = useState(null);
   const [casualeCommunity, setCasualeCommunity] = useState(null);
 
   const [extractedPlayer, setExtractedPlayer] = useState(null);
 
-  
   useEffect(() => {
     setCasualeCommunity(
       speciali?.length > 0
-      ? random.choice(speciali)
-      : { id: 0, descrizione: "LISTA VUOTA!!!" },
+        ? random.choice(speciali)
+        : { id: 0, descrizione: "LISTA VUOTA!!!" },
     );
     fetchSpeciali();
     let timeout = setTimeout(() => {
@@ -40,7 +41,7 @@ const Prepartita = () => {
     const estratto = rnd(prepartita, (i) => i.weight);
     setCasuale(estratto);
   }, []);
-  
+
   const {
     id,
     title,
@@ -51,10 +52,10 @@ const Prepartita = () => {
     numbExtrPlayer,
     notaBene,
   } = casuale ? casuale : {};
-  
+
   const titoloH1 = "Prepartita";
   const isImpCommunity = title === "PAROLA ALLA COMMUNITY!";
-  const numbersEx = numbers(baseEstrazione)
+  const numbersEx = numbers(baseEstrazione);
 
   return (
     <>
@@ -67,13 +68,9 @@ const Prepartita = () => {
         {casuale && (
           <>
             <h2
-              style={{
-                fontFamily: "'Anton', sans-serif",
-                filter: "drop-shadow(.05rem .05rem 0.1rem #000)",
-              }}
               className={
                 isImprev
-                  ? "text-7xl xl:text-5xl font-extrabold uppercase md:relative md:top-2 md:flex-1"
+                  ? "text-7xl font-extrabold uppercase md:relative md:top-2 md:flex-1 xl:text-5xl"
                   : "invisible"
               }
             >
@@ -82,21 +79,21 @@ const Prepartita = () => {
             {!isImpCommunity && (
               <>
                 <h3
-                  className={`flex-1 text-6xl xl:text-4xl font-extrabold uppercase ${
+                  className={`flex-1 text-6xl font-extrabold uppercase xl:text-4xl ${
                     title === "PAROLA ALLA COMMUNITY!" && "invisible"
                   }, ${
                     id === 999 &&
-                    "absolute left-1/2 top-1/3 xl:top-1/2 -translate-x-1/2 -translate-y-1/2"
+                    "absolute left-1/2 top-1/3 -translate-x-1/2 -translate-y-1/2 xl:top-1/2"
                   }`}
                 >
                   {title}
                 </h3>
-                <p className="andika-regular xl:mt-4 w-4/5 xl:w-1/2 px-4 text-3xl md:flex-1 xl:text-2xl">
+                <p className="orbitron-regular w-4/5 px-4 text-3xl md:flex-1 xl:mt-4 xl:w-1/2 xl:text-2xl">
                   {description && description}
                 </p>
 
                 {/* Eccezioni */}
-                <p className="andika-regular-italic animate-bounce text-sm font-normal md:text-lg">
+                <p className="orbitron-regular animate-bounce text-sm font-normal md:text-lg">
                   {notaBene && notaBene}
                 </p>
               </>

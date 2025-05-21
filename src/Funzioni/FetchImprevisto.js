@@ -45,7 +45,7 @@ const FetchImprevisto = (props) => {
         {titolo && titolo}
       </h3>
       <p
-        className={`andika-regular w-4/5 xl:w-2/3 flex h-fit items-center justify-center overflow-y-auto px-2 xl:px-4 scrollbar ${
+        className={`orbitron-regular w-4/5 xl:w-2/3 flex h-fit items-center justify-center overflow-y-auto px-2 xl:px-4 scrollbar ${
           descrizione && descrizione.length > 200 ? "text-3xl xl:text-lg" : "text-5xl xl:text-2xl"
         }`}
       >

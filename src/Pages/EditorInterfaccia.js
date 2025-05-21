@@ -35,7 +35,7 @@ const EditorInterfaccia = () => {
       <Accordion
         title="Colori Principali della APP"
         content={
-          <div className="grid w-full grid-cols-3 items-center gap-2 overflow-y-auto rounded-lg bg-slate-100/10 p-4 text-[--clr-txt] xl:grid-cols-6 xl:gap-0 xl:p-0">
+          <div className="grid w-full grid-cols-3 items-center gap-2 overflow-y-auto rounded-lg bg-[--clr-bg] p-4 text-[--clr-txt] xl:grid-cols-6 xl:gap-0 xl:p-0">
             <ColorPickerComponent
               defaultColor={primary}
               updateFunc={updatePrimary}
@@ -73,7 +73,7 @@ const EditorInterfaccia = () => {
       <Accordion
         title={"Colori Casacche Giocatori"}
         content={
-          <div className="grid w-full grid-cols-3 items-center gap-2 overflow-y-auto rounded-lg bg-slate-100/10 p-4 text-[--clr-txt] xl:grid-cols-6 xl:gap-0 xl:p-0">
+          <div className="grid w-full grid-cols-3 items-center gap-2 overflow-y-auto rounded-lg bg-[--clr-bg] p-4 text-[--clr-txt] xl:grid-cols-6 xl:gap-0 xl:p-0">
             <ColorPickerComponent
               defaultColor={colorPl}
               updateFunc={updateColorPl}

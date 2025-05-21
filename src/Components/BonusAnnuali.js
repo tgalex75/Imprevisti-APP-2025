@@ -65,7 +65,7 @@ const BonusAnnuali = () => {
             className="flex h-full w-1/3 items-center justify-center rounded p-2 xl:py-1"
             key={item.id}
           >
-            <div className="flex h-12 xl:h-20 w-12 xl:w-20 items-center justify-center rounded-full bg-[--clr-ter] p-2 text-center text-[--clr-sec] xl:flex-col">
+            <div className="flex h-12 xl:h-20 w-12 xl:w-20 items-center justify-center rounded-full bg-[--clr-ter] p-2 text-center text-[--clr-txt] xl:flex-col">
               <h3 className="mx-2 text-xl font-bold uppercase xl:text-lg">
                 {item.id}
               </h3>

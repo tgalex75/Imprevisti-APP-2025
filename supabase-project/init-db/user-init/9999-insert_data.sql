@@ -140,68 +140,36 @@ INSERT INTO "public"."saldo-punti" ("punti")
 VALUES (10);
 
 --
--- Data for Name: bonus-trofei; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: bonus-malus-punti; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO "public"."bonus-trofei" ("nome", "valore")
-VALUES ('Coppa Nazionale', 10),
-	('Scudetto', 18),
-	('Champions League', 30),
-	('Europa League', 20),
-	('Conference League', 15);
---
--- Data for Name: bonus-cessioni; Type: TABLE DATA; Schema: public; Owner: postgres
---
+INSERT INTO "public"."bonus-malus-punti" ("tipo", "nome", "valore", "nomeUnder", "nomeOver",
+		"nomeSerieMinori", "nomeSerieMinoriOver", "valoreUnder", "valoreOver",
+		"valoreSerieMinore", "valoreSerieMinoreOver")
+VALUES ('trofei', 'Coppa Nazionale', 10, null, null, null, null, null, null, null, null),
+	('trofei', 'Scudetto', 18, null, null, null, null, null, null, null, null),
+	('trofei', 'Champions League', 30, null, null, null, null, null, null, null, null),
+	('trofei', 'Europa League', 20, null, null, null, null, null, null, null, null),
+	('trofei', 'Conference League', 15, null, null, null, null, null, null, null, null),
+	('cessioni', '70', 2, null, null, null, null, null, null, null, null),
+	('cessioni', '75', 4, null, null, null, null, null, null, null, null),
+	('cessioni', '80', 5.5, null, null, null, null, null, null, null, null),
+	('cessioni', '85', 7, null, null, null, null, null, null, null, null),
+	('cessioni', '90', 9, null, null, null, null, null, null, null, null),
+	('acquisti', null, null, '70', '70', '70', '70', -3, -1.5, -1.5, -0.5),
+	('acquisti', null, null, '75', '75', '75', '75', -6, -3, -3, -1.5),
+	('acquisti', null, null, '80', '80', '80', '80', -9, -6, -4.5, -3),
+	('acquisti', null, null, '85', '85', '85', '85', -12, -9, -6, -4.5),
+	('acquisti', null, null, '90', '90', '90', '90', -15, -12, -7.5, -6),
+	('trend', 'Serie Negativa', -1, null, null, null, null, null, null, null, null),
+	('trend', 'Serie Positiva', 1, null, null, null, null, null, null, null, null),
+	('fine-camp', '2', 9, null, null, null, null, null, null, null, null),
+	('fine-camp', '3', 6, null, null, null, null, null, null, null, null),
+	('fine-camp', '4', 5, null, null, null, null, null, null, null, null),
+	('fine-camp', '5', 4, null, null, null, null, null, null, null, null),
+	('fine-camp', '6', 3, null, null, null, null, null, null, null, null),
+	('fine-camp', '7', 1, null, null, null, null, null, null, null, null),
+	('fine-camp', 'Cannoniere', 5, null, null, null, null, null, null, null, null),
+	('fine-camp', 'Assistman', 3, null, null, null, null, null, null, null, null),
+	('fine-camp', 'Portiere', 3, null, null, null, null, null, null, null, null);
 
-INSERT INTO "public"."bonus-cessioni" ("nome", "valore")
-VALUES ('70', 2),
-	('75', 4),
-	('80', 5.5),
-	('85', 7),
-	('90', 9);
-
-	
---
--- Data for Name: malus-acquisti; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-INSERT INTO "public"."malus-acquisti" (
-		"nomeUnder",
-		"nomeOver",
-		"nomeSerieMinori",
-		"nomeSerieMinoriOver",
-		"valoreUnder",
-		"valoreOver",
-		"valoreSerieMinore",
-		"valoreSerieMinoreOver"
-	)
-VALUES ('70', '70', '70', '70', -3, -1.5, -1.5, -0.5),
-	('75', '75', '75', '75', -6, -3, -3, -1.5),
-	('80', '80', '80', '80', -9, -6, -4.5, -3),
-	('85', '85', '85', '85', -12, -9, -6, -4.5),
-	('90', '90', '90', '90', -15, -12, -7.5, -6);
-
-
---
--- Data for Name: trend-prestazioni; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-INSERT INTO "public"."trend-prestazioni" ("nome", "valore")
-VALUES ('Serie Negativa', -1),
-	('Serie Positiva', 1);
-
-
---
--- Data for Name: fine-campionato; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-INSERT INTO "public"."fine-campionato" ("nome", "valore")
-VALUES (2, 9),
-	('3', 6),
-	('4', 5),
-	('5', 4),
-	('6', 3),
-	('7', 1),
-	('Cannoniere', 5),
-	('Assistman', 3),
-	('Portiere', 3);

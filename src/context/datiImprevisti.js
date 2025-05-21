@@ -16,26 +16,14 @@ export const DatiImprevistiProvider = ({ children }) => {
     const { data: serieNegativa, fetchRegistryList: fetchSerieNegativa } =
     useFetchData("serie-negativa");
     
-    const { data: bonusTrofei, fetchRegistryList: fetchBonusTrofei } =
-    useFetchData("bonus-trofei");
-    
-    const { data: bonusCessioni, fetchRegistryList: fetchBonusCessioni } =
-    useFetchData("bonus-cessioni");
-    
-    const { data: malusAcquisti, fetchRegistryList: fetchMalusAcquisti } =
-    useFetchData("malus-acquisti");
-    
-    const { data: trendPrestazioni, fetchRegistryList: fetchTrendPrestazioni } =
-    useFetchData("trend-prestazioni");
-    
-    const { data: fineCampionato, fetchRegistryList: fetchFineCampionato } =
-    useFetchData("fine-campionato");
-    
+    const { data: bonusMalus, fetchRegistryList: fetchBonusMalus } =
+    useFetchData("bonus-malus-punti");
+        
     const { data: ingaggiMercato, fetchRegistryList: fetchIngaggiMercato } =
     useFetchData("ingaggi-mercato");
     
-    //const { data: saldoPunti, fetchRegistryList: fetchSaldoPunti } =
-    //useFetchData("ingaggi-mercato");
+    const { data: saldoPunti, fetchRegistryList: fetchSaldoPunti } =
+    useFetchData("saldo-punti");
     
   return (
     <DatiImprevistiContext.Provider
@@ -50,16 +38,10 @@ export const DatiImprevistiProvider = ({ children }) => {
         fetchIngaggiMercato,
         serieNegativa,
         fetchSerieNegativa,
-        bonusTrofei,
-        fetchBonusTrofei,
-        bonusCessioni,
-        fetchBonusCessioni,
-        malusAcquisti,
-        fetchMalusAcquisti,
-        trendPrestazioni,
-        fetchTrendPrestazioni,
-        fineCampionato,
-        fetchFineCampionato
+        bonusMalus,
+        fetchBonusMalus,
+        saldoPunti,
+        fetchSaldoPunti
       }}
     >
       {children}

@@ -3,7 +3,7 @@ import { supabase } from "../../supabaseClient";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { v4 as uuidv4 } from "uuid";
-import { HiTrash } from "react-icons/hi2";
+import { MdDeleteForever } from "react-icons/md";
 import DatiImprevistiContext from "../../context/datiImprevisti";
 
 const EditorSpeciali = () => {
@@ -96,7 +96,7 @@ const EditorSpeciali = () => {
             >
               <h3> {item.titolo}</h3>
               <p className="pe-8"> {item.descrizione}</p>
-              <HiTrash
+              <MdDeleteForever
                 size={28}
                 className="absolute right-0 top-1/2 me-0 xl:me-2 h-full w-8 -translate-y-1/2 cursor-pointer transition-all group-hover:fill-red-600 hover:scale-125"
                 onClick={() => rmVoceDB(item.id)}
@@ -122,7 +122,7 @@ const EditorSpeciali = () => {
                 Titolo Imprevisto
                 {errors.titolo && (
                   <span className="font-normal italic text-[--clr-ter]">
-                    Il campo "Titolo" è obbligatorio - max 50 caratteri
+                    Il campo "Titolo" è obbligatorio - max 60 caratteri
                   </span>
                 )}
                 <input

@@ -31,13 +31,13 @@ const UploadRegistro = (props) => {
           ref={inputRef}
           type="text"
           id="nome-giocatore"
-          className="h-full w-full appearance-none rounded-lg border border-[--clr-txt] border-transparent bg-white px-1 py-2 text-xs text-[--clr-txt] placeholder-[--clr-txt] shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600 md:px-4 md:text-sm"
+          className="h-full w-full appearance-none rounded-lg border border-[--clr-btn] bg-[--clr-bg] px-1 py-2 text-xs text-[--clr-txt] placeholder-[--clr-txt] shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-[--clr-btn] md:px-4 md:text-sm"
           name="nomeGiocatore"
           placeholder="Fuori il nome..."
         />
         <button
           type="button"
-          className="flex h-full w-full items-center justify-center rounded-lg bg-[--clr-btn] px-4 py-2 text-center text-xs font-semibold text-[--clr-txt] shadow-md transition duration-200 ease-in hover:bg-[--clr-ter] focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-indigo-200 md:text-sm"
+          className="flex h-full w-full items-center justify-center rounded-lg bg-[--clr-btn] px-4 py-2 text-center text-xs font-semibold text-[--clr-txt] shadow-md transition duration-200 ease-in hover:bg-[--clr-ter] md:text-sm"
           onClick={() =>
             addToCartAndClearInput()
           }

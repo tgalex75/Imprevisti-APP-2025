@@ -54,19 +54,16 @@ const IngaggiMercato = (props) => {
         key={casuale}
         id="containerPrimaEstrazione"
         style={isImpr ? { color: "var(--clr-ter)" } : {}}
-        className="flex h-full w-full select-none flex-col items-center justify-around rounded-xl bg-black/50 pt-2 text-center shadow-lg ring ring-inset ring-white/75 xl:px-10 xl:pb-8"
+        className="flex h-full w-full select-none flex-col items-center justify-around rounded-xl bg-black/50 pt-2 text-center shadow-lg ring ring-inset ring-[--clr-txt] xl:px-10 xl:pb-8"
       >
         {!casuale && (
-          <h2 className="andika-regular-italic text-5xl italic">
-            Buzzzz it!...
+          <h2 className="flex h-full items-center justify-center text-5xl italic">
+            Vai!
           </h2>
         )}
         {casuale && (
           <>
             <h2
-              style={{
-                fontFamily: "'Anton', sans-serif",
-              }}
               className={
                 isImpr
                   ? "text-7xl font-extrabold uppercase xl:text-5xl"
@@ -75,16 +72,14 @@ const IngaggiMercato = (props) => {
             >
               imprevisto!
             </h2>
-            <h3
-              className="text-7xl font-extrabold uppercase xl:text-6xl"
-            >
+            <h3 className="text-7xl font-extrabold uppercase xl:text-6xl">
               {isImpr ? msgIsImpr : msgNoImpr}
             </h3>
             <p
               style={{
                 filter: "drop-shadow(.05rem .05rem 0.1rem #000)",
               }}
-              className="andika-regular mt-4 px-4 text-5xl w-4/5 xl:w-3/5 xl:text-4xl"
+              className="orbitron-regular mt-4 w-4/5 px-4 text-5xl xl:w-3/5 xl:text-4xl"
             >
               {isImpr ? descrIsImpr : descrNoImpr}
             </p>

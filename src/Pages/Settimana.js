@@ -18,11 +18,11 @@ const Settimana = () => {
   const titoloH1 = "Peggiore della Settimana n. ";
 
   return (
-    <div className="flex h-full w-full flex-col text-center items-center justify-center xl:flex-row p-2 xl-p-0">
+    <div className="xl-p-0 flex h-full w-full flex-col items-center justify-center p-2 text-center xl:flex-row">
       {!casuale && (
-        <h2 className="andika-regular-italic flex h-full items-center justify-center text-5xl italic">
-          Buzzzz it!...
-        </h2>
+       <h2 className="flex h-full items-center justify-center text-5xl italic">
+            Vai!
+          </h2>
       )}
       {casuale?.map((array, i) => (
         <LayoutBase
@@ -34,13 +34,9 @@ const Settimana = () => {
         >
           <>
             <h2
-              style={{
-                fontFamily: "'Anton', sans-serif",
-                filter: "drop-shadow(.05rem .05rem 0.1rem #000)",
-              }}
               className={
                 array.isImprev
-                  ? "text-7xl font-extrabold uppercase relative top-2 flex-1 xl:text-5xl"
+                  ? "relative top-2 flex-1 text-7xl font-extrabold uppercase xl:text-5xl"
                   : "hidden"
               }
             >
@@ -48,11 +44,11 @@ const Settimana = () => {
             </h2>
             <h3
               style={{ filter: "drop-shadow(.05rem .05rem 0.1rem #000)" }}
-              className="left-1/2 top-1/3 -translate-x-1/2 -translate-y-1/2 text-6xl font-extrabold uppercase absolute flex-1 xl:text-4xl"
+              className="absolute left-1/2 top-1/3 flex-1 -translate-x-1/2 -translate-y-1/2 text-6xl font-extrabold uppercase xl:text-4xl"
             >
               {array.title}
             </h3>
-            <p className="andika-regular left-1/2 top-2/3 mt-4 -translate-x-1/2 -translate-y-1/2 text-3xl absolute flex-1 xl:text-xl">
+            <p className="orbitron-regular absolute left-1/2 top-2/3 mt-4 flex-1 -translate-x-1/2 -translate-y-1/2 text-3xl xl:text-xl">
               {array.description}
             </p>
           </>

@@ -57,7 +57,7 @@ const Home = () => {
   return (
     <>
       <section
-        className={`flex h-full w-full flex-wrap bg-stone-950 font-bold text-[--clr-txt]`}
+        className={`flex h-full w-full flex-wrap bg-[--clr-bg] font-bold text-[--clr-txt]`}
       >
         {dettagliImprevisti.map((el) => (
           <div
@@ -75,7 +75,7 @@ const Home = () => {
                 {el.impr}
               </h2>
               <div
-                className={`flex w-full items-center justify-center bg-black/20 transition-all hover:bg-slate-800`}
+                className={`flex w-full items-center justify-center bg-[--clr-bg] transition-all hover:bg-[--clr-sec]`}
               >
                 {el.img}
               </div>

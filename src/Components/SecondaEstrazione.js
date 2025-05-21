@@ -31,7 +31,7 @@ const SecondaEstrazione = () => {
             ref={ref}
             type="number"
             id="input-estrazione-giocatore"
-            className="w-full flex-1 appearance-none rounded-lg border-[--clr-txt] bg-white p-2 text-center text-sm text-[--clr-txt] placeholder-[--clr-txt] shadow-sm focus:border-transparent focus:outline-none focus:ring-4 focus:ring-sky-700"
+            className="w-full flex-1 appearance-none rounded-lg border-[--clr-txt] bg-[--clr-txt] p-2 text-center text-sm text-[--clr-txt] placeholder-[--clr-txt] shadow-sm focus:border-transparent focus:outline-none focus:ring-4 focus:ring-sky-700"
             name="randomPlayerNum"
             placeholder="Su quanti giocatori?"
           />

@@ -61,39 +61,33 @@ const Navbar = () => {
     <nav className="fixed z-[1000] flex h-auto w-full select-none items-center justify-between px-2 py-1 xl:px-6 xl:py-3">
       <div
         style={isMobile ? { visibility: "hidden" } : {}}
-        className="flex cursor-pointer items-center justify-center rounded-full p-2 hover:bg-[--clr-txt]/30"
+        className="flex cursor-pointer items-center justify-center rounded-full p-2 hover:bg-[--clr-txt]"
       >
         <Link to="/">
           <MdHome
             size={36}
-            style={{
-              filter: "drop-shadow(.25rem .25rem 0.15rem #222)",
-            }}
-            className="fill-[--clr-txt] hover:fill-[--clr-txt]"
+            className="fill-[--clr-txt] hover:fill-[--clr-bg]"
           />
         </Link>
       </div>
-      <div className="flex cursor-pointer items-center justify-center rounded-full p-1 hover:bg-[--clr-txt]/30 md:p-2">
+      <div className="flex cursor-pointer items-center justify-center rounded-full p-1 hover:bg-[--clr-txt] md:p-2">
         {!isOpenMenu ? (
           <MdMenu
             size={isMobile ? 28 : 36}
-            style={{
-              filter: "drop-shadow(.25rem .25rem 0.15rem #222)",
-            }}
-            className="fill-[--clr-txt] hover:fill-[--clr-txt]"
+            className="fill-[--clr-txt] hover:fill-[--clr-bg]"
             onClick={handleClick}
           />
         ) : (
           <MdClose
             size={isMobile ? 28 : 36}
-            className="fill-[--clr-txt] hover:fill-[--clr-txt]"
+            className="fill-[--clr-txt] hover:fill-[--clr-bg]"
             onClick={handleClick}
           />
         )}
         <ul
           style={isOpenMenu ? { right: 0 } : { right: "-100%" }}
           onClick={handleClick}
-          className="xl:py-18 absolute top-0 z-[-1] flex h-screen w-full flex-col items-center justify-start bg-black/95 py-12 text-center text-[--clr-txt] transition-[0.5s] xl:h-screen xl:w-[30vw] xl:justify-around"
+          className="xl:py-18 absolute top-0 z-[-1] border-s-2 border-[--clr-txt] flex h-screen w-full flex-col items-center justify-start bg-[--clr-bg] py-12 text-center text-[--clr-txt] transition-[0.5s] xl:h-screen xl:w-[30vw] xl:justify-around"
         >
           {linksMenu}
         </ul>

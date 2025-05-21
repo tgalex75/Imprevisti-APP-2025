@@ -1,19 +1,18 @@
-import { Sketch } from '@uiw/react-color';
+import { Sketch } from "@uiw/react-color";
 
 const ColorPickerComponent = (props) => {
-
-  const {defaultColor, updateFunc, testoColore} = props
+  const { defaultColor, updateFunc, testoColore } = props;
 
   return (
-    <div className='flex flex-col items-center justify-around gap-2 p-2'>
-      <h5 className="font-extrabold border-b-8 " style={{color: defaultColor, borderColor: defaultColor}}>{testoColore}</h5>
-      <Sketch
-        onChange={updateFunc}
-        color={defaultColor}
-        width={"80%"}
-      />
+    <div className="flex flex-col items-center justify-around gap-2 p-2 font-extrabold">
+      <h5>{testoColore}</h5>
+      <div
+        className="h-4 w-1/3 border border-[--clr-txt]"
+        style={{ color: "var(--clr-txt)", backgroundColor: defaultColor }}
+      ></div>
+      <Sketch onChange={updateFunc} color={defaultColor} width={"80%"} />
     </div>
   );
-}
+};
 
 export default ColorPickerComponent;
