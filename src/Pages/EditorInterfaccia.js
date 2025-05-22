@@ -28,8 +28,21 @@ const EditorInterfaccia = () => {
     updateColorNumPl,
   } = useContext(ColorContext);
 
+  const listaUploader = [
+    { id: 1, nome: "Prepartita", urlName: "prepartita" },
+    { id: 2, nome: "Settimana", urlName: "settimana" },
+    { id: 3, nome: "Serie Negativa", urlName: "serie-negativa" },
+    { id: 4, nome: "Ingaggi", urlName: "ingaggi" },
+    { id: 5, nome: "Mercato", urlName: "mercato" },
+    { id: 6, nome: "Saldo Punti", urlName: "saldo-punti" },
+    { id: 7, nome: "Logo", urlName: "logo" },
+  ];
+  const mappedUploader = listaUploader.map((el) => (
+    <ImageUploader key={el.id} nome={el.nome} urlName={el.urlName} />
+  ));
+
   return (
-    <main className="flex h-full w-full flex-col items-center gap-12 overflow-y-auto p-4 font-bold">
+    <main className="flex h-full w-full flex-col items-center xl:gap-8 overflow-y-auto p-4 font-bold">
       <h1>Editor interfaccia</h1>
       <h3>Scegli le tue preferenze da applicare nella App</h3>
       <Accordion
@@ -117,10 +130,10 @@ const EditorInterfaccia = () => {
           </div>
         }
       />
-      <div className="h-auto w-full">
+      <div className="h-full w-full overflow-y-auto">
         <Accordion
-          title={"Scelta del Logo per lo sfondo"}
-          content={<ImageUploader />}
+          title={"Scelta Immagini personalizzate"}
+          content={mappedUploader}
         />
       </div>
     </main>

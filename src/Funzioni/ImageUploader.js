@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { supabase } from "../supabaseClient";
 
-function ImageUploader() {
+function ImageUploader(props) {
+  const {nome, urlName} = props
   const [fileError, setFileError] = useState(null);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [uploadCompleteMessage, setUploadCompleteMessage] = useState("");
+
+  const nomeUrl = `bg/${urlName}.png`
 
   const onDrop = async (acceptedFiles) => {
     if (acceptedFiles.length === 0) return;
@@ -21,8 +24,8 @@ function ImageUploader() {
     try {
       const { data, error } = await supabase.storage
         .from("immagini")
-        .update("bg/logo.png", file, {
-          cacheControl: '3600',
+        .update(nomeUrl, file, {
+          cacheControl: "3600",
           upsert: true,
           onUploadProgress: (progressEvent) => {
             const percentCompleted = Math.round(
@@ -51,15 +54,22 @@ function ImageUploader() {
   return (
     <div
       {...getRootProps()}
-      className="bg-slate-100/10 min-h-24 p-5 flex items-center justify-center"
+      className="flex min-h-12 xl:h-18 items-center justify-around bg-black text-sm xl:text-base odd:bg-opacity-30 even:bg-opacity-50 p-2 relative"
     >
+      <h6 className="w-1/4 xl:w-1/3">Immagine Home - {nome}</h6>
       <input {...getInputProps()} />
 
-      <p className="cursor-pointer py-4 px-16 hover:bg-black/30">Fai clic per selezionare un file esclusivamente in formato PNG (consigliato con sfondo trasparente ed inferiore ai 2 MB di dimesione)</p>
+      <p className="cursor-pointer flex items-center flex-col h-full w-3/4 xl:w-2/3 p-4 font-sans hover:text-[--clr-ter]">
+        Fai clic per selezionare un file esclusivamente in formato PNG
+        <small className="block">
+          ( consigliato con sfondo trasparente ed inferiore ai 4 MB di dimensione
+          )
+        </small>
+      </p>
 
-      {fileError && <div style={{ color: "red" }}>{fileError}</div>}
+      {fileError && <div className="absolute right-0 pe-2 font-semibold text-red-500">{fileError}</div>}
       {uploadCompleteMessage && (
-        <p className="font-semibold text-green-500">{uploadCompleteMessage}</p>
+        <small className="absolute right-0 pe-2 font-semibold text-green-500">{uploadCompleteMessage}</small>
       )}
       {uploadProgress > 0 && (
         <progress value={uploadProgress} max="100">

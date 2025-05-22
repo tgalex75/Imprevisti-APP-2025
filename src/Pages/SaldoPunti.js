@@ -19,8 +19,11 @@ const SaldoPunti = () => {
   // Controlla se saldoPunti esiste e se ha almeno un elemento
   if (!saldoPunti || saldoPunti.length === 0) {
     // Puoi mostrare un messaggio di caricamento, null, o un valore di fallback
-    return <div>Caricamento saldo punti...</div>;
-    // Oppure return null; se non vuoi mostrare nulla
+    return (
+      <div className="left-1/2 top-1/2 -translate-x-1/2 animate-pulse">
+        Caricamento saldo punti...
+      </div>
+    ); // Oppure return null; se non vuoi mostrare nulla
   }
 
   const { id, punti } = saldoPunti[0];

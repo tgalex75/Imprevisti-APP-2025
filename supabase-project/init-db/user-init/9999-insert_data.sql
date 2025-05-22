@@ -17,11 +17,82 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- Data for Name: imprevisti; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: prepartita; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO "public"."prepartita" (
+		"title",
+		"description",
+		"isImprev",
+		"isSpecial",
+		"ultEstrazione",
+		"baseEstrazione",
+		"numbExtrPlayer",
+		"notaBene",
+		"weight"
+	)
+VALUES (
+		'IMPREVISTO SPECIALE',
+		'',
+		true,
+		true,
+		true,
+		11,
+		1,
+		'',
+		15
+	),
+	(
+		'NESSUN IMPREVISTO',
+		'Tutto tranquillo',
+		false,
+		false,
+		false,
+		0,
+		0,
+		'',
+		25
+	),
+	(
+		'IMPREVISTO DEVASTANTE',
+		'Tre giocatori OUT per problemi intestinali',
+		true,
+		null,
+		true,
+		20,
+		3,
+		'',
+		15
+	);
+
+--
+-- Data for Name: settimana; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO "public"."settimana" (
+		"title",
+		"description",
+		"isImprev",
+		"weight"
+	)
+VALUES (
+		'IMPREVISTO MOLTO FANTASIOSO...',
+		'Descrizione imprevisto fantasioso',
+		true,
+		15
+	),
+	(
+		'NESSUN IMPREVISTO',
+		'Tutto tranquillo per ora...',
+		false,
+		25
+	);
+
+--
+-- Data for Name: speciali; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 INSERT INTO "public"."speciali" (
-		"id",
 		"titolo",
 		"descrizione",
 		"ultEstrazione",
@@ -29,7 +100,6 @@ INSERT INTO "public"."speciali" (
 		"titolariRosa"
 	)
 VALUES (
-		'628b2f97-52c6-40c8-b433-79b3303fcfec',
 		'CALCIO CAMMINATO',
 		'Mister Finazzi esige ordine e calma in campo. Schiera titolare in ogni ruolo per questa partita il giocatore con la statistica di velocità più bassa.',
 		false,
@@ -37,39 +107,6 @@ VALUES (
 		11
 	),
 	(
-		'7e4826b0-de17-417e-a992-ae4105726428',
-		'COSTE TO COSTE 2.0',
-		'È andato via Coste? Nessun problema. Prendi palla col difensore che lo sostituisce e portala Coste to Coste, obiettivo gol/assist. Se riesci prossima partita le nostre slide velocità avranno un +5, altrimenti - 5',
-		false,
-		0,
-		11
-	),
-	(
-		'e3de199c-5e56-4aef-afa0-fe1e06276610',
-		'CHI HA FATTO PALO?',
-		'Un grande imprenditore Arabo, Nalir Colbuk, si è appassionato alle ultime vicende della Juve Stabia. Non potendo fare a meno di ridere di gusto ad ogni legno colpito dalla squadra, decide di investire su di essa: ad ogni palo colpito durante l''episodio, aggiungi un punto al saldo mercato. ',
-		false,
-		0,
-		30
-	),
-	(
-		'580a00f9-4955-43a6-8932-42959cba8b83',
-		'BRACCIA TOLTE A...',
-		'Il presidente della Juve Stabia decide di assumere nella sua ditta edilizia, la Abusivismo S.p.a,  i 5 giocatori più scarsi della primavera. Acquisisci 0,5 punti per ogni giocatore mandato in cantiere.',
-		false,
-		0,
-		30
-	),
-	(
-		'b37331d5-9272-40ed-bcb2-5b444e50fa4c',
-		'PAPERINO',
-		'Dalle visite mediche si scopre Kwakman sia il frutto di una tresca in Olanda di Pato, il “Papero” per eccellenza della serie A, finto infortunio e vacanza per un mese a Rio con il padre.',
-		false,
-		0,
-		30
-	),
-	(
-		'556a0776-8275-430e-b54d-bc31c88ef0ed',
 		'PINTO FOOTBALL LIFE',
 		'Il prode Pinto dopo aver visto cosa accade nei bagni di Football Life invita 3 dei suoi compagni di squadra per una notte folle lui ed i 3 sorteggiati salteranno le prossime 2 partite in casa.',
 		true,
@@ -77,7 +114,6 @@ VALUES (
 		30
 	),
 	(
-		'8e9595c7-a83f-4941-b758-c0edaf444c7a',
 		'AUDIO IN QUESTURA',
 		'Mister Finazzi è stato squalificato dopo il recupero dell''audio compromettente registrato dopo il secondo gol dell''Atalanta, simula la prossima partita senza possibilità di intervenire.',
 		false,
@@ -85,7 +121,6 @@ VALUES (
 		11
 	),
 	(
-		'8d63b66c-ded2-47c0-9200-ca4a5744fda9',
 		'VITALE NO BOMBER ACADEMIA',
 		'Con l''addio di Pedrito "All Might" Mendes, "Deku" Vitale ha studiato un piano riuscendo a convincere "Bakougo" Bonneau: ingaggia un preparatore per gli Attaccanti e schiera il tridente stretto (AT-ATT-AT) Vitale-Pinto-Bonneau per tre partite.',
 		false,
@@ -172,4 +207,33 @@ VALUES ('trofei', 'Coppa Nazionale', 10, null, null, null, null, null, null, nul
 	('fine-camp', 'Cannoniere', 5, null, null, null, null, null, null, null, null),
 	('fine-camp', 'Assistman', 3, null, null, null, null, null, null, null, null),
 	('fine-camp', 'Portiere', 3, null, null, null, null, null, null, null, null);
+
+
+
+--
+-- Use Postgres to create a bucket.
+--
+
+ALTER TABLE storage.buckets ADD public boolean;
+
+
+insert into storage.buckets (id, name, public)
+values ('immagini', 'immagini', true);
+
+
+create policy "Images are publicly accessible."
+  on storage.objects for select
+  using ( bucket_id = 'immagini' );
+
+create policy "Anyone can upload an image."
+  on storage.objects for insert
+  with check ( bucket_id = 'immagini' );
+
+create policy "Anyone can update an image."
+  on storage.objects for update
+  with check ( bucket_id = 'immagini' );
+
+create policy "Anyone can delete an image."
+  on storage.objects for delete
+  with check ( bucket_id = 'immagini' );
 

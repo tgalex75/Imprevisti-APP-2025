@@ -69,6 +69,7 @@ SET default_tablespace = '';
 SET default_table_access_method = "heap";
 
 
+
 CREATE TABLE IF NOT EXISTS "public"."bonus-annuali" (
     "id" smallint NOT NULL
 );
@@ -143,9 +144,10 @@ ALTER TABLE "public"."salvaxdopo" OWNER TO "postgres";
 
 CREATE TABLE IF NOT EXISTS "public"."prepartita" (
     "id" "uuid" DEFAULT "gen_random_uuid"() NOT NULL,
-    "title" "text",
+    "title" "text" NOT NULL,
     "description" "text" NULL,
     "isImprev" boolean NULL,
+    "isSpecial" boolean NULL,
     "ultEstrazione" boolean NULL,
     "baseEstrazione" smallint NULL,
     "numbExtrPlayer" smallint NULL,

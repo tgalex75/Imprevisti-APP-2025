@@ -9,11 +9,11 @@ const Dado = (props) => {
     <motion.div
       whileHover={{
         scale: 1.1,
-        rotate: 30
+        rotate: 15
       }}
       whileTap={{
-        scale: 1.2,
-        rotate: -90
+        scale: 1.1,
+        rotate: -30
       }}
       transition={{ type: "spring", stiffness: 300 }}
       className="absolute bottom-2 right-2 mb-20 flex h-24 w-24 xl:h-36 xl:w-36 cursor-pointer select-none items-center justify-center md:m-4 xl:bottom-0 xl:right-0 xl:mb-14 xl:me-4"

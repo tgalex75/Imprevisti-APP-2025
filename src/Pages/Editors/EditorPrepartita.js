@@ -46,9 +46,10 @@ const EditorPrepartita = () => {
       .from("prepartita")
       .upsert({
         id: isListaVuota ? uuidv4() : data.id,
-        title: data.title,
+        title: !data.isSpecial ? data.title : "IMPREVISTO SPECIALE",
         description: data.description,
         isImprev: data.isImprev,
+        isSpecial: data.isSpecial,
         ultEstrazione: data.ultEstrazione,
         baseEstrazione: data.baseEstrazione,
         numbExtrPlayer: data.numbExtrPlayer,
@@ -142,7 +143,7 @@ const EditorPrepartita = () => {
                 )}
                 <textarea
                   name="description"
-                  {...register("description", { required: true })}
+                  {...register("description")}
                   rows={4}
                   id="description"
                   placeholder="Descrizione dell'imprevisto"
@@ -173,7 +174,7 @@ const EditorPrepartita = () => {
                 È un imprevisto?
                 {errors.isImprev && (
                   <span className="font-normal italic text-[--clr-ter]">
-                    Il campo "È un imprevisto" è obbligatorio
+                    Il campo "È un imprevisto?" è obbligatorio
                   </span>
                 )}
                 <div className="ms-4 flex h-fit w-1/4 items-center justify-around px-4 xl:gap-2">
@@ -191,6 +192,37 @@ const EditorPrepartita = () => {
                     {...register("isImprev", { required: true })}
                     id="isImprevNO"
                     name="isImprev"
+                    type="radio"
+                    value={false}
+                    className="ms-2 h-4 w-4 rounded border-[--clr-txt] text-[--clr-btn] focus:ring-2 focus:ring-[--clr-btn] md:m-0 dark:border-[--clr-txt] dark:bg-[--clr-txt] dark:ring-offset-[--clr-txt] dark:focus:ring-[--clr-btn]"
+                  />
+                </div>
+              </label>
+              <label
+                htmlFor="isSpecial"
+                className="my-1 flex w-full items-center justify-between xl:justify-start gap-2 text-sm font-semibold xl:ms-4 xl:self-start"
+              >
+                È un imprevisto SPECIALE?
+                {errors.isSpecial && (
+                  <span className="font-normal italic text-[--clr-ter]">
+                    Il campo "È un imprevisto SPECIALE?" è obbligatorio
+                  </span>
+                )}
+                <div className="ms-4 flex h-fit w-1/4 items-center justify-around px-4 xl:gap-2">
+                  <label htmlFor="isSpecialYES">Sì</label>
+                  <input
+                    {...register("isSpecial", { required: true })}
+                    id="isSpecialYES"
+                    name="isSpecial"
+                    type="radio"
+                    value={true}
+                    className="ms-2 h-4 w-4 rounded border-[--clr-txt] text-[--clr-btn] focus:ring-2 focus:ring-[--clr-btn] md:m-0 dark:border-[--clr-txt] dark:bg-[--clr-txt] dark:ring-offset-[--clr-txt] dark:focus:ring-[--clr-btn]"
+                  />
+                  <label htmlFor="isSpecialNO">No</label>
+                  <input
+                    {...register("isSpecial", { required: true })}
+                    id="isSpecialNO"
+                    name="isSpecial"
                     type="radio"
                     value={false}
                     className="ms-2 h-4 w-4 rounded border-[--clr-txt] text-[--clr-btn] focus:ring-2 focus:ring-[--clr-btn] md:m-0 dark:border-[--clr-txt] dark:bg-[--clr-txt] dark:ring-offset-[--clr-txt] dark:focus:ring-[--clr-btn]"

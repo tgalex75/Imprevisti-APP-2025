@@ -18,6 +18,7 @@ const Prepartita = () => {
     DatiImprevistiContext,
   );
   const [casuale, setCasuale] = useState(null);
+  const [count, setCount] = useState(0);
   const [casualeCommunity, setCasualeCommunity] = useState(null);
 
   const [extractedPlayer, setExtractedPlayer] = useState(null);
@@ -40,13 +41,17 @@ const Prepartita = () => {
   const estraiNumeroCasuale = useCallback(() => {
     const estratto = rnd(prepartita, (i) => i.weight);
     setCasuale(estratto);
+    setCount(count + 1);
   }, []);
+
+  console.log(count)
 
   const {
     id,
     title,
     description,
     isImprev,
+    isSpecial,
     ultEstrazione,
     baseEstrazione,
     numbExtrPlayer,
@@ -54,12 +59,12 @@ const Prepartita = () => {
   } = casuale ? casuale : {};
 
   const titoloH1 = "Prepartita";
-  const isImpCommunity = title === "PAROLA ALLA COMMUNITY!";
   const numbersEx = numbers(baseEstrazione);
 
   return (
     <>
       <LayoutBase
+        key={count}
         titoloH1={titoloH1}
         id={id}
         isImprev={isImprev}
@@ -74,17 +79,14 @@ const Prepartita = () => {
                   : "invisible"
               }
             >
-              {isImpCommunity ? "Imprevisto della Community" : "IMPREVISTO!"}
+              {isSpecial ? "IMPREVISTO SPECIALE!" : "IMPREVISTO!"}
             </h2>
-            {!isImpCommunity && (
+            {!isSpecial && (
               <>
                 <h3
                   className={`flex-1 text-6xl font-extrabold uppercase xl:text-4xl ${
-                    title === "PAROLA ALLA COMMUNITY!" && "invisible"
-                  }, ${
-                    id === 999 &&
-                    "absolute left-1/2 top-1/3 -translate-x-1/2 -translate-y-1/2 xl:top-1/2"
-                  }`}
+                    isSpecial && "invisible"
+                  } `}
                 >
                   {title}
                 </h3>
@@ -99,7 +101,7 @@ const Prepartita = () => {
               </>
             )}
 
-            {isImpCommunity && (
+            {isSpecial && (
               <FetchImprevisto
                 extractedPlayer={extractedPlayer}
                 setExtractedPlayer={setExtractedPlayer}
@@ -107,7 +109,7 @@ const Prepartita = () => {
               />
             )}
 
-            {ultEstrazione && !isImpCommunity && (
+            {ultEstrazione && !isSpecial && (
               <SecondaEstrazioneDiretta
                 numbExtrPlayer={numbExtrPlayer}
                 extractedPlayer={extractedPlayer}

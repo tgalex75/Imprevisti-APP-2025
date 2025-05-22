@@ -61,26 +61,26 @@ const Navbar = () => {
     <nav className="fixed z-[1000] flex h-auto w-full select-none items-center justify-between px-2 py-1 xl:px-6 xl:py-3">
       <div
         style={isMobile ? { visibility: "hidden" } : {}}
-        className="flex cursor-pointer items-center justify-center rounded-full p-2 hover:bg-[--clr-txt]"
+        className="flex cursor-pointer items-center justify-center rounded-full hover:bg-[--clr-txt]"
       >
         <Link to="/">
           <MdHome
-            size={36}
-            className="fill-[--clr-txt] hover:fill-[--clr-bg]"
+            size={50}
+            className="fill-[--clr-txt] hover:fill-[--clr-bg] p-2"
           />
         </Link>
       </div>
-      <div className="flex cursor-pointer items-center justify-center rounded-full p-1 hover:bg-[--clr-txt] md:p-2">
+      <div className="flex items-center justify-center w-12 h-12">
         {!isOpenMenu ? (
           <MdMenu
-            size={isMobile ? 28 : 36}
-            className="fill-[--clr-txt] hover:fill-[--clr-bg]"
+            size={isMobile ? 28 : 48}
+            className="fill-[--clr-txt] cursor-pointer hover:fill-[--clr-bg] hover:bg-[--clr-txt] p-2 rounded-full"
             onClick={handleClick}
           />
         ) : (
           <MdClose
-            size={isMobile ? 28 : 36}
-            className="fill-[--clr-txt] hover:fill-[--clr-bg]"
+            size={isMobile ? 28 : 48}
+            className="fill-[--clr-txt] cursor-pointer hover:fill-[--clr-bg] hover:bg-[--clr-txt] p-2 rounded-full"
             onClick={handleClick}
           />
         )}
