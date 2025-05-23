@@ -96,8 +96,8 @@ const EditorSerieNegativa = () => {
               onClick={() => handleEditClick(item)} // Al click, imposta l'elemento in modifica
               className="m-2 cursor-pointer border-[--clr-txt] p-2 hover:bg-[--clr-btn] relative group"
             >
-              <h3>Titolo: {item.titolo}</h3>
-              <p>Descrizione: {item.descrizione}</p>
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
               <MdDeleteForever
                 size={28}
                 className="absolute right-0 top-1/2 me-0 xl:me-2 h-full w-8 -translate-y-1/2 cursor-pointer transition-all group-hover:fill-red-600 hover:scale-125"

@@ -5,7 +5,7 @@ const Sfondo = () => {
   const [logoURL, setLogoURL] = useState(null);
 
 
-  const fetchLogoURL = async () => {
+  const fetchLogoURL = () => {
     const { data } = supabase.storage
       .from("immagini")
       .getPublicUrl("bg/logo.png");

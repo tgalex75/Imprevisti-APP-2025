@@ -172,6 +172,16 @@ CREATE TABLE IF NOT EXISTS "public"."settimana" (
 ALTER TABLE "public"."settimana" OWNER TO "postgres";
 
 
+CREATE TABLE IF NOT EXISTS "public"."preferenze-immagini" (
+    "id" smallint NOT NULL,
+    "nome" "text",
+    "url" "text" NULL
+);
+
+
+ALTER TABLE "public"."preferenze-immagini" OWNER TO "postgres";
+
+
 CREATE TABLE IF NOT EXISTS "public"."ingaggi-mercato" (
     "id" "uuid" DEFAULT "gen_random_uuid"() NOT NULL,
     "tipo" "text" NOT NULL,
@@ -254,6 +264,11 @@ ALTER TABLE ONLY "public"."settimana"
 
 
 
+ALTER TABLE ONLY "public"."preferenze-immagini"
+    ADD CONSTRAINT "preferenze-immagini_pkey" PRIMARY KEY ("id");
+
+
+
 ALTER TABLE ONLY "public"."ingaggi-mercato"
     ADD CONSTRAINT "ingaggi-mercato_pkey" PRIMARY KEY ("id");
 
@@ -296,6 +311,9 @@ ALTER TABLE "public"."prepartita" DISABLE ROW LEVEL SECURITY;
 
 
 ALTER TABLE "public"."settimana" DISABLE ROW LEVEL SECURITY;
+
+
+ALTER TABLE "public"."preferenze-immagini" DISABLE ROW LEVEL SECURITY;
 
 
 ALTER TABLE "public"."ingaggi-mercato" DISABLE ROW LEVEL SECURITY;
@@ -369,6 +387,12 @@ GRANT ALL ON TABLE "public"."prepartita" TO "service_role";
 GRANT ALL ON TABLE "public"."settimana" TO "anon";
 GRANT ALL ON TABLE "public"."settimana" TO "authenticated";
 GRANT ALL ON TABLE "public"."settimana" TO "service_role";
+
+
+
+GRANT ALL ON TABLE "public"."preferenze-immagini" TO "anon";
+GRANT ALL ON TABLE "public"."preferenze-immagini" TO "authenticated";
+GRANT ALL ON TABLE "public"."preferenze-immagini" TO "service_role";
 
 
 

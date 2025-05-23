@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
 import Dado from "../Components/Dado";
 import rnd from "random-weight";
+import {v4 as uuidv4} from "uuid"
 import LayoutBase from "../Components/LayoutBase";
 import DatiImprevistiContext from "../context/datiImprevisti";
 
@@ -26,7 +27,7 @@ const Settimana = () => {
   const estraiNumeroCasuale = () => {
     const estrattoSettimana = rnd(settimana, (i) => i.weight);
     setCasuale(estrattoSettimana);
-    setCount(count + 1);
+    setCount(uuidv4());
   };
 
   const titoloH1 = "Imprevisto della Settimana";

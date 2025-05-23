@@ -88,6 +88,47 @@ VALUES (
 		25
 	);
 
+	--
+-- Data for Name: prepartita; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO "public"."serie-negativa" (
+		"title",
+		"description",
+		"isImprev",
+		"ultEstrazione",
+		"baseEstrazione",
+		"numbExtrPlayer",
+		"weight"
+	)
+VALUES (
+		'Squadra contro',
+		'4 Top player, i più forti, si ribellano al mister. Mettili fuori squadra. Se vinci riconquisti la loro fiducia fino a fine stagione. Se perdi o pareggi, la prossima partita se ne aggiunge un altro.',
+		true,
+		false,
+		30,
+		0,
+		15
+	),
+	(
+		'NESSUN IMPREVISTO',
+		'Tutto tranquillo',
+		false,
+		false,
+		0,
+		0,
+		25
+	),
+	(
+		'Gelosia',
+		'I due giocatori estratti iniziano una lite e finiscono fuori squadra. Da ora l’imprevisto si rifarà a loro fino a fine stagione. Se viene risorteggiato dovrai scegliere chi tenere cedendo l’altro alla prima finestra utile.',
+		true,
+		true,
+		30,
+		2,
+		10
+	);
+
 --
 -- Data for Name: speciali; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -208,6 +249,18 @@ VALUES ('trofei', 'Coppa Nazionale', 10, null, null, null, null, null, null, nul
 	('fine-camp', 'Assistman', 3, null, null, null, null, null, null, null, null),
 	('fine-camp', 'Portiere', 3, null, null, null, null, null, null, null, null);
 
+--
+-- Data for Name: preferenze-immagini; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO "public"."preferenze-immagini" ("id", "nome", "url")
+VALUES ( 1,'Prepartita', NULL),
+	( 2,'Settimana', NULL),
+	( 3,'Serie Negativa', NULL),
+	( 4,'Ingaggi', NULL),
+	( 5,'Mercato', NULL),
+	( 6,'Saldo Punti', NULL);
+
 
 
 --
@@ -221,19 +274,10 @@ insert into storage.buckets (id, name, public)
 values ('immagini', 'immagini', true);
 
 
-create policy "Images are publicly accessible."
-  on storage.objects for select
-  using ( bucket_id = 'immagini' );
+CREATE POLICY "Anyone can view images" ON storage.objects FOR SELECT TO public USING (bucket_id = 'immagini');
 
-create policy "Anyone can upload an image."
-  on storage.objects for insert
-  with check ( bucket_id = 'immagini' );
+CREATE POLICY "Anyone can upload images" ON storage.objects FOR INSERT TO public WITH CHECK (bucket_id = 'immagini');
 
-create policy "Anyone can update an image."
-  on storage.objects for update
-  with check ( bucket_id = 'immagini' );
+CREATE POLICY "Anyone can update images 1qem02d_0" ON storage.objects FOR UPDATE TO public USING (bucket_id = 'immagini');
 
-create policy "Anyone can delete an image."
-  on storage.objects for delete
-  with check ( bucket_id = 'immagini' );
 
