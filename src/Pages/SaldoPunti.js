@@ -5,6 +5,7 @@ import { GrPowerReset } from "react-icons/gr";
 import { LuArrowUpWideNarrow, LuArrowDownWideNarrow } from "react-icons/lu";
 import { IoMdTrendingDown, IoMdTrendingUp, IoMdPodium } from "react-icons/io";
 import { GiTrophy, GiTrophyCup } from "react-icons/gi";
+import { MdCreate } from "react-icons/md";
 import DatiImprevistiContext from "../context/datiImprevisti";
 
 const SaldoPunti = () => {
@@ -60,7 +61,9 @@ const SaldoPunti = () => {
   const bonusMalusStyle =
     "flex flex-col cursor-pointer text-center text-base p-2 border-none hover:border items-center justify-center rounded-xl hover:text-black hover:bg-[--clr-ter]";
 
-  const bonusCessioni = bonusMalus.filter((el) => el.tipo === "cessioni");
+  const bonusCessioni = bonusMalus
+    .filter((el) => el.tipo === "cessioni")
+    .sort((a, b) => a.id - b.id);
 
   const mappedCessioni = bonusCessioni.map((el) => (
     <div
@@ -72,7 +75,9 @@ const SaldoPunti = () => {
     </div>
   ));
 
-  const malusAcquisti = bonusMalus.filter((el) => el.tipo === "acquisti");
+  const malusAcquisti = bonusMalus
+    .filter((el) => el.tipo === "acquisti")
+    .sort((a, b) => a.id - b.id);
 
   const mappedAcquisti = malusAcquisti.map((el) => (
     <div
@@ -92,11 +97,11 @@ const SaldoPunti = () => {
     >
       ≥
       {isSerieMinoreOver
-        ? el.nomeSerieMinoriOver
+        ? el.nomeSerieMinoreOver
         : isOver32
           ? el.nomeOver
           : isSerieMinore
-            ? el.nomeSerieMinori
+            ? el.nomeSerieMinore
             : el.nomeUnder}{" "}
       {isSerieMinoreOver
         ? el.valoreSerieMinoreOver
@@ -108,7 +113,9 @@ const SaldoPunti = () => {
     </div>
   ));
 
-  const bonusTrofei = bonusMalus.filter((el) => el.tipo === "trofei");
+  const bonusTrofei = bonusMalus
+    .filter((el) => el.tipo === "trofei")
+    .sort((a, b) => a.id - b.id);
 
   const mappedTrofei = bonusTrofei.map((el) => (
     <div
@@ -120,7 +127,9 @@ const SaldoPunti = () => {
     </div>
   ));
 
-  const trendPrestazioni = bonusMalus.filter((el) => el.tipo === "trend");
+  const trendPrestazioni = bonusMalus
+    .filter((el) => el.tipo === "trend")
+    .sort((a, b) => a.id - b.id);
 
   const mappedTrend = trendPrestazioni.map((el) => (
     <div
@@ -132,7 +141,9 @@ const SaldoPunti = () => {
     </div>
   ));
 
-  const fineCampionato = bonusMalus.filter((el) => el.tipo === "fine-camp");
+  const fineCampionato = bonusMalus
+    .filter((el) => el.tipo === "fine-camp")
+    .sort((a, b) => a.id - b.id);
 
   const mappedPiazzamento = fineCampionato.map((el) => (
     <div
@@ -148,13 +159,19 @@ const SaldoPunti = () => {
     <>
       <main
         id="saldo-punti"
-        className="flex h-full w-full select-none flex-col items-center justify-between gap-2 bg-black/30 py-4 font-semibold xl:font-bold"
+        className="flex h-full w-full select-none flex-col items-center justify-between gap-2 bg-[--clr-bg] py-4 font-semibold xl:font-bold"
       >
         <section
           id="saldoPunti"
           className="flex h-1/4 w-full flex-col items-center justify-around"
         >
-          <h1 className="relative">Saldo Punti</h1>
+          <h1 className="group relative">
+            Saldo Punti
+              {/* <MdCreate
+                className="absolute hidden group-hover:inline"
+                size={32}
+              /> */}
+          </h1>
           <h3 className="text-8xl font-black italic xl:text-7xl">{punti}</h3>
           <div className="absolute right-2 mt-12 flex flex-col items-center justify-around p-2">
             <GrPowerReset

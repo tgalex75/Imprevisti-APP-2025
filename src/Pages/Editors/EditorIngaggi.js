@@ -67,6 +67,7 @@ const EditorIngaggi = () => {
   // Gestore per annullare la modifica
   const handleCancelEdit = () => {
     setEditingItem(null);
+    reset()
   };
 
   const rmVoceDB = async (element) => {
@@ -95,7 +96,7 @@ const EditorIngaggi = () => {
               onClick={() => handleEditClick(item)} // Al click, imposta l'elemento in modifica
               className="m-2 cursor-pointer border-[--clr-txt] p-2 hover:bg-[--clr-btn] relative group"
             >
-              <h3>{item.tipo}: {item.titolo}</h3>
+              <h3 className="uppercase">{item.tipo}: {item.titolo}</h3>
               <p>Descrizione: {item.descrizione}</p>
               <MdDeleteForever
                 size={28}
@@ -136,7 +137,7 @@ const EditorIngaggi = () => {
                   placeholder="Ingaggio o Mercato?"
                   className="block w-2/3 self-start rounded p-1 text-sm font-semibold uppercase text-black placeholder:normal-case placeholder:italic"
                 >
-                  <option value="Ingaggio">Ingaggio</option>
+                  <option value="Ingaggi">Ingaggi</option>
                   <option value="Mercato">Mercato</option>
                 </select>
               </label>
@@ -144,7 +145,7 @@ const EditorIngaggi = () => {
                 Titolo Imprevisto
                 {errors.titolo && (
                   <span className="font-normal italic text-[--clr-ter]">
-                    Il campo "Titolo" è obbligatorio - max 50 caratteri
+                    Il campo "Titolo" è obbligatorio - max 60 caratteri
                   </span>
                 )}
                 <input

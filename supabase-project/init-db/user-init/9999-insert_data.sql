@@ -220,7 +220,7 @@ VALUES (10);
 --
 
 INSERT INTO "public"."bonus-malus-punti" ("tipo", "nome", "valore", "nomeUnder", "nomeOver",
-		"nomeSerieMinori", "nomeSerieMinoriOver", "valoreUnder", "valoreOver",
+		"nomeSerieMinore", "nomeSerieMinoreOver", "valoreUnder", "valoreOver",
 		"valoreSerieMinore", "valoreSerieMinoreOver")
 VALUES ('trofei', 'Coppa Nazionale', 10, null, null, null, null, null, null, null, null),
 	('trofei', 'Scudetto', 18, null, null, null, null, null, null, null, null),
@@ -239,12 +239,12 @@ VALUES ('trofei', 'Coppa Nazionale', 10, null, null, null, null, null, null, nul
 	('acquisti', null, null, '90', '90', '90', '90', -15, -12, -7.5, -6),
 	('trend', 'Serie Negativa', -1, null, null, null, null, null, null, null, null),
 	('trend', 'Serie Positiva', 1, null, null, null, null, null, null, null, null),
-	('fine-camp', '2', 9, null, null, null, null, null, null, null, null),
-	('fine-camp', '3', 6, null, null, null, null, null, null, null, null),
-	('fine-camp', '4', 5, null, null, null, null, null, null, null, null),
-	('fine-camp', '5', 4, null, null, null, null, null, null, null, null),
-	('fine-camp', '6', 3, null, null, null, null, null, null, null, null),
-	('fine-camp', '7', 1, null, null, null, null, null, null, null, null),
+	('fine-camp', '2°', 9, null, null, null, null, null, null, null, null),
+	('fine-camp', '3°', 6, null, null, null, null, null, null, null, null),
+	('fine-camp', '4°', 5, null, null, null, null, null, null, null, null),
+	('fine-camp', '5°', 4, null, null, null, null, null, null, null, null),
+	('fine-camp', '6°', 3, null, null, null, null, null, null, null, null),
+	('fine-camp', '7°', 1, null, null, null, null, null, null, null, null),
 	('fine-camp', 'Cannoniere', 5, null, null, null, null, null, null, null, null),
 	('fine-camp', 'Assistman', 3, null, null, null, null, null, null, null, null),
 	('fine-camp', 'Portiere', 3, null, null, null, null, null, null, null, null);

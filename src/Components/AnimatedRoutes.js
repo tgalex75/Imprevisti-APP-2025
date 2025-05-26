@@ -41,7 +41,7 @@ const AnimatedRoutes = () => {
         <Route path="/saldo-punti" element={<SaldoPunti />} />
         <Route
           path="/ingaggio"
-          element={<IngaggiMercato tipoImprevisto="Ingaggio" />}
+          element={<IngaggiMercato tipoImprevisto="Ingaggi" />}
         />
         <Route path="/estrazione-libera" element={<EstrazioneLibera />} />
         <Route path="/serie-negativa" element={<SerieNegativa />} />

@@ -65,6 +65,7 @@ const EditorSpeciali = () => {
 
   // Gestore per annullare la modifica
   const handleCancelEdit = () => {
+    reset()
     setEditingItem(null);
   };
 

@@ -66,6 +66,7 @@ const EditorSettimana = () => {
   // Gestore per annullare la modifica
   const handleCancelEdit = () => {
     setEditingItem(null);
+    reset()
   };
 
   const rmVoceDB = async (element) => {

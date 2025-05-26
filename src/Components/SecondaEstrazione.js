@@ -23,7 +23,7 @@ const SecondaEstrazione = () => {
 
 
   return (
-    <section className="flex h-auto w-full flex-col items-center justify-around gap-2 rounded-md border-2 border-[--clr-txt]/20 p-4 xl:w-3/4 xl:flex-row xl:p-4 xl:px-12">
+    <section className="flex h-auto w-full flex-col items-center justify-around gap-2 rounded-md p-4 xl:w-3/4 xl:flex-row xl:p-4 xl:px-12">
       <div className="flex h-fit w-3/4 flex-col items-center justify-around gap-2 rounded-lg px-2 xl:w-auto">
         <div className="flex h-12 w-full flex-col items-center justify-around xl:h-auto">
           <input
@@ -31,7 +31,7 @@ const SecondaEstrazione = () => {
             ref={ref}
             type="number"
             id="input-estrazione-giocatore"
-            className="w-full flex-1 appearance-none rounded-lg border-[--clr-txt] bg-[--clr-txt] p-2 text-center text-sm text-[--clr-txt] placeholder-[--clr-txt] shadow-sm focus:border-transparent focus:outline-none focus:ring-4 focus:ring-sky-700"
+            className="w-full flex-1 appearance-none rounded-lg border-[--clr-txt] bg-[--clr-bg] ring ring-[--clr-txt] p-2 text-center text-sm text-[--clr-txt] placeholder-[--clr-txt] shadow-sm focus:border-transparent focus:outline-none focus:ring-4 focus:ring-sky-700"
             name="randomPlayerNum"
             placeholder="Su quanti giocatori?"
           />

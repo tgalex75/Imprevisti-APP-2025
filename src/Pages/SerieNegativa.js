@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect, useContext, useCallback } from "react";
+import { useState, useEffect, useContext, useCallback } from "react";
 import Dado from "../Components/Dado";
 import SecondaEstrazioneDiretta from "../Components/SecondaEstrazioneDiretta";
 import RegistroSerieNegativa from "../Components/RegistroSerieNegativa";
@@ -34,6 +34,9 @@ const SerieNegativa = () => {
     baseEstrazione,
     numbExtrPlayer,
   } = casuale ? casuale : {};
+
+  console.log(serieNegativa)
+
 
   useEffect(() => {
     let timeout = setTimeout(() => {

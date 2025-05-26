@@ -10,7 +10,7 @@ import RegistroSerieNegativa from "../Components/RegistroSerieNegativa";
 import rnd from "random-weight";
 import random from "random";
 import { numbers } from "../Funzioni/schemi";
-import {v4 as uuidv4} from "uuid"
+import { v4 as uuidv4 } from "uuid";
 import pickRandom from "pick-random";
 import DatiImprevistiContext from "../context/datiImprevisti";
 
@@ -27,8 +27,8 @@ const Prepartita = () => {
   useEffect(() => {
     setCasualeCommunity(
       speciali?.length > 0
-      ? random.choice(speciali)
-      : { id: 0, descrizione: "LISTA VUOTA!!!" },
+        ? random.choice(speciali)
+        : { id: 0, descrizione: "LISTA VUOTA!!!" },
     );
     fetchSpeciali();
     let timeout = setTimeout(() => {
@@ -36,24 +36,14 @@ const Prepartita = () => {
     }, 200);
     return () => clearTimeout(timeout);
   }, [casuale]);
-  
+
   // Prima Estrazione
-  
+
   const estraiNumeroCasuale = useCallback(() => {
     const estratto = rnd(prepartita, (i) => i.weight);
     setCasuale(estratto);
     setCount(uuidv4());
   }, []);
-  
-  // Controlla se saldoPunti esiste e se ha almeno un elemento
-if (!prepartita || prepartita.length === 0) {
-  // Puoi mostrare un messaggio di caricamento, null, o un valore di fallback
-  return (
-    <div className="left-1/2 top-1/2 -translate-x-1/2 animate-pulse">
-      Caricamento dati imprevisto...
-    </div>
-  ); // Oppure return null; se non vuoi mostrare nulla
-}
 
   const {
     id,
@@ -69,6 +59,16 @@ if (!prepartita || prepartita.length === 0) {
 
   const titoloH1 = "Prepartita";
   const numbersEx = numbers(baseEstrazione);
+
+  // Controlla se saldoPunti esiste e se ha almeno un elemento
+  if (!prepartita || prepartita.length === 0) {
+    // Puoi mostrare un messaggio di caricamento, null, o un valore di fallback
+    return (
+      <div className="left-1/2 top-1/2 -translate-x-1/2 animate-pulse">
+        Caricamento dati imprevisto...
+      </div>
+    ); // Oppure return null; se non vuoi mostrare nulla
+  }
 
   return (
     <>
