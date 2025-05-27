@@ -52,7 +52,7 @@ const IngaggiMercato = (props) => {
         transition={{ delay: 0.4, duration: 0.4, type: "spring" }}
         id="containerPrimaEstrazione"
         style={isImprev ? { color: "var(--clr-ter)" } : {}}
-        className="flex h-full w-full select-none flex-col items-center justify-around rounded-xl bg-black/50 pt-2 text-center shadow-lg ring ring-inset ring-[--clr-txt] xl:px-10 xl:pb-8"
+        className="flex h-full w-full select-none flex-col items-center justify-around rounded-xl bg-[rgb(var(--clr-bg)/.5)] pt-2 text-center shadow-lg ring ring-inset ring-[--clr-txt] xl:px-10 xl:pb-8"
       >
         {!casuale && (
           <h2 className="flex h-full items-center justify-center text-5xl italic">

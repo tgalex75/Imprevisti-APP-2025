@@ -25,7 +25,7 @@ export const mySelect = (labelText, ref, func, arr, defaultVal) => {
         {labelText}
       </label>
       <select
-        className="text-sm block w-48 rounded-md border border-[--clr-txt] bg-black/50 px-3 py-2 font-semibold text-[--clr-txt] shadow-sm"
+        className="text-sm block w-48 rounded-md border border-[--clr-txt] bg-[rgb(var(--clr-bg)/.5)] px-3 py-2 font-semibold text-[--clr-txt] shadow-sm"
         name="tattica"
         ref={ref}
         onChange={func}

@@ -1,4 +1,4 @@
-import { Sketch } from "@uiw/react-color";
+import { Chrome } from "@uiw/react-color";
 
 const ColorPickerComponent = (props) => {
   const { defaultColor, updateFunc, testoColore } = props;
@@ -10,7 +10,7 @@ const ColorPickerComponent = (props) => {
         className="h-4 w-1/3 border border-[--clr-txt]"
         style={{ color: "var(--clr-txt)", backgroundColor: defaultColor }}
       ></div>
-      <Sketch onChange={updateFunc} color={defaultColor} width={"80%"} />
+      <Chrome onChange={updateFunc} color={defaultColor} width={"80%"} />
     </div>
   );
 };

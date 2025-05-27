@@ -35,8 +35,6 @@ const SerieNegativa = () => {
     numbExtrPlayer,
   } = casuale ? casuale : {};
 
-  console.log(serieNegativa)
-
 
   useEffect(() => {
     let timeout = setTimeout(() => {
@@ -71,7 +69,7 @@ const SerieNegativa = () => {
         key={count}
         id="containerPrimaEstrazione"
         style={isImprev ? { color: "var(--clr-ter)" } : {}}
-        className="flex h-full w-full select-none flex-col items-center justify-evenly gap-4 rounded-xl bg-black/50 px-4 py-2 text-center shadow-lg ring ring-inset ring-[--clr-txt] xl:gap-0 xl:px-10"
+        className="flex h-full w-full select-none flex-col items-center justify-evenly gap-4 rounded-xl bg-[rgb(var(--clr-bg)/.5)] px-4 py-2 text-center shadow-lg ring ring-inset ring-[--clr-txt] xl:gap-0 xl:px-10"
       >
         {!casuale ? (
           <h2 className="flex h-full items-center justify-center text-5xl italic">

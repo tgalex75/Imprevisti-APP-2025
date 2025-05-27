@@ -2,19 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-
 * {
   margin: 0;
   padding: 0;
 }
 
 :root {
-  --clr-prim: #fffffc;
-  --clr-sec: #008000;
-  --clr-ter: #ffa500;
-  --clr-bg: #1d1c2f;
-  --clr-txt: #eeeeee;
-  --clr-btn: #4b147c;
+  --clr-prim: 255 255 252;
+  --clr-sec: 0 128 0;
+  --clr-ter: 255 165 0;
+  --clr-bg: 29 28 47;
+  --clr-txt: 238 238 238;
+  --clr-btn: 75 20 124;
 }
 
 body {
@@ -39,7 +38,6 @@ code {
 
 /* Font descrizione */
 
-
 .orbitron-regular {
   font-family: "Orbitron", sans-serif;
   font-optical-sizing: auto;
@@ -61,46 +59,10 @@ code {
   font-style: normal;
 }
 
-
-
 h1 {
   font-family: "Orbitron", sans-serif;
   font-size: clamp(1.2rem, 2.5vw, 3rem);
   font-weight: 900;
-}
-
-.t-deGdmh {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 25vw;
-  height: 60vh;
-  border: 0.3rem solid var(--clr-ter);
-  padding: 1rem;
-  border-radius: 1rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  justify-items: center;
-}
-
-.t-deGdmh button {
-  background-color: transparent;
-  border-color: var(--clr-ter);
-  color: var(--clr-ter);
-}
-
-.c-bOcPnF-cmFMMs-color-primary:hover {
-  background-color: var(--clr-ter) !important;
-  color: black;
-}
-
-@media screen and (max-width: 767px) {
-  .t-deGdmh {
-    width: 75vw;
-    height: 70vh;
-  }
 }
 
 .temporary-bounce {

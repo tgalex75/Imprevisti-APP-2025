@@ -64,7 +64,7 @@ function ImageUploader(props) {
   return (
     <div
       {...getRootProps()}
-      className="flex min-h-12 xl:h-18 items-center justify-around bg-black text-sm xl:text-base odd:bg-opacity-30 even:bg-opacity-50 p-2"
+      className="flex min-h-12 xl:h-18 items-center justify-around bg-[--clr-bg] text-sm xl:text-base odd:bg-opacity-30 even:bg-opacity-50 p-2"
     >
       <h6 className="w-2/5 xl:w-1/3">{nome}</h6>
       <input {...getInputProps()} />

@@ -85,7 +85,7 @@ const EditorSettimana = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.7, duration: 0.7 }}
-        className="flex h-full w-full flex-col items-center justify-around rounded-lg bg-black/50 gap-2 text-[--clr-txt]"
+        className="flex h-full w-full flex-col items-center justify-around rounded-lg bg-[rgb(var(--clr-bg)/.5)] gap-2 text-[--clr-txt]"
       >
         {/* LISTA ELEMENTI */}
         <div className="h-full w-full overflow-y-auto pb-2">

@@ -14,14 +14,14 @@ const RegistroRiepilogo = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.7, duration: 0.7 }}
-        className="h-full w-full items-center gap-2 overflow-hidden rounded-lg bg-black/50 p-4 text-[--clr-txt] md:flex md:flex-col"
+        className="h-full w-full items-center gap-2 overflow-hidden rounded-lg bg-[rgb(var(--clr-bg)/.5)] p-4 text-[--clr-txt] md:flex md:flex-col"
       >
         <h4 className="text-[--clr-ter] font-semibold">Imprevisti Serie Negativa</h4>
         <ul className="flex h-full w-full flex-col gap-1 overflow-y-auto border px-2 pb-2">
           {cartItems.map((el) => (
             <li
               key={el.id}
-              className="flex items-center justify-between bg-[--clr-txt]/20 py-1 ps-2 text-left text-sm uppercase"
+              className="flex items-center justify-between bg-[rgb(var(--clr-txt)/.2)] py-1 ps-2 text-left text-sm uppercase"
             >
               {el.title} - {el.quantity}
               <MdClear

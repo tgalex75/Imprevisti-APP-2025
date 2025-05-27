@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useContext } from "react";
+import { Link } from "react-router-dom";
 import { supabase } from "../supabaseClient";
 import { GrPowerReset } from "react-icons/gr";
 import { LuArrowUpWideNarrow, LuArrowDownWideNarrow } from "react-icons/lu";
@@ -14,7 +15,7 @@ const SaldoPunti = () => {
   const isSerieMinoreOver = isOver32 && isSerieMinore;
 
   const { bonusMalus, saldoPunti, fetchSaldoPunti } = useContext(
-    DatiImprevistiContext,
+    DatiImprevistiContext
   );
 
   // Controlla se saldoPunti esiste e se ha almeno un elemento
@@ -89,8 +90,8 @@ const SaldoPunti = () => {
               isOver32
                 ? el.valoreOver
                 : isSerieMinore
-                  ? el.valoreSerieMinore
-                  : el.valoreUnder,
+                ? el.valoreSerieMinore
+                : el.valoreUnder
             )
       }
       className={bonusMalusStyle}
@@ -99,17 +100,17 @@ const SaldoPunti = () => {
       {isSerieMinoreOver
         ? el.nomeSerieMinoreOver
         : isOver32
-          ? el.nomeOver
-          : isSerieMinore
-            ? el.nomeSerieMinore
-            : el.nomeUnder}{" "}
+        ? el.nomeOver
+        : isSerieMinore
+        ? el.nomeSerieMinore
+        : el.nomeUnder}{" "}
       {isSerieMinoreOver
         ? el.valoreSerieMinoreOver
         : isOver32
-          ? el.valoreOver
-          : isSerieMinore
-            ? el.valoreSerieMinore
-            : el.valoreUnder}
+        ? el.valoreOver
+        : isSerieMinore
+        ? el.valoreSerieMinore
+        : el.valoreUnder}
     </div>
   ));
 
@@ -165,13 +166,13 @@ const SaldoPunti = () => {
           id="saldoPunti"
           className="flex h-1/4 w-full flex-col items-center justify-around"
         >
-          <h1 className="group relative">
-            Saldo Punti
-              {/* <MdCreate
-                className="absolute hidden group-hover:inline"
-                size={32}
-              /> */}
-          </h1>
+          <h1 className="relative">Saldo Punti</h1>
+            <Link to="/editor-saldo-punti">
+              <MdCreate
+                className="absolute left-2 mt-8 opacity-30 hover:left-4 transition-all duration-500 hover:opacity-100"
+                size={40}
+              />
+            </Link>
           <h3 className="text-8xl font-black italic xl:text-7xl">{punti}</h3>
           <div className="absolute right-2 mt-12 flex flex-col items-center justify-around p-2">
             <GrPowerReset

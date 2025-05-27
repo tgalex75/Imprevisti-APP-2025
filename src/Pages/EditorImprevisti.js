@@ -18,7 +18,7 @@ const EditorImprevisti = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.7, duration: 0.7 }}
-        className="flex h-full w-full flex-col items-center justify-around gap-2 rounded-lg bg-black/50 text-[--clr-txt]"
+        className="flex h-full w-full flex-col items-center justify-around gap-2 rounded-lg bg-[rgb(var(--clr-bg)/.5)] text-[--clr-txt]"
       >
         <h2>Scegli quale lista di imprevisti modificare</h2>
         <main className="grid h-full w-full grid-cols-2 gap-2 p-4 xl:grid-cols-3">
