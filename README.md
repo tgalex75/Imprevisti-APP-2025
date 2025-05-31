@@ -26,18 +26,15 @@ Verifica l'URL effettivo del repository del tuo progetto ed il nome della cartel
 
 ### **2\. Configura le Variabili d'Ambiente ⚙️**
 
-L'applicazione necessita di alcune chiavi di configurazione per connettersi a Supabase. Solitamente, queste sono gestite tramite un file .env.
+L'applicazione necessita di alcune chiavi di configurazione per connettersi a Supabase. Solitamente, queste sono gestite tramite un file `.env`. Ne troverai due uno nella directory primaria (dove si trova il Dockerfile insomma) e l'altro nella cartella del progetto docker, ossia la cartella chiamata `supabase-project`.
 
-1. **Cerca un file di esempio**: All'interno della cartella del progetto, dovresti trovare un file chiamato .env.example o simile. Questo file mostra quali variabili d'ambiente sono necessarie.
-2. **Crea il tuo file .env**: Duplica il file .env.example e rinominalo in .env.
-
-   * Su Linux e macOS puoi usare il comando: cp .env.example .env
-   * Su Windows puoi usare il comando: copy .env.example .env
-3. **Inserisci i tuoi valori**: Apri il file .env con un editor di testo e inserisci i valori corretti per le variabili d'ambiente relative a Supabase (come SUPABASE\_URL e SUPABASE\_ANON\_KEY). Queste informazioni dovresti averle dal tuo progetto Supabase.
-   `# Esempio di contenuto del file .env`
-   `REACT_APP_SUPABASE_URL=IL_TUO_URL_SUPABASE`
-   `REACT_APP_SUPABASE_ANON_KEY=LA_TUA_ANON_KEY_SUPABASE`
-
+1. **Cerca i file di esempio**: All'interno della cartella del progetto, dovresti trovare un file chiamato `.env.example`. Questi file mostrano quali variabili d'ambiente sono necessarie, sia per il Frontend che per il Backend (il database insomma!).
+2. **Crea i due file .env**: Duplica i rispettivi file .env.example e rinominali in .env (in entrambe le cartelle **ricordalo**!).
+   
+   * Su Linux e macOS puoi usare il comando: `cp .env.example .env`
+   * Su Windows puoi usare il comando: `copy .env.example .env`
+3. **Inserisci i tuoi valori - (PASSAGGIO NON OBBLIGATORIO)**, se desideri personalizzarli (non necessario finché fai girare la app in locale: questa infatti comprende già dei valori di **default**. Apri i file `.env` con un editor di testo e inserisci i valori corretti per le variabili d'ambiente relative a Supabase (come SUPABASE\_URL e SUPABASE\_ANON\_KEY). Queste informazioni dovresti averle dal tuo progetto Supabase. `# Esempio di contenuto del file .env` `REACT_APP_SUPABASE_URL=IL_TUO_URL_SUPABASE` `REACT_APP_SUPABASE_ANON_KEY=LA_TUA_ANON_KEY_SUPABASE`
+   
    `# Altre variabili necessarie per il backend...`
    `# Ad esempio, se anche il backend Dockerizzato le necessita direttamente:`
    `# POSTGRES_PASSWORD=una_password_sicura_per_il_db_locale_se_supabase_e_dockerizzato_localmente`
@@ -49,9 +46,9 @@ L'applicazione necessita di alcune chiavi di configurazione per connettersi a Su
 
 Docker Compose è uno strumento per definire ed eseguire applicazioni Docker multi-container. Il tuo progetto dovrebbe includere un file docker-compose.yml che definisce i servizi per il front-end e il backend.
 
-1. **Apri il terminale** nella cartella principale del progetto (la stessa dove si trova il file docker-compose.yml).
+1. **Apri il terminale** nella cartella principale del progetto `supabase-project`   (la stessa dove si trova il file docker-compose.yml).
 2. **Esegui il seguente comando** per costruire le immagini Docker (se non esistono già) e avviare i container:`docker-compose up --build`
-
+   
    * docker-compose up: Questo comando avvia i servizi definiti nel file docker-compose.yml.
    * \--build: Questa opzione forza la ricostruzione delle immagini Docker prima di avviare i container. È utile se hai apportato modifiche al codice sorgente o ai Dockerfile.
 
@@ -73,10 +70,8 @@ Per fermare l'applicazione e i relativi container Docker:
 1. Torna al terminale dove hai eseguito docker-compose up.
 2. Premi Ctrl \+ C.
 3. Potrebbe essere necessario attendere qualche secondo affinché i container si arrestino correttamente.
-4. Per assicurarti che i container siano rimossi (opzionale, ma utile per liberare risorse), puoi eseguire:
-   `docker-compose down`
-   o, per le versioni più recenti:
-   `docker compose down`
+4. Per assicurarti che i container siano rimossi (opzionale, ma utile per liberare risorse), puoi eseguire:`docker-compose down`
+   o, per le versioni più recenti:`docker compose down`
    Questo comando ferma e rimuove i container, le reti e, opzionalmente, i volumi definiti nel docker-compose.yml.
 
 ## **Risoluzione dei Problemi Comuni 🛠️**
@@ -92,3 +87,4 @@ Per fermare l'applicazione e i relativi container Docker:
   * Controlla i log dei container per errori specifici: docker logs \<nome\_container\_frontend\> e docker logs \<nome\_container\_backend\>. Puoi trovare i nomi dei container con docker ps.
   * Verifica la configurazione di rete nel docker-compose.yml e assicurati che le porte siano esposte correttamente.
   * Assicurati che le variabili d'ambiente per la connessione a Supabase (REACT\_APP\_SUPABASE\_URL e REACT\_APP\_SUPABASE\_ANON\_KEY) siano corrette e accessibili dal container del front-end.
+
