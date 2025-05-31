@@ -1,16 +1,29 @@
-# **Guida all'Installazione dell'Applicazione**
+# Guida all'Installazione dell'Applicazione
 
 Questa guida ti aiuterà ad installare ed eseguire l'applicazione sul tuo computer. L'applicazione utilizza React per il front-end e Supabase per il backend, entrambi gestiti tramite Docker.
 
-## **Prerequisiti**
+## Prerequisiti
 
-Prima di iniziare, assicurati di avere installato **Docker** sul tuo sistema. Docker è una piattaforma che permette di eseguire applicazioni in ambienti isolati chiamati container.
+Prima di iniziare, assicurati di avere installato Docker e Git sul tuo sistema.
 
-* **Windows**: Scarica e installa[Docker Desktop for Windows](https://docs.docker.com/desktop/install/windows-install/).
-* **macOS**: Scarica e installa[Docker Desktop for Mac](https://docs.docker.com/desktop/install/mac-install/).
-* **Linux**: Installa Docker Engine seguendo la guida per la tua distribuzione specifica. Puoi trovare le istruzioni su[Install Docker Engine](https://docs.docker.com/engine/install/). Generalmente, dopo l'installazione di Docker Engine, avrai bisogno anche di Docker Compose. Su molte distribuzioni Linux, Docker Compose viene installato come plugin di Docker CLI (docker compose) oppure come pacchetto separato (docker-compose). Verifica la documentazione per la tua distribuzione.
+### 1. Docker
 
-Assicurati anche di avere **Git** installato per clonare il repository dell'applicazione. Se non lo hai, puoi scaricarlo da [git-scm.com](https://git-scm.com/downloads).
+Docker è una piattaforma che permette di eseguire applicazioni in ambienti isolati chiamati container.
+
+* **Windows**: Scarica e installa [Docker Desktop for Windows](https://docs.docker.com/desktop/install/windows-install/).
+* **macOS**: Scarica e installa [Docker Desktop for Mac](https://docs.docker.com/desktop/install/mac-install/).
+* **Linux**: Installa Docker Engine seguendo la guida per la tua distribuzione specifica. Puoi trovare le istruzioni su [Install Docker Engine](https://docs.docker.com/engine/install/). Generalmente, dopo l'installazione di Docker Engine, avrai bisogno anche di Docker Compose. Su molte distribuzioni Linux, Docker Compose viene installato come plugin di Docker CLI (`docker compose`) oppure come pacchetto separato (`docker-compose`). Verifica la documentazione per la tua distribuzione.
+
+### 2. Git e `git.exe` nel PATH (Soprattutto per Windows)
+
+Git è necessario per clonare il repository dell'applicazione. Inoltre, il processo di build di Docker o Docker Compose stesso potrebbe necessitare dell'eseguibile `git.exe` disponibile nel PATH di sistema per raccogliere informazioni sul repository o per altre operazioni.
+
+* **Tutti i Sistemi Operativi**: Se non hai Git, scaricalo da [git-scm.com](https://git-scm.com/downloads).
+* **IMPORTANTE per Utenti Windows**:
+    * È fondamentale installare **Git per Windows** (disponibile su [git-scm.com](https://git-scm.com/downloads)).
+    * Durante l'installazione, assicurati di selezionare un'opzione che aggiunga Git al PATH di sistema. L'opzione raccomandata è solitamente "Git from the command line and also from 3rd-party software".
+    * **Avere solo GitHub Desktop installato potrebbe non essere sufficiente**, poiché potrebbe non aggiungere `git.exe` al PATH di sistema in modo che Docker possa trovarlo.
+    * **Dopo aver installato Git o modificato il PATH, riavvia il tuo terminale (PowerShell, Git Bash, Prompt dei Comandi) e, per sicurezza, anche Docker Desktop.** Questo assicura che le modifiche al PATH vengano recepite correttamente.
 
 ## **Installazione**
 
