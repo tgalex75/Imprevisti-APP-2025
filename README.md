@@ -33,6 +33,7 @@ Segui questi passaggi per mettere in funzione l'applicazione:
 
 Apri un terminale (su Windows puoi usare Git Bash, PowerShell o il Prompt dei Comandi; su macOS e Linux puoi usare il Terminale) e clona il repository dell'applicazione:
 `git clone https://github.com/tgalex75/imprevisti-supabase-docker.git`
+
 `cd imprevisti-supabase-docker`
 
 Verifica l'URL effettivo del repository del tuo progetto ed il nome della cartella che viene creata dopo la clonazione.
