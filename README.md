@@ -48,16 +48,16 @@ L'applicazione necessita di alcune chiavi di configurazione per connettersi a Su
    
    * Su Linux e macOS puoi usare il comando: `cp .env.example .env`
    * Su Windows puoi usare il comando: `copy .env.example .env`
-3. **Inserisci i tuoi valori - (PASSAGGIO NON OBBLIGATORIO)**, se desideri personalizzarli (non necessario finché fai girare la app in locale: questa infatti comprende già dei valori di **default**. Apri i file `.env` con un editor di testo e inserisci i valori corretti per le variabili d'ambiente relative a Supabase (come SUPABASE\_URL e SUPABASE\_ANON\_KEY). Queste informazioni dovresti averle dal tuo progetto Supabase.
+3. **Inserisci i tuoi valori - (PASSAGGIO NON OBBLIGATORIO)**, se desideri personalizzarli (non necessario finché fai girare la app in locale: questa infatti comprende già dei valori di **default**. Apri i file `.env` con un editor di testo e inserisci i valori corretti per le variabili d'ambiente relative a Supabase (come `SUPABASE_URL` e `SUPABASE_ANON_KEY`). Queste informazioni dovresti averle dal tuo progetto Supabase.
 
-> `# Esempio di contenuto del file .env`
-> `REACT_APP_SUPABASE_URL=IL_TUO_URL_SUPABASE` 
-> `REACT_APP_SUPABASE_ANON_KEY=LA_TUA_ANON_KEY_SUPABASE`
+> `# Esempio di contenuto del file .env` <br>
+> `REACT_APP_SUPABASE_URL=IL_TUO_URL_SUPABASE` <br>
+> `REACT_APP_SUPABASE_ANON_KEY=LA_TUA_ANON_KEY_SUPABASE` <br>
 > 
-> `# Altre variabili necessarie per il backend...`
-> `# Ad esempio, se anche il backend Dockerizzato le necessita direttamente:`
-> `# POSTGRES_PASSWORD=una_password_sicura_per_il_db_locale_se_supabase_e_dockerizzato_localmente`
-> `# (Nota: Se Supabase è un servizio cloud, le chiavi API sono generalmente sufficienti per il frontend.`
+> `# Altre variabili necessarie per il backend...` <br>
+> `# Ad esempio, se anche il backend Dockerizzato le necessita direttamente:` <br>
+> `# POSTGRES_PASSWORD=una_password_sicura_per_il_db_locale_se_supabase_e_dockerizzato_localmente` <br>
+> `# (Nota: Se Supabase è un servizio cloud, le chiavi API sono generalmente sufficienti per il frontend.` <br>
 > `# Se anche il backend Supabase è dockerizzato come parte del tuo stack, potrebbero servire più variabili)`
 
 **Importante**: Assicurati che i nomi delle variabili nel file .env corrispondano a quelli attesi dai tuoi container Docker (controlla il Dockerfile o il file docker-compose.yml).
@@ -76,8 +76,10 @@ Docker Compose è uno strumento per definire ed eseguire applicazioni Docker mul
 
 1. **Spostati** nella cartella principale del progetto `supabase-project`  (la stessa dove si trova il file `docker-compose.yml`).
 2. **Esegui il seguente comando** per costruire le immagini Docker (se non esistono già) e avviare i container: 
->`docker-compose up -d` <br>
-> `# Oppure, più probabile nelle versioni più recenti di Docker:` <br>
+>`docker-compose up -d`
+
+Oppure, più probabile nelle versioni più recenti di Docker:
+
 >`docker compose up -d`
    
    * `docker-compose up`: Questo comando avvia i servizi definiti nel file docker-compose.yml.
@@ -107,6 +109,7 @@ Per fermare l'applicazione e i relativi container Docker:
 o, per le versioni più recenti:
 
 > `docker compose down`
+
    Questo comando ferma e rimuove i container, le reti e, opzionalmente, i volumi definiti nel `docker-compose.yml`.
 
 ## **Risoluzione dei Problemi Comuni 🛠️**
