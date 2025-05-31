@@ -42,20 +42,27 @@ L'applicazione necessita di alcune chiavi di configurazione per connettersi a Su
    `# Se anche il backend Supabase è dockerizzato come parte del tuo stack, potrebbero servire più variabili)`
    **Importante**: Assicurati che i nomi delle variabili nel file .env corrispondano a quelli attesi dai tuoi container Docker (controlla il Dockerfile o il file docker-compose.yml).
 
-### **3\. Avvia l'Applicazione con Docker Compose 🚀**
+### **3\. Costruzione dell'Immagine Docker con `buildx` 🛠️**
+
+Per costruire il frontend che ti consentirà di interagire con la APP da Browser, è necessario costruire l'immagine docker che si occuperà di scaricare ed installare tutto il necessario.
+
+1. **Apri il terminale** nella cartella radice `imprevisti-supabase-docker` (la stessa dove si trovano il `Dockerfile` ed il `package.json`).
+2. **Esegui il seguente comando** per costruire l'immagine di base Docker: `docker build -t frontend .`
+   **Importante**: Attenzione al *punto* alla fine del comando appena indicato: esso è infatti necessario per dirgli di installare il necessario nella cartella attuale.
+   
+### **4\. Avvia l'Applicazione con Docker Compose 🚀**
 
 Docker Compose è uno strumento per definire ed eseguire applicazioni Docker multi-container. Il tuo progetto dovrebbe includere un file docker-compose.yml che definisce i servizi per il front-end e il backend.
 
-1. **Apri il terminale** nella cartella principale del progetto `supabase-project`   (la stessa dove si trova il file docker-compose.yml).
-2. **Esegui il seguente comando** per costruire le immagini Docker (se non esistono già) e avviare i container:`docker-compose up --build`
+1. **Spostati** nella cartella principale del progetto `supabase-project`  (la stessa dove si trova il file `docker-compose.yml`).
+2. **Esegui il seguente comando** per costruire le immagini Docker (se non esistono già) e avviare i container: `docker-compose up -d` oppure, più probabile nelle versioni più recenti di Docker `docker compose up -d`
    
    * docker-compose up: Questo comando avvia i servizi definiti nel file docker-compose.yml.
    * \--build: Questa opzione forza la ricostruzione delle immagini Docker prima di avviare i container. È utile se hai apportato modifiche al codice sorgente o ai Dockerfile.
 
-Se la tua versione di Docker Compose è integrata con la Docker CLI (più comune nelle versioni recenti), il comando potrebbe essere:`docker compose up --build`
-Attendi che il processo di build e avvio sia completato. Vedrai molti log nel terminale che indicano lo stato dei container.
+Attendi che il processo di avvio dei containers e avvio sia completato. Se preferisci vedere i log nel terminale che indicano lo stato dei container, avvia invece con `docker compose up`
 
-### **4\. Accedi all'Applicazione 🌐**
+### **5\. Accedi all'Applicazione 🌐**
 
 Una volta che i container sono avviati correttamente, dovresti essere in grado di accedere all'applicazione tramite il tuo browser web.
 
@@ -63,7 +70,7 @@ Una volta che i container sono avviati correttamente, dovresti essere in grado d
 
 Controlla i log nel terminale o il file docker-compose.yml per vedere su quale porta è esposta l'applicazione.
 
-### **5\. Fermare l'Applicazione 🛑**
+### **6\. Fermare l'Applicazione 🛑**
 
 Per fermare l'applicazione e i relativi container Docker:
 
