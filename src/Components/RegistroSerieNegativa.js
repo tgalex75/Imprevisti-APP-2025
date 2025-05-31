@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MdAddCircleOutline, MdRemoveCircleOutline } from "react-icons/md";
+import { MdAddCircleOutline, MdRemoveCircleOutline, MdDeleteForever } from "react-icons/md";
 import { CartContext } from "../context/regContext";
 
 const RegistroSerieNegativa = () => {
@@ -12,9 +12,9 @@ const RegistroSerieNegativa = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ delay: 0.7, duration: 0.7 }}
-      className="flex h-72 w-full flex-col items-center gap-2 rounded-xl bg-[rgb(var(--clr-bg)/.9)] text-[--clr-txt] xl:absolute xl:left-1 xl:top-1 xl:h-96 xl:w-[24vw]"
+      className="flex h-72 w-full flex-col items-center gap-2 rounded-xl text-[rgb(var(--clr-txt))] xl:absolute xl:left-1 xl:top-1 xl:h-96 xl:w-[24vw]"
     >
-      <h6 className="uppercase text-[--clr-prim]">Registro Giocatori</h6>
+      <h6 className="uppercase bg-[rgb(var(--clr-prim))] w-full rounded-t">Registro Giocatori</h6>
       <AnimatePresence initial={false} mode="popLayout">
         <ul className="flex h-full w-full flex-col gap-1 overflow-y-auto px-1 pb-2">
           {cartItems.map((item, i) => (
@@ -30,7 +30,7 @@ const RegistroSerieNegativa = () => {
                   ? { backgroundColor: "orange", color: "black" }
                   : {}
               }
-              className="flex items-center justify-between bg-[rgb(var(--clr-txt)/.2)] ps-1 text-left text-[0.6rem] uppercase"
+              className="flex items-center justify-between ps-1 text-left text-[0.6rem] uppercase hover:bg-[rgb(var(--clr-btn)/.5)] cursor-pointer"
             >
               <small className="text-xs font-semibold uppercase md:text-sm">
                 {item.title}
@@ -39,27 +39,34 @@ const RegistroSerieNegativa = () => {
                 <MdAddCircleOutline
                   size={18}
                   style={item.quantity > 2 ? { visibility: "hidden" } : {}}
-                  className="rounded-full hover:scale-110"
+                  className="rounded-full hover:scale-125"
                   onClick={() => {
                     addToCart(item);
                   }}
                 />
-                <small className="mx-2 text-lg font-bold uppercase">
+                <small className="mx-2 xl:mx-4 text-lg font-bold uppercase">
                   {item.quantity >= 3 ? 3 : item.quantity}
                 </small>
+                {item.quantity < 2 ? <MdDeleteForever
+                  onClick={() => {
+                    removeFromCart(item);
+                  }}
+                  size={20}
+                  className="rounded-full hover:scale-125"
+                />:
                 <MdRemoveCircleOutline
                   onClick={() => {
                     removeFromCart(item);
                   }}
                   size={18}
-                  className="rounded-full hover:scale-110"
-                />
+                  className="rounded-full hover:scale-125"
+                />}
               </div>
             </motion.div>
           ))}
         </ul>
       </AnimatePresence>
-      <button className="block h-8 w-full bg-[--clr-btn]" onClick={clearCart}>
+      <button className="block h-8 w-full rounded-b hover:bg-[rgb(var(--clr-btn)/.7)] bg-[rgb(var(--clr-btn)/.5)]" onClick={clearCart}>
         Resetta lista
       </button>
     </motion.div>

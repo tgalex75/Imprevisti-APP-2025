@@ -11,17 +11,18 @@ function App(props) {
   const { primary, secondary, tertiary, colorBG, colorTxt, colorBtn } =
     useContext(ColorContext);
 
+
   useEffect(() => {
-    document.documentElement.style.setProperty("--clr-prim", primary);
-    document.documentElement.style.setProperty("--clr-sec", secondary);
-    document.documentElement.style.setProperty("--clr-ter", tertiary);
-    document.documentElement.style.setProperty("--clr-bg", colorBG);
-    document.documentElement.style.setProperty("--clr-txt", colorTxt);
-    document.documentElement.style.setProperty("--clr-btn", colorBtn);
+    document.documentElement.style.setProperty("--clr-prim", primary.simpleRgb);
+    document.documentElement.style.setProperty("--clr-sec", secondary.simpleRgb);
+    document.documentElement.style.setProperty("--clr-ter", tertiary.simpleRgb);
+    document.documentElement.style.setProperty("--clr-bg", colorBG.simpleRgb);
+    document.documentElement.style.setProperty("--clr-txt", colorTxt.simpleRgb);
+    document.documentElement.style.setProperty("--clr-btn", colorBtn.simpleRgb);
   }, [primary, secondary, tertiary, colorBG, colorTxt, colorBtn]);
 
   return (
-    <main className="h-dvh w-screen xl:overflow-hidden">
+    <main className="h-dvh w-screen lg:overflow-hidden">
       <Router>
         <Navbar />
         <AnimatedRoutes />

@@ -10,6 +10,7 @@ import { v4 as uuidv4 } from "uuid";
 import rnd from "random-weight";
 import pickRandom from "pick-random";
 import DatiImprevistiContext from "../context/datiImprevisti";
+import Spinner from "../Components/Spinner";
 
 const SerieNegativa = () => {
   const { serieNegativa } = useContext(DatiImprevistiContext);
@@ -17,6 +18,7 @@ const SerieNegativa = () => {
   const [casuale, setCasuale] = useState(null);
   const [count, setCount] = useState(0);
   const [extractedPlayer, setExtractedPlayer] = useState(null);
+  const [isLoading, setIsLoading] = useState(true); // Nuovo stato isLoading
 
   // Prima Estrazione
 
@@ -35,7 +37,6 @@ const SerieNegativa = () => {
     numbExtrPlayer,
   } = casuale ? casuale : {};
 
-
   useEffect(() => {
     let timeout = setTimeout(() => {
       casuale &&
@@ -47,14 +48,32 @@ const SerieNegativa = () => {
     (player) => player.id,
   );
 
-  // Controlla se saldoPunti esiste e se ha almeno un elemento
-  if (!serieNegativa || serieNegativa.length === 0) {
-    // Puoi mostrare un messaggio di caricamento, null, o un valore di fallback
+  useEffect(() => {
+    // Controlla se serieNegativa ha dati
+    if (serieNegativa && serieNegativa.length > 0) {
+      setIsLoading(false); // Imposta isLoading a false quando i dati sono disponibili
+    } else if (serieNegativa === null || serieNegativa === undefined) {
+      setIsLoading(true); // Mantieni isLoading a true se serieNegativa è null o undefined
+    } else if (serieNegativa && serieNegativa.length === 0 && isLoading) {
+      // Se serieNegativa è un array vuoto ma stavamo ancora caricando (es. primo render)
+      // decidiamo se considerarlo "caricato" (array vuoto è uno stato valido)
+      // o se aspettare ulteriormente (dipende dalla logica dell'app)
+      // In questo caso, lo considero caricato.
+      setIsLoading(false);
+    }
+  }, [serieNegativa, isLoading]); // Aggiungi isLoading alle dipendenze di useEffect
+
+  if (isLoading) {
+    return <Spinner />; // Mostra lo spinner se isLoading è true
+  }
+
+  // Se settimana è un array vuoto dopo il caricamento e vuoi mostrare un messaggio specifico
+  if (!isLoading && serieNegativa.length === 0) {
     return (
-      <div className="left-1/2 top-1/2 -translate-x-1/2 animate-pulse">
-        Caricamento dati imprevisto...
+      <div className=" absolute text-3xl left-1/2 top-1/2 -translate-x-1/2 transform text-center">
+        Nessun dato disponibile. Controlla l'Editor.
       </div>
-    ); // Oppure return null; se non vuoi mostrare nulla
+    );
   }
 
   return (
@@ -68,8 +87,8 @@ const SerieNegativa = () => {
         transition={{ delay: 0.4, duration: 0.4, type: "spring" }}
         key={count}
         id="containerPrimaEstrazione"
-        style={isImprev ? { color: "var(--clr-ter)" } : {}}
-        className="flex h-full w-full select-none flex-col items-center justify-evenly gap-4 rounded-xl bg-[rgb(var(--clr-bg)/.5)] px-4 py-2 text-center shadow-lg ring ring-inset ring-[--clr-txt] xl:gap-0 xl:px-10"
+        style={isImprev ? { color: "rgb(var(--clr-ter))" } : {}}
+        className="flex h-full w-full select-none flex-col items-center justify-evenly gap-4 rounded-xl px-4 py-2 text-center shadow-lg ring ring-inset ring-[rgb(var(--clr-txt))] xl:gap-0 xl:px-10"
       >
         {!casuale ? (
           <h2 className="flex h-full items-center justify-center text-5xl italic">

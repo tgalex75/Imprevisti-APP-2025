@@ -20,12 +20,12 @@ export const mySelect = (labelText, ref, func, arr, defaultVal) => {
     <div className="flex gap-1 flex-col">
       <label
         htmlFor="tattica"
-        className="block text-sm xl:text-xs text-center xl:text-start font-medium text-[--clr-txt]"
+        className="block text-sm xl:text-xs text-center xl:text-start font-medium text-[rgb(var(--clr-txt))]"
       >
         {labelText}
       </label>
       <select
-        className="text-sm block w-48 rounded-md border border-[--clr-txt] bg-[rgb(var(--clr-bg)/.5)] px-3 py-2 font-semibold text-[--clr-txt] shadow-sm"
+        className="text-sm block w-48 rounded-md border border-[rgb(var(--clr-txt))] px-3 py-2 font-semibold bg-[rgb(var(--clr-txt))] text-[rgb(var(--clr-bg))] shadow-sm"
         name="tattica"
         ref={ref}
         onChange={func}

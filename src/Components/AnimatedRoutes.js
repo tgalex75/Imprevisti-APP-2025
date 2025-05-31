@@ -4,7 +4,6 @@ import Home from "../Pages/Home";
 import Prepartita from "../Pages/Prepartita";
 import Settimana from "../Pages/Settimana";
 import SalvaPerDopo from "../Pages/SalvaPerDopo";
-import RiepilogoImprevisti from "../Pages/RiepilogoImprevisti";
 import IngaggiMercato from "../Pages/IngaggiMercato";
 import SaldoPunti from "../Pages/SaldoPunti";
 import SerieNegativa from "../Pages/SerieNegativa";
@@ -36,7 +35,6 @@ const AnimatedRoutes = () => {
         <Route path="/editor-speciali" element={<EditorSpeciali />} />
         <Route path="/editor-saldo-punti" element={<EditorSaldoPunti />} />
         <Route path="/editor-interfaccia" element={<EditorInterfaccia />} />
-        <Route path="/riepilogo-imprevisti" element={<RiepilogoImprevisti />} />
         <Route path="/imprevisti-sospesi" element={<SalvaPerDopo />} />
         <Route path="/saldo-punti" element={<SaldoPunti />} />
         <Route

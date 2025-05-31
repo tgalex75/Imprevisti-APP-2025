@@ -83,12 +83,12 @@ const EditorPrepartita = () => {
 
   return (
     <section className="flex h-full w-full flex-col items-center overflow-y-auto p-2 font-semibold xl:overflow-y-hidden xl:font-bold">
-      <h1 className="h-fit">Editor Imprevisti Prepartita</h1>
+      <h1 className="h-fit">Editor Prepartita</h1>
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.7, duration: 0.7 }}
-        className="flex h-full w-full flex-col items-center justify-around gap-2 rounded-lg bg-[rgb(var(--clr-bg)/.5)] text-[--clr-txt]"
+        className="flex h-full w-full flex-col items-center justify-around gap-2 rounded-lg text-[rgb(var(--clr-txt))]"
       >
         {/* LISTA ELEMENTI */}
         <div className="h-full w-full overflow-y-auto pb-2">
@@ -96,7 +96,7 @@ const EditorPrepartita = () => {
             <div
               key={item.id} // Importante per le liste in React
               onClick={() => handleEditClick(item)} // Al click, imposta l'elemento in modifica
-              className="m-2 cursor-pointer border-[--clr-txt] p-2 hover:bg-[--clr-btn] relative group"
+              className="m-2 cursor-pointer border-[rgb(var(--clr-txt))] py-4 px-2 rounded hover:bg-[rgb(var(--clr-btn)/.7)] relative group"
             >
               <h3>{item.title}</h3>
               <p className="pe-2 xl:pe-8">{item.description}</p>
@@ -112,7 +112,7 @@ const EditorPrepartita = () => {
 
         {/* EDITING ELEMENTO */}
 
-        <div className="mt-4 h-full w-full border-t-2 border-t-[--clr-btn] xl:m-0">
+        <div className="mt-4 h-full w-full border-t-2 border-t-[rgb(var(--clr-btn))] xl:m-0">
           <h2 className="h-fit text-center font-bold uppercase xl:p-4">
             {isListaVuota ? "LISTA VUOTA: Inserisci" : "Modifica"} Imprevisto
           </h2>
@@ -124,7 +124,7 @@ const EditorPrepartita = () => {
               <label className="my-1 flex w-full flex-col items-start self-start text-sm font-semibold xl:gap-4">
                 Titolo Imprevisto
                 {errors.title && (
-                  <span className="font-normal italic text-[--clr-ter]">
+                  <span className="font-normal italic text-[rgb(var(--clr-txt))]">
                     Il campo "titolo" è obbligatorio - max 60 caratteri
                   </span>
                 )}
@@ -138,7 +138,7 @@ const EditorPrepartita = () => {
               <label className="my-1 flex w-full flex-col items-start self-start text-sm font-semibold xl:gap-4">
                 Descrizione Imprevisto
                 {errors.description && (
-                  <span className="font-normal italic text-[--clr-ter]">
+                  <span className="font-normal italic text-[rgb(var(--clr-txt))]">
                     Il campo "Descrizione" è obbligatorio
                   </span>
                 )}
@@ -154,7 +154,7 @@ const EditorPrepartita = () => {
               <label className="my-1 flex w-full flex-col self-start text-sm font-semibold xl:items-end xl:gap-4">
                 Nota bene... compilare se è un caso particolare
                 {errors.notaBene && (
-                  <span className="font-normal italic text-[--clr-ter]">
+                  <span className="font-normal italic text-[rgb(var(--clr-txt))]">
                     Il campo "Nota Bene" è errato
                   </span>
                 )}
@@ -174,7 +174,7 @@ const EditorPrepartita = () => {
               >
                 È un imprevisto?
                 {errors.isImprev && (
-                  <span className="font-normal italic text-[--clr-ter]">
+                  <span className="font-normal italic text-[rgb(var(--clr-txt))]">
                     Il campo "È un imprevisto?" è obbligatorio
                   </span>
                 )}
@@ -186,7 +186,7 @@ const EditorPrepartita = () => {
                     name="isImprev"
                     type="radio"
                     value={true}
-                    className="ms-2 h-4 w-4 rounded border-[--clr-txt] text-[--clr-btn] focus:ring-2 focus:ring-[--clr-btn] md:m-0 dark:border-[--clr-txt] dark:bg-[--clr-txt] dark:ring-offset-[--clr-txt] dark:focus:ring-[--clr-btn]"
+                    className="ms-2 h-4 w-4 rounded border-[rgb(var(--clr-txt))] text-[rgb(var(--clr-btn))] focus:ring-2 focus:ring-[rgb(var(--clr-btn))] md:m-0 dark:border-[rgb(var(--clr-txt))] dark:bg-[rgb(var(--clr-txt))] dark:ring-offset-[rgb(var(--clr-txt))] dark:focus:ring-[rgb(var(--clr-btn))]"
                   />
                   <label htmlFor="isImprevNO">No</label>
                   <input
@@ -195,7 +195,7 @@ const EditorPrepartita = () => {
                     name="isImprev"
                     type="radio"
                     value={false}
-                    className="ms-2 h-4 w-4 rounded border-[--clr-txt] text-[--clr-btn] focus:ring-2 focus:ring-[--clr-btn] md:m-0 dark:border-[--clr-txt] dark:bg-[--clr-txt] dark:ring-offset-[--clr-txt] dark:focus:ring-[--clr-btn]"
+                    className="ms-2 h-4 w-4 rounded border-[rgb(var(--clr-txt))] text-[rgb(var(--clr-btn))] focus:ring-2 focus:ring-[rgb(var(--clr-btn))] md:m-0 dark:border-[rgb(var(--clr-txt))] dark:bg-[rgb(var(--clr-txt))] dark:ring-offset-[rgb(var(--clr-txt))] dark:focus:ring-[rgb(var(--clr-btn))]"
                   />
                 </div>
               </label>
@@ -205,7 +205,7 @@ const EditorPrepartita = () => {
               >
                 È un imprevisto SPECIALE?
                 {errors.isSpecial && (
-                  <span className="font-normal italic text-[--clr-ter]">
+                  <span className="font-normal italic text-[rgb(var(--clr-txt))]">
                     Il campo "È un imprevisto SPECIALE?" è obbligatorio
                   </span>
                 )}
@@ -217,7 +217,7 @@ const EditorPrepartita = () => {
                     name="isSpecial"
                     type="radio"
                     value={true}
-                    className="ms-2 h-4 w-4 rounded border-[--clr-txt] text-[--clr-btn] focus:ring-2 focus:ring-[--clr-btn] md:m-0 dark:border-[--clr-txt] dark:bg-[--clr-txt] dark:ring-offset-[--clr-txt] dark:focus:ring-[--clr-btn]"
+                    className="ms-2 h-4 w-4 rounded border-[rgb(var(--clr-txt))] text-[rgb(var(--clr-btn))] focus:ring-2 focus:ring-[rgb(var(--clr-btn))] md:m-0 dark:border-[rgb(var(--clr-txt))] dark:bg-[rgb(var(--clr-txt))] dark:ring-offset-[rgb(var(--clr-txt))] dark:focus:ring-[rgb(var(--clr-btn))]"
                   />
                   <label htmlFor="isSpecialNO">No</label>
                   <input
@@ -226,7 +226,7 @@ const EditorPrepartita = () => {
                     name="isSpecial"
                     type="radio"
                     value={false}
-                    className="ms-2 h-4 w-4 rounded border-[--clr-txt] text-[--clr-btn] focus:ring-2 focus:ring-[--clr-btn] md:m-0 dark:border-[--clr-txt] dark:bg-[--clr-txt] dark:ring-offset-[--clr-txt] dark:focus:ring-[--clr-btn]"
+                    className="ms-2 h-4 w-4 rounded border-[rgb(var(--clr-txt))] text-[rgb(var(--clr-btn))] focus:ring-2 focus:ring-[rgb(var(--clr-btn))] md:m-0 dark:border-[rgb(var(--clr-txt))] dark:bg-[rgb(var(--clr-txt))] dark:ring-offset-[rgb(var(--clr-txt))] dark:focus:ring-[rgb(var(--clr-btn))]"
                   />
                 </div>
               </label>
@@ -236,7 +236,7 @@ const EditorPrepartita = () => {
               >
                 Bisogna estrarre uno o più giocatori?
                 {errors.ultEstrazione && (
-                  <span className="font-normal italic text-[--clr-ter]">
+                  <span className="font-normal italic text-[rgb(var(--clr-txt))]">
                     Il campo "estrazione giocatore" è obbligatorio
                   </span>
                 )}
@@ -249,7 +249,7 @@ const EditorPrepartita = () => {
                     type="radio"
                     value={true}
                     defaultChecked={editingItem?.ultEstrazione === true}
-                    className="ms-2 h-4 w-4 rounded border-[--clr-txt] text-[--clr-btn] focus:ring-2 focus:ring-[--clr-btn] md:m-0 dark:border-[--clr-txt] dark:bg-[--clr-txt] dark:ring-offset-[--clr-txt] dark:focus:ring-[--clr-btn]"
+                    className="ms-2 h-4 w-4 rounded border-[rgb(var(--clr-txt))] text-[rgb(var(--clr-btn))] focus:ring-2 focus:ring-[rgb(var(--clr-btn))] md:m-0 dark:border-[rgb(var(--clr-txt))] dark:bg-[rgb(var(--clr-txt))] dark:ring-offset-[rgb(var(--clr-txt))] dark:focus:ring-[rgb(var(--clr-btn))]"
                   />
                   <label htmlFor="ultEstrazioneNO">No</label>
                   <input
@@ -259,7 +259,7 @@ const EditorPrepartita = () => {
                     type="radio"
                     value={false}
                     defaultChecked={editingItem?.ultEstrazione === false}
-                    className="ms-2 h-4 w-4 rounded border-[--clr-txt] text-[--clr-btn] focus:ring-2 focus:ring-[--clr-btn] md:m-0 dark:border-[--clr-txt] dark:bg-[--clr-txt] dark:ring-offset-[--clr-txt] dark:focus:ring-[--clr-btn]"
+                    className="ms-2 h-4 w-4 rounded border-[rgb(var(--clr-txt))] text-[rgb(var(--clr-btn))] focus:ring-2 focus:ring-[rgb(var(--clr-btn))] md:m-0 dark:border-[rgb(var(--clr-txt))] dark:bg-[rgb(var(--clr-txt))] dark:ring-offset-[rgb(var(--clr-txt))] dark:focus:ring-[rgb(var(--clr-btn))]"
                   />
                 </div>
               </label>
@@ -269,7 +269,7 @@ const EditorPrepartita = () => {
               >
                 Quanti giocatori saranno estratti?
                 {errors.numbExtrPlayer && (
-                  <span className="font-normal italic text-[--clr-ter]">
+                  <span className="font-normal italic text-[rgb(var(--clr-txt))]">
                     Il campo "Quanti Giocatori" è obbligatorio - Inserisci un
                     numero da 0 a 10
                   </span>
@@ -292,7 +292,7 @@ const EditorPrepartita = () => {
               >
                 Su quanti giocatori effettuare l'estrazione?
                 {errors.baseEstrazione && (
-                  <span className="font-normal italic text-[--clr-ter]">
+                  <span className="font-normal italic text-[rgb(var(--clr-txt))]">
                     Il campo "Su quanti giocatori?" è obbligatorio
                   </span>
                 )}
@@ -315,7 +315,7 @@ const EditorPrepartita = () => {
               >
                 Quale è il "peso" di questo imprevisto?
                 {errors.weight && (
-                  <span className="font-normal italic text-[--clr-ter]">
+                  <span className="font-normal italic text-[rgb(var(--clr-txt))]">
                     Il campo "Peso Imprevisto" è obbligatorio
                   </span>
                 )}
@@ -341,7 +341,7 @@ const EditorPrepartita = () => {
               </button>
               <button
                 type="submit"
-                className="flex h-12 w-full flex-col items-center justify-center rounded-lg border-2 border-[--clr-btn] py-1 font-semibold hover:bg-[--clr-btn] xl:h-16 xl:w-1/3"
+                className="flex h-12 w-full flex-col items-center justify-center rounded-lg border-2 border-[rgb(var(--clr-btn))] py-1 font-semibold hover:bg-[rgb(var(--clr-btn)/.7)] xl:h-16 xl:w-1/3"
               >
                 Salva ed Invia
               </button>

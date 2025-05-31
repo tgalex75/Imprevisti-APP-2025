@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 
 const ErrorPage = () => {
@@ -17,7 +16,7 @@ const ErrorPage = () => {
         to="/home"
         style={{
           fontSize: "1rem",
-          color: "var(--clr-primary)",
+          color: "rgb(var(--clr-txt))",
           fontWeight: "600",
           padding: "2rem",
         }}

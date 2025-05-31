@@ -8,10 +8,10 @@
 }
 
 :root {
-  --clr-prim: 255 255 252;
+  --clr-prim: 208 2 27;
   --clr-sec: 0 128 0;
   --clr-ter: 255 165 0;
-  --clr-bg: 29 28 47;
+  --clr-bg: 18 18 18;
   --clr-txt: 238 238 238;
   --clr-btn: 75 20 124;
 }
@@ -26,9 +26,9 @@ body {
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: var(--clr-bg);
-  color: var(--clr-txt);
   overflow: hidden;
+  background-color: rgb(var(--clr-bg));
+  color: rgb(var(--clr-txt));
 }
 
 code {

@@ -24,9 +24,9 @@ const RiepilogoImprevisti = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.7, duration: 0.7 }}
-        className="flex h-full w-full flex-col items-center gap-2 overflow-y-auto rounded-lg bg-[rgb(var(--clr-bg)/.5)] p-2 text-[--clr-txt]"
+        className="flex h-full w-full flex-col items-center gap-2 overflow-y-auto rounded-lg p-2 text-[rgb(var(--clr-txt))]"
       >
-        <h3 className="text-center uppercase text-[--clr-ter]">
+        <h3 className="text-center uppercase text-[rgb(var(--clr-txt))]">
           Imprevisti Prepartita
         </h3>
         <ul className="flex h-fit w-full flex-col gap-1 px-2 pb-2">
@@ -35,7 +35,7 @@ const RiepilogoImprevisti = () => {
               el.title.toUpperCase() !== "NESSUN IMPREVISTO" && (
                 <li
                   key={el.id}
-                  className="flex items-center justify-start gap-2 bg-[rgb(var(--clr-txt)/.2)] py-1 ps-2 text-left text-sm"
+                  className="flex items-center justify-start gap-2 py-1 ps-2 text-left text-sm"
                 >
                   <strong className="uppercase">{el.title}</strong>
                   <em className="font-medium">{el.description}</em>
@@ -43,7 +43,7 @@ const RiepilogoImprevisti = () => {
               ),
           )}
         </ul>
-        <h3 className="text-center uppercase text-[--clr-ter]">
+        <h3 className="text-center uppercase text-[rgb(var(--clr-txt))]">
           Imprevisti Settimana
         </h3>
         <ul className="flex h-fit w-full flex-col gap-1 px-2 pb-2">
@@ -52,7 +52,7 @@ const RiepilogoImprevisti = () => {
               el.title.toUpperCase() !== "NESSUN IMPREVISTO" && (
                 <li
                   key={el.id}
-                  className="flex items-center justify-start gap-2 bg-[rgb(var(--clr-txt)/.2)] py-1 ps-2 text-left text-sm"
+                  className="flex items-center justify-start gap-2 py-1 ps-2 text-left text-sm"
                 >
                   <strong className="uppercase">{el.title}</strong>
                   <em className="font-medium">{el.description}</em>
@@ -60,7 +60,7 @@ const RiepilogoImprevisti = () => {
               ),
           )}
         </ul>
-        <h3 className="text-center uppercase text-[--clr-ter]">
+        <h3 className="text-center uppercase text-[rgb(var(--clr-txt))]">
           Imprevisti Speciali
         </h3>
         <strong className="absolute right-1 top-0 font-semibold">
@@ -70,7 +70,7 @@ const RiepilogoImprevisti = () => {
           {speciali?.map((el) => (
             <li
               key={el.id}
-              className="flex h-auto w-full items-center justify-evenly bg-[rgb(var(--clr-txt)/.2)] py-1 ps-2 text-left text-sm font-normal uppercase"
+              className="flex h-auto w-full items-center justify-evenly py-1 ps-2 text-left text-sm font-normal uppercase"
             >
               <div className="w-full">
                 <strong className="uppercase pe-2">{el.titolo}</strong>

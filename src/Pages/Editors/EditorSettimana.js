@@ -80,12 +80,12 @@ const EditorSettimana = () => {
 
   return (
     <section className="flex h-full w-full flex-col items-center p-2 overflow-y-auto xl:overflow-y-hidden font-semibold xl:font-bold">
-      <h1 className="h-fit">Editor Imprevisti Settimana</h1>
+      <h1 className="h-fit">Editor Settimana</h1>
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.7, duration: 0.7 }}
-        className="flex h-full w-full flex-col items-center justify-around rounded-lg bg-[rgb(var(--clr-bg)/.5)] gap-2 text-[--clr-txt]"
+        className="flex h-full w-full flex-col items-center justify-around rounded-lg gap-2 text-[rgb(var(--clr-txt))]"
       >
         {/* LISTA ELEMENTI */}
         <div className="h-full w-full overflow-y-auto pb-2">
@@ -93,7 +93,7 @@ const EditorSettimana = () => {
             <div
               key={item.id} // Importante per le liste in React
               onClick={() => handleEditClick(item)} // Al click, imposta l'elemento in modifica
-              className="m-2 cursor-pointer border-[--clr-txt] p-2 hover:bg-[--clr-btn] relative group"
+              className="m-2 cursor-pointer border-[rgb(var(--clr-txt))] py-4 px-2 rounded hover:bg-[rgb(var(--clr-btn)/.7)] relative group"
             >
               <h3>{item.title}</h3>
               <p> {item.description}</p>
@@ -110,7 +110,7 @@ const EditorSettimana = () => {
 
         {/* EDITING ELEMENTO */}
 
-        <div className="h-full w-full border-t-2 border-t-[--clr-btn] mt-4 xl:m-0">
+        <div className="h-full w-full border-t-2 border-t-[rgb(var(--clr-btn))] mt-4 xl:m-0">
           <h2 className="h-fit text-center font-bold uppercase xl:p-4">
             {isListaVuota ? "LISTA VUOTA: Inserisci" : "Modifica"} Imprevisto
           </h2>
@@ -122,7 +122,7 @@ const EditorSettimana = () => {
               <label className="my-1 flex w-full flex-col items-start xl:gap-4 self-start text-sm font-semibold">
                 Titolo Imprevisto
                 {errors.title && (
-                  <span className="font-normal italic text-[--clr-ter]">
+                  <span className="font-normal italic text-[rgb(var(--clr-txt))]">
                     Il campo "Titolo" è obbligatorio - max 60 caratteri
                   </span>
                 )}
@@ -136,7 +136,7 @@ const EditorSettimana = () => {
               <label className="my-1 flex w-full flex-col items-start xl:gap-4 self-start text-sm font-semibold">
                 Descrizione Imprevisto
                 {errors.description && (
-                  <span className="font-normal italic text-[--clr-ter]">
+                  <span className="font-normal italic text-[rgb(var(--clr-txt))]">
                     Il campo "Descrizione" è obbligatorio
                   </span>
                 )}
@@ -157,7 +157,7 @@ const EditorSettimana = () => {
               >
                 È un imprevisto?
                 {errors.isImprev && (
-                  <span className="font-normal italic text-[--clr-ter]">
+                  <span className="font-normal italic text-[rgb(var(--clr-txt))]">
                     Il campo "estrazione giocatore" è obbligatorio
                   </span>
                 )}
@@ -169,7 +169,7 @@ const EditorSettimana = () => {
                     name="isImprev"
                     type="radio"
                     value={true}
-                    className="ms-2 h-4 w-4 rounded border-[--clr-txt] text-[--clr-btn] focus:ring-2 focus:ring-[--clr-btn] md:m-0 dark:border-[--clr-txt] dark:bg-[--clr-txt] dark:ring-offset-[--clr-txt] dark:focus:ring-[--clr-btn]"
+                    className="ms-2 h-4 w-4 rounded border-[rgb(var(--clr-txt))] text-[rgb(var(--clr-btn))] focus:ring-2 focus:ring-[rgb(var(--clr-btn))] md:m-0 dark:border-[rgb(var(--clr-txt))] dark:bg-[rgb(var(--clr-txt))] dark:ring-offset-[rgb(var(--clr-txt))] dark:focus:ring-[rgb(var(--clr-btn))]"
                   />
                   <label htmlFor="isImprevNO">No</label>
                   <input
@@ -178,7 +178,7 @@ const EditorSettimana = () => {
                     name="isImprev"
                     type="radio"
                     value={false}
-                    className="ms-2 h-4 w-4 rounded border-[--clr-txt] text-[--clr-btn] focus:ring-2 focus:ring-[--clr-btn] md:m-0 dark:border-[--clr-txt] dark:bg-[--clr-txt] dark:ring-offset-[--clr-txt] dark:focus:ring-[--clr-btn]"
+                    className="ms-2 h-4 w-4 rounded border-[rgb(var(--clr-txt))] text-[rgb(var(--clr-btn))] focus:ring-2 focus:ring-[rgb(var(--clr-btn))] md:m-0 dark:border-[rgb(var(--clr-txt))] dark:bg-[rgb(var(--clr-txt))] dark:ring-offset-[rgb(var(--clr-txt))] dark:focus:ring-[rgb(var(--clr-btn))]"
                   />
                 </div>
               </label>
@@ -188,7 +188,7 @@ const EditorSettimana = () => {
               >
                 Quale è il "peso" di questo imprevisto?
                 {errors.weight && (
-                  <span className="font-normal italic text-[--clr-ter]">
+                  <span className="font-normal italic text-[rgb(var(--clr-txt))]">
                     Il campo "Peso Imprevisto" è obbligatorio
                   </span>
                 )}
@@ -214,7 +214,7 @@ const EditorSettimana = () => {
               </button>
               <button
                 type="submit"
-                className="h-12 w-full flex flex-col items-center justify-center rounded-lg border-2 border-[--clr-btn] py-1 font-semibold hover:bg-[--clr-btn] xl:h-16 xl:w-1/3"
+                className="h-12 w-full flex flex-col items-center justify-center rounded-lg border-2 border-[rgb(var(--clr-btn))] py-1 font-semibold hover:bg-[rgb(var(--clr-btn)/.7)] xl:h-16 xl:w-1/3"
               >
                 Salva ed Invia
               </button>

@@ -18,12 +18,12 @@ const EditorImprevisti = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.7, duration: 0.7 }}
-        className="flex h-full w-full flex-col items-center justify-around gap-2 rounded-lg bg-[rgb(var(--clr-bg)/.5)] text-[--clr-txt]"
+        className="flex h-full w-full flex-col items-center justify-around gap-2 rounded-lg text-[rgb(var(--clr-txt))]"
       >
         <h2>Scegli quale lista di imprevisti modificare</h2>
         <main className="grid h-full w-full grid-cols-2 gap-2 p-4 xl:grid-cols-3">
           {menu.map((voce) => (
-            <Link to={voce.linkTo} key={voce.id} className="border border-[--clr-btn] p-2 text-bold uppercase flex items-center justify-center text-center text-xl xl:text-5xl hover:bg-[--clr-btn]">
+            <Link to={voce.linkTo} key={voce.id} className="border border-[rgb(var(--clr-btn))] p-2 text-bold uppercase flex items-center justify-center text-center text-xl xl:text-5xl hover:bg-[rgb(var(--clr-btn)/.7)]">
               <h3>{voce.nome}</h3>
             </Link>
           ))}

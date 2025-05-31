@@ -9,6 +9,7 @@
     "@testing-library/jest-dom": "^6.5.0",
     "@testing-library/react": "^16.0.1",
     "@testing-library/user-event": "^14.5.2",
+    "@uiw/color-convert": "^2.5.5",
     "@uiw/react-color": "^2.5.3",
     "framer-motion": "^11.11.7",
     "lodash.capitalize": "^4.2.1",

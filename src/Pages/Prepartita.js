@@ -13,6 +13,7 @@ import { numbers } from "../Funzioni/schemi";
 import { v4 as uuidv4 } from "uuid";
 import pickRandom from "pick-random";
 import DatiImprevistiContext from "../context/datiImprevisti";
+import Spinner from "../Components/Spinner";
 
 const Prepartita = () => {
   const { prepartita, speciali, fetchSpeciali } = useContext(
@@ -21,6 +22,7 @@ const Prepartita = () => {
   const [casuale, setCasuale] = useState(null);
   const [count, setCount] = useState(0);
   const [casualeCommunity, setCasualeCommunity] = useState(null);
+  const [isLoading, setIsLoading] = useState(true); // Nuovo stato isLoading
 
   const [extractedPlayer, setExtractedPlayer] = useState(null);
 
@@ -36,6 +38,21 @@ const Prepartita = () => {
     }, 200);
     return () => clearTimeout(timeout);
   }, [casuale]);
+
+  useEffect(() => {
+    // Controlla se prepartita ha dati
+    if (prepartita && prepartita.length > 0) {
+      setIsLoading(false); // Imposta isLoading a false quando i dati sono disponibili
+    } else if (prepartita === null || prepartita === undefined) {
+      setIsLoading(true); // Mantieni isLoading a true se prepartita è null o undefined
+    } else if (prepartita && prepartita.length === 0 && isLoading) {
+        // Se prepartita è un array vuoto ma stavamo ancora caricando (es. primo render)
+        // decidiamo se considerarlo "caricato" (array vuoto è uno stato valido)
+        // o se aspettare ulteriormente (dipende dalla logica dell'app)
+        // In questo caso, lo considero caricato.
+        setIsLoading(false);
+    }
+  }, [prepartita, isLoading]); // Aggiungi isLoading alle dipendenze di useEffect
 
   // Prima Estrazione
 
@@ -60,14 +77,17 @@ const Prepartita = () => {
   const titoloH1 = "Prepartita";
   const numbersEx = numbers(baseEstrazione);
 
-  // Controlla se saldoPunti esiste e se ha almeno un elemento
-  if (!prepartita || prepartita.length === 0) {
-    // Puoi mostrare un messaggio di caricamento, null, o un valore di fallback
+  if (isLoading) {
+    return <Spinner />; // Mostra lo spinner se isLoading è true
+  }
+
+  // Se settimana è un array vuoto dopo il caricamento e vuoi mostrare un messaggio specifico
+  if (!isLoading && prepartita.length === 0) {
     return (
-      <div className="left-1/2 top-1/2 -translate-x-1/2 animate-pulse">
-        Caricamento dati imprevisto...
+      <div className=" absolute text-3xl left-1/2 top-1/2 -translate-x-1/2 transform text-center">
+        Nessun dato disponibile. Controlla l'Editor.
       </div>
-    ); // Oppure return null; se non vuoi mostrare nulla
+    );
   }
 
   return (
@@ -84,7 +104,7 @@ const Prepartita = () => {
             <h2
               className={
                 isImprev
-                  ? "text-7xl font-extrabold uppercase md:relative md:top-2 md:flex-1 xl:text-5xl"
+                  ? "text-7xl font-extrabold uppercase md:relative md:top-2 md:flex-1 xl:text-6xl"
                   : "invisible"
               }
             >
@@ -93,13 +113,13 @@ const Prepartita = () => {
             {!isSpecial && (
               <>
                 <h3
-                  className={`flex-1 text-6xl font-extrabold uppercase xl:text-4xl ${
+                  className={`flex-1 text-7xl font-extrabold uppercase xl:text-6xl ${
                     isSpecial && "invisible"
                   } `}
                 >
                   {title}
                 </h3>
-                <p className="orbitron-regular w-4/5 px-4 text-3xl md:flex-1 xl:mt-4 xl:w-1/2 xl:text-2xl">
+                <p className="orbitron-regular w-4/5 px-4 text-5xl md:flex-1 xl:mt-4 xl:w-1/2 xl:text-4xl">
                   {description && description}
                 </p>
 

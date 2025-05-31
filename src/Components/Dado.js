@@ -2,13 +2,14 @@
 import { motion } from "framer-motion";
 import { GiPerspectiveDiceOne } from "react-icons/gi";
 import useFetchData from "../Hooks/useFetchData";
+import { supabase } from "../supabaseClient";
 
 const Dado = (props) => {
   const { clickFunc } = props;
   const { data } = useFetchData("preferenze-immagini");
 
   const dadoImg = data.filter((item) => item.id === 7)[0]?.url;
-  const urlDiretto = `http://localhost:8000/storage/v1/object/public/immagini/${dadoImg}`;
+  const urlDiretto = `${supabase.storageUrl}/object/public/immagini/${dadoImg}`;
 
   return (
     <motion.div

@@ -9,42 +9,42 @@ name: supabase
 
 services:
 
-  # frontend:
-  #   build:
-  #     context: ../       # <-- Il contesto di build è la directory padre (root del tuo progetto React)
-  #     dockerfile: Dockerfile # <-- Il Dockerfile si trova nella root del contesto di build
-  #     args:
-  #       # Passa i valori al Dockerfile.
-  #       # Usa le variabili definite nel tuo file .env principale del self-hosting.
-  #       # Assicurati di avere ANON_KEY nel tuo .env principale.
-  #       # Definisci SUPABASE_PUBLIC_URL nel tuo .env principale (es. SUPABASE_PUBLIC_URL=http://localhost:8000)
-  #       REACT_APP_SUPABASE_URL: ${SUPABASE_PUBLIC_URL:-http://localhost:8000} # Usa la variabile o un default
-  #       REACT_APP_SUPABASE_ANON_KEY: ${ANON_KEY}
-  #   ports:
-  #     - "3000:80" # Mappa la porta del tuo frontend (es. 80) sulla porta 80 della tua macchina host
-  #     # Puoi usare un'altra porta host se la 80 è già in uso, es. "3000:80"
-  #   restart: unless-stopped
+  frontend:
+    build:
+      context: ../       # <-- Il contesto di build è la directory padre (root del tuo progetto React)
+      dockerfile: Dockerfile # <-- Il Dockerfile si trova nella root del contesto di build
+      args:
+        # Passa i valori al Dockerfile.
+        # Usa le variabili definite nel tuo file .env principale del self-hosting.
+        # Assicurati di avere ANON_KEY nel tuo .env principale.
+        # Definisci SUPABASE_PUBLIC_URL nel tuo .env principale (es. SUPABASE_PUBLIC_URL=http://localhost:8000)
+        REACT_APP_SUPABASE_URL: ${SUPABASE_PUBLIC_URL:-http://localhost:8000} # Usa la variabile o un default
+        REACT_APP_SUPABASE_ANON_KEY: ${ANON_KEY}
+    ports:
+      - "3000:80" # Mappa la porta del tuo frontend (es. 80) sulla porta 80 della tua macchina host
+      # Puoi usare un'altra porta host se la 80 è già in uso, es. "3000:80"
+    restart: unless-stopped
 
-  #   depends_on:
-  #     # Assicurati che il frontend parta DOPO i servizi Supabase necessari.
-  #     # Se il tuo frontend comunica con Supabase tramite il servizio 'kong':
-  #     - kong
-  #     # Se il tuo frontend comunica direttamente con servizi specifici (meno comune con Kong):
-  #     # - auth
-  #     # - rest
-  #     # - storage # Se usi storage
-  #     # - realtime # Se usi realtime
+    depends_on:
+      # Assicurati che il frontend parta DOPO i servizi Supabase necessari.
+      # Se il tuo frontend comunica con Supabase tramite il servizio 'kong':
+      - kong
+      # Se il tuo frontend comunica direttamente con servizi specifici (meno comune con Kong):
+      # - auth
+      # - rest
+      # - storage # Se usi storage
+      # - realtime # Se usi realtime
 
-  #   # environment:
-  #   #   # VARIABILI D'AMBIENTE PER IL TUO FRONTEND REACT
-  #   #   # Queste variabili devono essere accessibili dal tuo codice React
-  #   #   # e devono puntare agli URL *interni* dei servizi Supabase nella rete Docker Compose.
-  #   #   # Spesso le API passano per il servizio 'kong' sulla porta 8000 interna.
-  #   #   REACT_APP_SUPABASE_URL: http://kong:8000
-  #   #   # Riusa la variabile ANON_KEY definita nel file .env principale:
-  #   #   REACT_APP_SUPABASE_ANON_KEY: ${ANON_KEY}
-  #   #   # Aggiungi qui altre variabili richieste dal tuo frontend (es. URL per Auth se non passa per Kong)
-  #   #   # REACT_APP_SUPABASE_AUTH_URL: http://kong:8000/auth/v1 # Esempio se Auth passa per Kong
+    # environment:
+    #   # VARIABILI D'AMBIENTE PER IL TUO FRONTEND REACT
+    #   # Queste variabili devono essere accessibili dal tuo codice React
+    #   # e devono puntare agli URL *interni* dei servizi Supabase nella rete Docker Compose.
+    #   # Spesso le API passano per il servizio 'kong' sulla porta 8000 interna.
+    #   REACT_APP_SUPABASE_URL: http://kong:8000
+    #   # Riusa la variabile ANON_KEY definita nel file .env principale:
+    #   REACT_APP_SUPABASE_ANON_KEY: ${ANON_KEY}
+    #   # Aggiungi qui altre variabili richieste dal tuo frontend (es. URL per Auth se non passa per Kong)
+    #   # REACT_APP_SUPABASE_AUTH_URL: http://kong:8000/auth/v1 # Esempio se Auth passa per Kong
 
 
   studio:

@@ -116,7 +116,7 @@ const EditorSaldoPunti = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.7, duration: 0.7 }}
-        className="flex h-full w-full flex-col items-center justify-around gap-2 rounded-lg bg-[rgb(var(--clr-bg)/.5)] text-[--clr-txt]"
+        className="flex h-full w-full flex-col items-center justify-around gap-2 rounded-lg text-[rgb(var(--clr-txt))]"
       >
         {/* RENDER LISTA ELEMENTI */}
         <div className="h-full w-full overflow-y-auto pb-2 text-sm xl:text-base">
@@ -129,7 +129,7 @@ const EditorSaldoPunti = () => {
               <select
                 ref={selectRef}
                 onChange={handleSelectRef}
-                className="w-1/2 self-center rounded-md border bg-[--clr-txt] p-1 text-sm font-semibold text-[--clr-bg] placeholder-[--clr-txt] xl:w-fit dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                className="w-1/2 self-center rounded-md border bg-[rgb(var(--clr-txt))] p-1 text-sm font-semibold text-[rgb(var(--clr-bg))] placeholder-[rgb(var(--clr-txt))] xl:w-fit dark:focus:border-blue-500 dark:focus:ring-blue-500"
               >
                 <option value="cessioni">Cessioni</option>
                 <option value="acquisti">Acquisti</option>
@@ -143,7 +143,7 @@ const EditorSaldoPunti = () => {
             <div
               key={item.id} // Importante per le liste in React
               onClick={() => handleEditClick(item)} // Al click, imposta l'elemento in modifica
-              className="group relative m-2 cursor-pointer border border-[--clr-txt] hover:bg-[--clr-btn] xl:p-2"
+              className="group relative m-2 cursor-pointer border border-[rgb(var(--clr-txt))] hover:bg-[rgb(var(--clr-btn)/.7)] xl:py-4 xl:px-2 rounded"
             >
               {selectRefState === "acquisti" ? (
                 <>
@@ -190,7 +190,7 @@ const EditorSaldoPunti = () => {
 
         {/* EDITING ELEMENTO */}
 
-        <div className="mt-4 h-full w-full border-t-2 border-t-[--clr-btn] xl:m-0">
+        <div className="mt-4 h-full w-full border-t-2 border-t-[rgb(var(--clr-btn))] xl:m-0">
           <h2 className="mt-2 h-fit text-center font-bold uppercase xl:p-4">
             {isListaVuota ? "LISTA VUOTA: Inserisci" : "Modifica"} Bonus/Malus{" "}
             {selectRefState}
@@ -206,7 +206,7 @@ const EditorSaldoPunti = () => {
                 <label className="my-1 flex w-full flex-col items-center gap-2 text-sm font-semibold xl:gap-4">
                   Valore ≥ di
                   {errors.nome && (
-                    <span className="font-normal italic text-[--clr-ter]">
+                    <span className="font-normal italic text-[rgb(var(--clr-txt))]">
                       Il campo "Valore ≥ di" è obbligatorio - min. 30 max 99
                     </span>
                   )}
@@ -217,13 +217,13 @@ const EditorSaldoPunti = () => {
                     min={30}
                     type="number"
                     placeholder="Valore ≥ di?"
-                    className="block rounded bg-[--clr-txt] p-1 text-center text-sm font-semibold uppercase text-[--clr-bg] placeholder:normal-case placeholder:italic xl:self-center"
+                    className="block rounded bg-[rgb(var(--clr-txt))] p-1 text-center text-sm font-semibold uppercase text-[rgb(var(--clr-bg))] placeholder:normal-case placeholder:italic xl:self-center"
                   />
                 </label>
                 <label className="my-1 flex w-full flex-col items-center gap-2 text-sm font-semibold xl:gap-4">
                   Punti
                   {errors.valore && (
-                    <span className="font-normal italic text-[--clr-ter]">
+                    <span className="font-normal italic text-[rgb(var(--clr-txt))]">
                       Il campo "Punti" è obbligatorio
                     </span>
                   )}
@@ -235,7 +235,7 @@ const EditorSaldoPunti = () => {
                     name="valore"
                     type="number"
                     placeholder="Punti?"
-                    className="block self-start rounded bg-[--clr-txt] p-1 text-center text-sm font-semibold uppercase text-[--clr-bg] placeholder:normal-case placeholder:italic xl:self-center"
+                    className="block self-start rounded bg-[rgb(var(--clr-txt))] p-1 text-center text-sm font-semibold uppercase text-[rgb(var(--clr-bg))] placeholder:normal-case placeholder:italic xl:self-center"
                   />
                 </label>
               </div>
@@ -249,7 +249,7 @@ const EditorSaldoPunti = () => {
                   <label className="my-1 flex w-full flex-col items-center text-sm font-semibold xl:gap-4">
                     Valore Overall Under 32 ≥ di
                     {errors.nomeUnder && (
-                      <span className="font-normal italic text-[--clr-ter]">
+                      <span className="font-normal italic text-[rgb(var(--clr-txt))]">
                         Il campo "Valore ≥ di" è obbligatorio - min. 30 max 99
                       </span>
                     )}
@@ -264,13 +264,13 @@ const EditorSaldoPunti = () => {
                       min={30}
                       type="number"
                       placeholder="Valore ≥ di?"
-                      className="block rounded bg-[--clr-txt] p-1 text-center text-sm font-semibold uppercase text-[--clr-bg] placeholder:normal-case placeholder:italic xl:self-center"
+                      className="block rounded bg-[rgb(var(--clr-txt))] p-1 text-center text-sm font-semibold uppercase text-[rgb(var(--clr-bg))] placeholder:normal-case placeholder:italic xl:self-center"
                     />
                   </label>
                   <label className="my-1 flex w-full flex-col items-center text-sm font-semibold xl:gap-4">
                     Punti Under 32
                     {errors.valoreUnder && (
-                      <span className="font-normal italic text-[--clr-ter]">
+                      <span className="font-normal italic text-[rgb(var(--clr-txt))]">
                         Il campo "Punti" è obbligatorio
                       </span>
                     )}
@@ -282,7 +282,7 @@ const EditorSaldoPunti = () => {
                       name="valoreUnder"
                       type="number"
                       placeholder="Punti?"
-                      className="block rounded bg-[--clr-txt] p-1 text-center text-sm font-semibold uppercase text-[--clr-bg] placeholder:normal-case placeholder:italic xl:self-center"
+                      className="block rounded bg-[rgb(var(--clr-txt))] p-1 text-center text-sm font-semibold uppercase text-[rgb(var(--clr-bg))] placeholder:normal-case placeholder:italic xl:self-center"
                     />
                   </label>
                 </div>
@@ -290,7 +290,7 @@ const EditorSaldoPunti = () => {
                   <label className="my-1 flex w-full flex-col items-center text-sm font-semibold xl:gap-4">
                     Valore Overall Over 32 ≥ di
                     {errors.nomeOver && (
-                      <span className="font-normal italic text-[--clr-ter]">
+                      <span className="font-normal italic text-[rgb(var(--clr-txt))]">
                         Il campo "Valore ≥ di" è obbligatorio - min. 30 max 99
                       </span>
                     )}
@@ -305,13 +305,13 @@ const EditorSaldoPunti = () => {
                       min={30}
                       type="number"
                       placeholder="Valore ≥ di?"
-                      className="block rounded bg-[--clr-txt] p-1 text-center text-sm font-semibold uppercase text-[--clr-bg] placeholder:normal-case placeholder:italic xl:self-center"
+                      className="block rounded bg-[rgb(var(--clr-txt))] p-1 text-center text-sm font-semibold uppercase text-[rgb(var(--clr-bg))] placeholder:normal-case placeholder:italic xl:self-center"
                     />
                   </label>
                   <label className="my-1 flex w-full flex-col items-center text-sm font-semibold xl:gap-4">
                     Punti Over 32
                     {errors.valoreOver && (
-                      <span className="font-normal italic text-[--clr-ter]">
+                      <span className="font-normal italic text-[rgb(var(--clr-txt))]">
                         Il campo "Punti" è obbligatorio
                       </span>
                     )}
@@ -323,7 +323,7 @@ const EditorSaldoPunti = () => {
                       name="valoreOver"
                       type="number"
                       placeholder="Punti?"
-                      className="block rounded bg-[--clr-txt] p-1 text-center text-sm font-semibold uppercase text-[--clr-bg] placeholder:normal-case placeholder:italic xl:self-center"
+                      className="block rounded bg-[rgb(var(--clr-txt))] p-1 text-center text-sm font-semibold uppercase text-[rgb(var(--clr-bg))] placeholder:normal-case placeholder:italic xl:self-center"
                     />
                   </label>
                 </div>
@@ -331,7 +331,7 @@ const EditorSaldoPunti = () => {
                   <label className="my-1 flex w-full flex-col items-center text-sm font-semibold xl:gap-4">
                     Valore Overall Serie Minore ≥ di
                     {errors.nomeSerieMinore && (
-                      <span className="font-normal italic text-[--clr-ter]">
+                      <span className="font-normal italic text-[rgb(var(--clr-txt))]">
                         Il campo "Valore ≥ di" è obbligatorio - min. 30 max 99
                       </span>
                     )}
@@ -346,13 +346,13 @@ const EditorSaldoPunti = () => {
                       min={30}
                       type="number"
                       placeholder="Valore ≥ di?"
-                      className="block rounded bg-[--clr-txt] p-1 text-center text-sm font-semibold uppercase text-[--clr-bg] placeholder:normal-case placeholder:italic xl:self-center"
+                      className="block rounded bg-[rgb(var(--clr-txt))] p-1 text-center text-sm font-semibold uppercase text-[rgb(var(--clr-bg))] placeholder:normal-case placeholder:italic xl:self-center"
                     />
                   </label>
                   <label className="my-1 flex w-full flex-col items-center text-sm font-semibold xl:gap-4">
                     Punti Serie Minore
                     {errors.valoreSerieMinore && (
-                      <span className="font-normal italic text-[--clr-ter]">
+                      <span className="font-normal italic text-[rgb(var(--clr-txt))]">
                         Il campo "Punti" è obbligatorio
                       </span>
                     )}
@@ -364,7 +364,7 @@ const EditorSaldoPunti = () => {
                       name="valoreSerieMinore"
                       type="number"
                       placeholder="Punti?"
-                      className="block rounded bg-[--clr-txt] p-1 text-center text-sm font-semibold uppercase text-[--clr-bg] placeholder:normal-case placeholder:italic xl:self-center"
+                      className="block rounded bg-[rgb(var(--clr-txt))] p-1 text-center text-sm font-semibold uppercase text-[rgb(var(--clr-bg))] placeholder:normal-case placeholder:italic xl:self-center"
                     />
                   </label>
                 </div>
@@ -372,7 +372,7 @@ const EditorSaldoPunti = () => {
                   <label className="my-1 flex w-full flex-col items-center text-sm font-semibold xl:gap-4">
                     Valore Overall Serie Minore Over 32 ≥ di
                     {errors.nomeSerieMinoreOver && (
-                      <span className="font-normal italic text-[--clr-ter]">
+                      <span className="font-normal italic text-[rgb(var(--clr-txt))]">
                         Il campo "Valore ≥ di" è obbligatorio - min. 30 max 99
                       </span>
                     )}
@@ -387,13 +387,13 @@ const EditorSaldoPunti = () => {
                       min={30}
                       type="number"
                       placeholder="Valore ≥ di?"
-                      className="block rounded bg-[--clr-txt] p-1 text-center text-sm font-semibold uppercase text-[--clr-bg] placeholder:normal-case placeholder:italic xl:self-center"
+                      className="block rounded bg-[rgb(var(--clr-txt))] p-1 text-center text-sm font-semibold uppercase text-[rgb(var(--clr-bg))] placeholder:normal-case placeholder:italic xl:self-center"
                     />
                   </label>
                   <label className="my-1 flex w-full flex-col items-center text-sm font-semibold xl:gap-4">
                     Punti Serie Minore Over 32
                     {errors.valoreSerieMinoreOver && (
-                      <span className="font-normal italic text-[--clr-ter]">
+                      <span className="font-normal italic text-[rgb(var(--clr-txt))]">
                         Il campo "Punti" è obbligatorio
                       </span>
                     )}
@@ -405,7 +405,7 @@ const EditorSaldoPunti = () => {
                       name="valoreSerieMinoreOver"
                       type="number"
                       placeholder="Punti?"
-                      className="block rounded bg-[--clr-txt] p-1 text-center text-sm font-semibold uppercase text-[--clr-bg] placeholder:normal-case placeholder:italic xl:self-center"
+                      className="block rounded bg-[rgb(var(--clr-txt))] p-1 text-center text-sm font-semibold uppercase text-[rgb(var(--clr-bg))] placeholder:normal-case placeholder:italic xl:self-center"
                     />
                   </label>
                 </div>
@@ -421,7 +421,7 @@ const EditorSaldoPunti = () => {
                 <label className="my-1 flex w-full flex-col items-center gap-2 text-sm font-semibold xl:gap-4">
                   Nome
                   {errors.nome && (
-                    <span className="font-normal italic text-[--clr-ter]">
+                    <span className="font-normal italic text-[rgb(var(--clr-txt))]">
                       Il campo "Nome" è obbligatorio
                     </span>
                   )}
@@ -431,13 +431,13 @@ const EditorSaldoPunti = () => {
                     {...register("nome", { required: true, maxLength: 60 })}
                     type="text"
                     placeholder="Nome del trend"
-                    className="block rounded bg-[--clr-txt] p-1 text-center text-sm font-semibold uppercase text-[--clr-bg] placeholder:normal-case placeholder:italic xl:self-center"
+                    className="block rounded bg-[rgb(var(--clr-txt))] p-1 text-center text-sm font-semibold uppercase text-[rgb(var(--clr-bg))] placeholder:normal-case placeholder:italic xl:self-center"
                   />
                 </label>
                 <label className="my-1 flex w-full flex-col items-center gap-2 text-sm font-semibold xl:gap-4">
                   Punti
                   {errors.valore && (
-                    <span className="font-normal italic text-[--clr-ter]">
+                    <span className="font-normal italic text-[rgb(var(--clr-txt))]">
                       Il campo "Punti" è obbligatorio
                     </span>
                   )}
@@ -449,7 +449,7 @@ const EditorSaldoPunti = () => {
                     name="valore"
                     type="number"
                     placeholder="Punti?"
-                    className="block self-start rounded bg-[--clr-txt] p-1 text-center text-sm font-semibold uppercase text-[--clr-bg] placeholder:normal-case placeholder:italic xl:self-center"
+                    className="block self-start rounded bg-[rgb(var(--clr-txt))] p-1 text-center text-sm font-semibold uppercase text-[rgb(var(--clr-bg))] placeholder:normal-case placeholder:italic xl:self-center"
                   />
                 </label>
               </div>
@@ -466,7 +466,7 @@ const EditorSaldoPunti = () => {
               </button>
               <button
                 type="submit"
-                className="flex h-12 w-full flex-col items-center justify-center rounded-lg border-2 border-[--clr-btn] py-1 font-semibold hover:bg-[--clr-btn] xl:h-16 xl:w-1/3"
+                className="flex h-12 w-full flex-col items-center justify-center rounded-lg border-2 border-[rgb(var(--clr-btn))] py-1 font-semibold hover:bg-[rgb(var(--clr-btn)/.7)] xl:h-16 xl:w-1/3"
               >
                 Salva ed Invia
               </button>

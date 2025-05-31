@@ -27,11 +27,10 @@ const Navbar = () => {
     },
     { id: 6, voceLi: "Imprevisti di Ingaggio", linkTo: "/ingaggio" },
     { id: 7, voceLi: "Saldo Punti", linkTo: "/saldo-punti" },
-    { id: 9, voceLi: "Editor Imprevisti", linkTo: "/editor-imprevisti" },
-    { id: 10, voceLi: "Riepilogo Imprevisti", linkTo: "/riepilogo-imprevisti" },
-    { id: 11, voceLi: "Imprevisti Sospesi", linkTo: "/imprevisti-sospesi" },
-    { id: 12, voceLi: "Estrazione Libera", linkTo: "/estrazione-libera" },
-    { id: 8, voceLi: "Editor Interfaccia", linkTo: "/editor-interfaccia" },
+    { id: 8, voceLi: "Editor Imprevisti", linkTo: "/editor-imprevisti" },
+    { id: 9, voceLi: "Imprevisti Sospesi", linkTo: "/imprevisti-sospesi" },
+    { id: 10, voceLi: "Estrazione Libera", linkTo: "/estrazione-libera" },
+    { id: 11, voceLi: "Editor Interfaccia", linkTo: "/editor-interfaccia" },
   ];
 
   //Sostituire div con <Link> from react-router
@@ -48,7 +47,7 @@ const Navbar = () => {
               ease: "easeIn",
               stiffness: 200,
             }}
-            className="lg :text-xl p-4 px-8 text-lg font-bold uppercase hover:text-[--clr-btn] xl:text-2xl"
+            className="lg :text-xl p-4 px-8 text-lg font-bold uppercase hover:text-[rgb(var(--clr-ter))] xl:text-2xl"
           >
             {voce.voceLi}
           </motion.li>
@@ -61,33 +60,33 @@ const Navbar = () => {
     <nav className="fixed z-[1000] flex h-auto w-full select-none items-center justify-between px-2 py-1 xl:px-6 xl:py-3">
       <div
         style={isMobile ? { visibility: "hidden" } : {}}
-        className="flex cursor-pointer items-center justify-center rounded-full hover:bg-[--clr-txt]"
+        className="flex cursor-pointer items-center justify-center rounded-full hover:bg-[rgb(var(--clr-txt))]"
       >
         <Link to="/">
           <MdHome
             size={50}
-            className="fill-[--clr-txt] hover:fill-[--clr-bg] p-2"
+            className="fill-[rgb(var(--clr-txt))] p-2 hover:fill-[rgb(var(--clr-bg))]"
           />
         </Link>
       </div>
-      <div className="flex items-center justify-center w-12 h-12">
+      <div className="flex h-12 w-12 items-center justify-center">
         {!isOpenMenu ? (
           <MdMenu
             size={isMobile ? 28 : 48}
-            className="fill-[--clr-txt] cursor-pointer hover:fill-[--clr-bg] hover:bg-[--clr-txt] p-2 rounded-full"
+            className="cursor-pointer rounded-full fill-[rgb(var(--clr-txt))] p-2 hover:bg-[rgb(var(--clr-txt))] hover:fill-[rgb(var(--clr-bg))]"
             onClick={handleClick}
           />
         ) : (
           <MdClose
             size={isMobile ? 28 : 48}
-            className="fill-[--clr-txt] cursor-pointer hover:fill-[--clr-bg] hover:bg-[--clr-txt] p-2 rounded-full"
+            className="cursor-pointer rounded-full fill-[rgb(var(--clr-txt))] p-2 hover:bg-[rgb(var(--clr-txt))] hover:fill-[rgb(var(--clr-bg))]"
             onClick={handleClick}
           />
         )}
         <ul
           style={isOpenMenu ? { right: 0 } : { right: "-100%" }}
           onClick={handleClick}
-          className="xl:py-18 absolute top-0 z-[-1] border-s-2 border-[--clr-txt] flex h-screen w-full flex-col items-center justify-start bg-[--clr-bg] py-12 text-center text-[--clr-txt] transition-[0.5s] xl:h-screen xl:w-[30vw] xl:justify-around"
+          className="absolute top-0 z-[-1] flex h-screen w-full flex-col items-center gap-3 justify-center bg-[rgb(var(--clr-bg)/.95)] text-center text-[rgb(var(--clr-txt))] transition-all duration-300 xl:duration-500 xl:h-screen xl:w-[30vw] xl:gap-2"
         >
           {linksMenu}
         </ul>

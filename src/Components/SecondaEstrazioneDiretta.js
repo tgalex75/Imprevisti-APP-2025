@@ -11,9 +11,9 @@ const SecondaEstrazioneDiretta = (props) => {
   return (
     <section
       id="secEstrDiretta"
-      className="mb-12 flex w-full flex-col items-center justify-around rounded-md border-2 bg-[rgb(var(--clr-txt)/.2)] px-1 min-h-[50%] xl:px-6"
+      className="mb-12 flex w-full flex-col items-center justify-around rounded-md border-2 px-1 min-h-[50%] xl:px-6"
     >
-      <h4 className="my-1 text-xs font-bold uppercase text-[--clr-txt] xl:my-0 xl:mb-1 xl:text-lg xl:self-start">
+      <h4 className="my-1 text-xs font-bold uppercase text-[rgb(var(--clr-txt))] xl:my-0 xl:mb-1 xl:text-lg xl:self-start">
         {numbExtrPlayer === 1 ? "Giocatore estratto" : "Giocatori estratti"}
       </h4>
       <main
@@ -30,13 +30,13 @@ const SecondaEstrazioneDiretta = (props) => {
                 key={i}
                 className={`relative flex flex-col items-center overflow-hidden rounded p-6 transition-all ${numbExtrPlayer > 2 ? "min-w-60 h-fit xl:h-1/2" : numbExtrPlayer === 1 ? "min-w-60 xl:w-96 h-full xl:h-3/5" : "min-w-52 xl:w-80 h-full xl:h-3/5"}`}>
                 <JerseySVGBg
-                  fillColor={player === 1 ? colorGK : colorPl}
+                  fillColor={player === 1 ? colorGK.hex : colorPl.hex}
                   strokeColor="white"
                   className="stroke-2"
                 />
                 <span
                   className={`absolute left-1/2 top-1/3 z-50 -translate-x-1/2 -translate-y-1/3 font-['Anton'] ${numbExtrPlayer > 2 ? "text-[4rem] xl:text-[4rem]" : numbExtrPlayer === 1 ? "text-[5rem] xl:text-[7rem]" : "text-[4rem] xl:text-[5rem]"}`}
-                  style={player === 1 ? {color: colorNumGK} : {color: colorNumPl}}
+                  style={player === 1 ? {color: colorNumGK.hex} : {color: colorNumPl.hex}}
                 >
                   {player}
                 </span>

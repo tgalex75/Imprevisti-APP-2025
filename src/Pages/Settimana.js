@@ -1,25 +1,44 @@
-import { useState, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import Dado from "../Components/Dado";
 import rnd from "random-weight";
 import {v4 as uuidv4} from "uuid"
 import LayoutBase from "../Components/LayoutBase";
 import DatiImprevistiContext from "../context/datiImprevisti";
+import Spinner from "../Components/Spinner";
 
 const Settimana = () => {
   const [casuale, setCasuale] = useState(null);
   const [count, setCount] = useState(0);
+  const [isLoading, setIsLoading] = useState(true); // Nuovo stato isLoading
 
   const { settimana } = useContext(DatiImprevistiContext);
 
-  // Controlla se settimana esiste e se ha almeno un elemento
-  if (!settimana || settimana.length === 0) {
-    // Puoi mostrare un messaggio di caricamento, null, o un valore di fallback
+  useEffect(() => {
+    // Controlla se settimana ha dati
+    if (settimana && settimana.length > 0) {
+      setIsLoading(false); // Imposta isLoading a false quando i dati sono disponibili
+    } else if (settimana === null || settimana === undefined) {
+      setIsLoading(true); // Mantieni isLoading a true se settimana è null o undefined
+    } else if (settimana && settimana.length === 0 && isLoading) {
+        // Se settimana è un array vuoto ma stavamo ancora caricando (es. primo render)
+        // decidiamo se considerarlo "caricato" (array vuoto è uno stato valido)
+        // o se aspettare ulteriormente (dipende dalla logica dell'app)
+        // In questo caso, lo considero caricato.
+        setIsLoading(false);
+    }
+  }, [settimana, isLoading]); // Aggiungi isLoading alle dipendenze di useEffect
+
+  if (isLoading) {
+    return <Spinner />; // Mostra lo spinner se isLoading è true
+  }
+
+  // Se settimana è un array vuoto dopo il caricamento e vuoi mostrare un messaggio specifico
+  if (!isLoading && settimana.length === 0) {
     return (
-      <div className="left-1/2 top-1/2 -translate-x-1/2 animate-pulse">
-        Caricamento saldo punti...
+      <div className=" absolute text-3xl left-1/2 top-1/2 -translate-x-1/2 transform text-center">
+        Nessun dato disponibile. Controlla l'Editor.
       </div>
     );
-    // Oppure return null; se non vuoi mostrare nulla
   }
 
   // Prima Estrazione
@@ -58,11 +77,11 @@ const Settimana = () => {
             </h2>
             <h3
               style={{ filter: "drop-shadow(.05rem .05rem 0.1rem #000)" }}
-              className="absolute left-1/2 top-1/3 flex-1 -translate-x-1/2 -translate-y-1/2 text-6xl font-extrabold uppercase xl:text-4xl"
+              className="absolute left-1/2 top-1/3 flex-1 -translate-x-1/2 -translate-y-1/2 text-7xl font-extrabold uppercase xl:text-6xl"
             >
               {casuale?.title}
             </h3>
-            <p className="orbitron-regular absolute left-1/2 top-2/3 mt-4 flex-1 -translate-x-1/2 -translate-y-1/2 text-3xl xl:text-xl">
+            <p className="orbitron-regular absolute left-1/2 top-2/3 mt-4 flex-1 -translate-x-1/2 -translate-y-1/2 text-5xl xl:text-4xl">
               {casuale?.description}
             </p>
           </>

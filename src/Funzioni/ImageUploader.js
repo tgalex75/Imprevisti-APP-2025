@@ -3,7 +3,7 @@ import { useDropzone } from "react-dropzone";
 import { supabase } from "../supabaseClient";
 
 function ImageUploader(props) {
-  const {id, nome, urlName } = props;
+  const { id, nome, urlName } = props;
   const [fileError, setFileError] = useState(null);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [uploadCompleteMessage, setUploadCompleteMessage] = useState("");
@@ -31,19 +31,19 @@ function ImageUploader(props) {
           upsert: true,
           onUploadProgress: (progressEvent) => {
             const percentCompleted = Math.round(
-              (progressEvent.loaded * 100) / progressEvent.total
+              (progressEvent.loaded * 100) / progressEvent.total,
             );
             setUploadProgress(percentCompleted);
           },
         });
 
-        const { data: preferenze, error: prefError } = await supabase
+      const { data: preferenze, error: prefError } = await supabase
         .from("preferenze-immagini")
         .upsert({ id: id, nome: nome, url: nomeUrl })
         .select();
 
-        console.log(preferenze)
-        prefError && console.log(prefError)
+      console.log(preferenze);
+      prefError && console.log(prefError);
 
       if (error) throw error;
 
@@ -53,7 +53,7 @@ function ImageUploader(props) {
     } catch (error) {
       console.error(
         "Errore durante il caricamento dell'immagine:",
-        error.message
+        error.message,
       );
       setFileError(error.message);
     }
@@ -64,18 +64,20 @@ function ImageUploader(props) {
   return (
     <div
       {...getRootProps()}
-      className="flex min-h-12 xl:h-18 items-center justify-around bg-[--clr-bg] text-sm xl:text-base odd:bg-opacity-30 even:bg-opacity-50 p-2"
+      className="xl:h-18 flex min-h-12 items-center justify-around bg-[rgb(var(--clr-bg))] p-2 text-sm odd:bg-opacity-30 even:bg-opacity-50 xl:text-lg"
     >
-      <h6 className="w-2/5 xl:w-1/3">{nome}</h6>
       <input {...getInputProps()} />
 
-      <p className="cursor-pointer flex items-start xl:items-center flex-col h-full w-3/5 xl:w-2/3 p-4 font-sans hover:text-[--clr-ter]">
+      <p className="flex h-full w-3/5 cursor-pointer flex-col items-start p-4 font-sans hover:text-[rgb(var(--clr-txt))] xl:w-2/3 xl:items-center">
         Clicca QUI e carica una immagine
         <small className="block">( JPEG o PNG inferiore ai 4 MB ) </small>
+        <small className="invisible last:visible">
+          {" "}
+          Attenzione! Le immagini caricate sovrascriveranno quelle eventualmente
+          già presenti.
+        </small>
         {fileError && (
-          <small className="font-semibold text-red-500">
-            {fileError}
-          </small>
+          <small className="font-semibold text-red-500">{fileError}</small>
         )}
         {uploadCompleteMessage && (
           <small className="font-semibold text-green-500">
