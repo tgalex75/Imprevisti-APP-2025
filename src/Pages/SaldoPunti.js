@@ -173,7 +173,7 @@ const SaldoPunti = () => {
       onClick={() => updateSaldoPunti(el.valore)}
       className={bonusMalusStyle}
     >
-      {el.nome}° p. +{el.valore}
+      {el.nome} +{el.valore}
     </div>
   ));
 

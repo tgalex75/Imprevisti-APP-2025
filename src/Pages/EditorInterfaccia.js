@@ -32,7 +32,7 @@ const EditorInterfaccia = () => {
 
   return (
     <main className="flex h-full w-full flex-col items-center overflow-y-auto p-4 font-bold xl:gap-8">
-      <h1>Editor interfaccia</h1>
+      <h1>Impostazioni APP</h1>
       <h3 className="text-center text-sm xl:text-lg">
         Le tue preferenze da applicare nella App
       </h3>

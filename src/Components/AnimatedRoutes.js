@@ -34,7 +34,7 @@ const AnimatedRoutes = () => {
         <Route path="/editor-ingaggi" element={<EditorIngaggi />} />
         <Route path="/editor-speciali" element={<EditorSpeciali />} />
         <Route path="/editor-saldo-punti" element={<EditorSaldoPunti />} />
-        <Route path="/editor-interfaccia" element={<EditorInterfaccia />} />
+        <Route path="/impostazioni-app" element={<EditorInterfaccia />} />
         <Route path="/imprevisti-sospesi" element={<SalvaPerDopo />} />
         <Route path="/saldo-punti" element={<SaldoPunti />} />
         <Route

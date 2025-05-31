@@ -76,6 +76,7 @@ function ImageUploader(props) {
           Attenzione! Le immagini caricate sovrascriveranno quelle eventualmente
           già presenti.
         </small>
+        <small className="block">Se non vedi subito l'immagine aggiornata, ricarica la pagina premendo CTRL + F5</small>
         {fileError && (
           <small className="font-semibold text-red-500">{fileError}</small>
         )}
