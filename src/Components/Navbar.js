@@ -27,11 +27,49 @@ const Navbar = () => {
     },
     { id: 6, voceLi: "Imprevisti di Ingaggio", linkTo: "/ingaggio" },
     { id: 7, voceLi: "Saldo Punti", linkTo: "/saldo-punti" },
-    { id: 8, voceLi: "Editor Imprevisti", linkTo: "/editor-imprevisti" },
+    {
+      id: 8,
+      voceLi: "Editor Imprevisti",
+      linkTo: "/editor-imprevisti",
+      subMenu: [
+        {
+          id: 8.1,
+          subVoceLi: "Editor Prepartita",
+          subLinkTo: "/editor-prepartita",
+        },
+        {
+          id: 8.2,
+          subVoceLi: "Editor Settimana",
+          subLinkTo: "/editor-settimana",
+        },
+        {
+          id: 8.3,
+          subVoceLi: "Editor Serie Negativa",
+          subLinkTo: "/editor-serie-negativa",
+        },
+        {
+          id: 8.4,
+          subVoceLi: "Editor Ingaggi e Mercato",
+          subLinkTo: "/editor-ingaggi",
+        },
+        {
+          id: 8.5,
+          subVoceLi: "Editor Speciali",
+          subLinkTo: "/editor-speciali",
+        },
+        {
+          id: 8.6,
+          subVoceLi: "Editor Saldo Punti",
+          subLinkTo: "/editor-saldo-punti",
+        },
+      ],
+    },
     { id: 9, voceLi: "Imprevisti Sospesi", linkTo: "/imprevisti-sospesi" },
     { id: 10, voceLi: "Estrazione Libera", linkTo: "/estrazione-libera" },
     { id: 11, voceLi: "Impostazioni App", linkTo: "/impostazioni-app" },
   ];
+
+  /* https://codesandbox.io/p/sandbox/map-nested-array-of-objects-kct7e?file=%2Fsrc%2Fdata.js */
 
   //Sostituire div con <Link> from react-router
   const linksMenu = dettagliMenu.map((voce) => {
@@ -47,9 +85,30 @@ const Navbar = () => {
               ease: "easeIn",
               stiffness: 200,
             }}
-            className="lg :text-xl p-4 px-8 text-lg font-bold uppercase hover:text-[rgb(var(--clr-ter))] xl:text-2xl"
+            className="lg:text-xl p-4 px-8 text-lg font-bold uppercase hover:text-[rgb(var(--clr-ter))] xl:text-2xl relative group"
           >
             {voce.voceLi}
+            {voce?.subMenu && (
+              <div className="xl:absolute p-2 xl:top-0 w-full xl:right-full bg-[rgb(var(--clr-bg)/.95)] xl:group-hover:block hidden">
+                {voce?.subMenu.map((element) => (
+                  <Link key={element.id} to={element.subLinkTo}>
+                    <motion.li
+                      layout
+                      whileHover={{ scale: 1.2 }}
+                      transition={{
+                        type: "spring",
+                        duration: 0.4,
+                        ease: "easeIn",
+                        stiffness: 200,
+                      }}
+                      className="p-4 w-full text-base font-bold uppercase text-[rgb(var(--clr-txt))] hover:text-[rgb(var(--clr-ter))] xl:text-lg relative"
+                    >
+                      {element.subVoceLi}
+                    </motion.li>
+                  </Link>
+                ))}
+              </div>
+            )}
           </motion.li>
         </Link>
       </div>

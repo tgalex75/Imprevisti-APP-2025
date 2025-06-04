@@ -7,6 +7,7 @@ function ImageUploader(props) {
   const [fileError, setFileError] = useState(null);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [uploadCompleteMessage, setUploadCompleteMessage] = useState("");
+  const [eliminaImgDaListaDb, setEliminaImgDaListaDb] = useState("");
 
   const onDrop = async (acceptedFiles) => {
     if (acceptedFiles.length === 0) return;
@@ -61,37 +62,65 @@ function ImageUploader(props) {
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
-  return (
-    <div
-      {...getRootProps()}
-      className="xl:h-18 flex min-h-12 items-center justify-around bg-[rgb(var(--clr-bg))] p-2 text-sm odd:bg-opacity-30 even:bg-opacity-50 xl:text-lg"
-    >
-      <input {...getInputProps()} />
+  const remUrlFromImgList = async () => {
+    const { error } = await supabase
+      .from("preferenze-immagini")
+      .update({ url: null })
+      .eq("id", id);
+    setEliminaImgDaListaDb("Immagine eliminata con successo dal Database");
+    error && console.log(error);
+    error &&
+      setEliminaImgDaListaDb("Errore durante l'eliminazione dal Database");
+  };
 
-      <p className="flex h-full w-3/5 cursor-pointer flex-col items-start p-4 font-sans hover:text-[rgb(var(--clr-txt))] xl:w-2/3 xl:items-center">
-        Clicca QUI e carica una immagine
-        <small className="block">( JPEG o PNG inferiore ai 4 MB ) </small>
-        <small className="invisible last:visible">
-          {" "}
-          Attenzione! Le immagini caricate sovrascriveranno quelle eventualmente
-          già presenti.
-        </small>
-        <small className="block">Se non vedi subito l'immagine aggiornata, ricarica la pagina premendo CTRL + F5</small>
-        {fileError && (
-          <small className="font-semibold text-red-500">{fileError}</small>
-        )}
-        {uploadCompleteMessage && (
-          <small className="font-semibold text-green-500">
-            {uploadCompleteMessage}
+  return (
+    <>
+      <div
+        {...getRootProps()}
+        className="xl:h-18 flex min-h-12 flex-col items-center justify-around bg-[rgb(var(--clr-bg))] p-2 text-sm odd:bg-opacity-30 even:bg-opacity-50 xl:text-lg"
+      >
+        <input {...getInputProps()} />
+
+        <p className="flex h-full w-full cursor-pointer flex-col items-start rounded-lg p-4 text-center font-sans hover:bg-[rgb(var(--clr-btn)/.5)] xl:w-2/3 xl:items-center">
+          Clicca QUI e carica una immagine
+          <small className="block">( JPEG o PNG inferiore ai 4 MB ) </small>
+          <small className="invisible last:visible">
+            {" "}
+            Attenzione! Le immagini caricate sovrascriveranno quelle
+            eventualmente già presenti.
           </small>
-        )}
-        {uploadProgress > 0 && (
-          <progress value={uploadProgress} max="100">
-            {uploadProgress}%
-          </progress>
-        )}
-      </p>
-    </div>
+          <small className="block">
+            Se subito dopo il caricamento non vedi l'immagine aggiornata nella
+            rispettiva posizione, ricarica la pagina premendo CTRL + F5
+          </small>
+          {fileError && (
+            <small className="font-semibold text-red-500">{fileError}</small>
+          )}
+          {uploadCompleteMessage && (
+            <small className="font-semibold text-green-500">
+              {uploadCompleteMessage}
+            </small>
+          )}
+          {uploadProgress > 0 && (
+            <progress value={uploadProgress} max="100">
+              {uploadProgress}%
+            </progress>
+          )}
+        </p>
+      </div>
+      <div className="flex h-auto w-full flex-col items-center justify-center">
+        <button
+          className="mt-4 flex h-12 w-full items-center justify-center rounded-lg border-2 border-red-700 py-1 text-center font-semibold hover:bg-red-700 xl:w-52"
+          type="button"
+          onClick={remUrlFromImgList}
+        >
+          Rimuovi Immagine
+        </button>
+        <span className="font-semibold text-green-500">
+          {eliminaImgDaListaDb}
+        </span>
+      </div>
+    </>
   );
 }
 

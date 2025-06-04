@@ -84,6 +84,9 @@ const EditorSerieNegativa = () => {
   return (
     <section className="flex h-full w-full flex-col items-center overflow-y-auto p-2 font-semibold xl:overflow-y-hidden xl:font-bold">
       <h1 className="h-fit">Editor Serie Negativa</h1>
+      <h2 className="w-full text-center">
+        Seleziona una voce per modificarla nell'editor. Oppure inseriscine uno da Zero.
+      </h2>
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -98,8 +101,25 @@ const EditorSerieNegativa = () => {
               onClick={() => handleEditClick(item)} // Al click, imposta l'elemento in modifica
               className="group relative m-2 cursor-pointer border-[rgb(var(--clr-txt))] p-2 hover:bg-[rgb(var(--clr-btn)/.7)]"
             >
-              <h3>{item.title}</h3>
+              <h3 className="text-[rgb(var(--clr-ter))]">{item.title}</h3>
               <p>{item.description}</p>
+              <span className="pe-2 xl:pe-8">
+                Imprevisto: <strong className="text-[rgb(var(--clr-ter))]">{item.isImprev ? "SI" : "NO"}</strong>
+              </span>
+              <span className="pe-2 xl:pe-8">
+                Estrazione: <strong className="text-[rgb(var(--clr-ter))]">{item.ultEstrazione ? "SI" : "NO"}</strong>
+              </span>
+              <span className="pe-2 xl:pe-8">
+                Numero estratti:{" "}
+                <strong className="text-[rgb(var(--clr-ter))]">{item.numbExtrPlayer && item.numbExtrPlayer}</strong>
+              </span>
+              <span className="pe-2 xl:pe-8">
+                Su quanti giocatori:{" "}
+                <strong className="text-[rgb(var(--clr-ter))]">{item.baseEstrazione && item.baseEstrazione}</strong>
+              </span>
+              <span className="pe-2 xl:pe-8">
+                "Peso" dell'estrazione: <strong className="text-[rgb(var(--clr-ter))]">{item.weight}</strong>
+              </span>
               <MdDeleteForever
                 size={28}
                 className="absolute right-0 top-1/2 me-0 h-full w-8 -translate-y-1/2 cursor-pointer transition-all group-hover:fill-red-600 hover:scale-125 xl:me-2"
@@ -113,33 +133,39 @@ const EditorSerieNegativa = () => {
 
         {/* EDITING ELEMENTO */}
 
-        <div className="mt-4 h-full w-full border-t-2 border-t-[rgb(var(--clr-btn))] xl:m-0">
-          <h2 className="h-fit text-center font-bold uppercase xl:p-4">
-            {isListaVuota ? "LISTA VUOTA: Inserisci" : "Modifica"} Imprevisto
+        <div className="relative mt-4 h-full w-full border-t-2 border-t-[rgb(var(--clr-btn))] xl:m-0">
+          {editingItem && (
+            <strong className="absolute top-0 inline-block w-full text-center italic text-[rgb(var(--clr-ter))]">
+              Fai doppio Click su ANNULLA per resettare i campi di modifica
+            </strong>
+          )}
+          <h2 className="mt-2 h-fit text-center font-bold uppercase xl:p-4">
+            {!editingItem ? "Inserisci" : "Modifica"} Imprevisto
           </h2>
           <form
             onSubmit={handleSubmit(handleUpdateSubmit)}
             className="flex h-full w-full flex-col items-center justify-around rounded-md font-normal xl:justify-between"
           >
             <div className="flex h-2/3 w-full flex-col items-start justify-between gap-2 px-2 xl:flex-row">
-              <label className="my-1 flex w-full flex-col items-start self-start text-sm font-semibold xl:gap-4">
+              <label htmlFor="title" className="my-1 flex w-full flex-col items-start self-start text-sm font-semibold xl:gap-4">
                 Titolo Imprevisto
                 {errors.title && (
-                  <span className="font-normal italic text-[rgb(var(--clr-txt))]">
+                  <span className="font-normal italic text-red-600">
                     Il campo "Titolo" è obbligatorio - max 60 caratteri
                   </span>
                 )}
                 <input
                   name="title"
+                  id="title"
                   {...register("title", { required: true, maxLength: 60 })}
                   className="block w-2/3 self-start rounded p-1 text-sm font-semibold uppercase text-black placeholder:normal-case placeholder:italic"
                   placeholder="Titolo dell'imprevisto"
                 />
               </label>
-              <label className="my-1 flex w-full flex-col items-start self-start text-sm font-semibold xl:gap-4">
+              <label htmlFor="description" className="my-1 flex w-full flex-col items-start self-start text-sm font-semibold xl:gap-4">
                 Descrizione Imprevisto
                 {errors.description && (
-                  <span className="font-normal italic text-[rgb(var(--clr-txt))]">
+                  <span className="font-normal italic text-red-600">
                     Il campo "Descrizione" è obbligatorio
                   </span>
                 )}
@@ -147,7 +173,7 @@ const EditorSerieNegativa = () => {
                   name="description"
                   {...register("description", { required: true })}
                   rows={4}
-                  id="descrizione"
+                  id="description"
                   placeholder="Descrizione dell'imprevisto"
                   className="w-full rounded p-1 text-sm font-semibold text-black placeholder:italic"
                 />
@@ -160,7 +186,7 @@ const EditorSerieNegativa = () => {
               >
                 È un imprevisto?
                 {errors.isImprev && (
-                  <span className="font-normal italic text-[rgb(var(--clr-txt))]">
+                  <span className="font-normal italic text-red-600">
                     Il campo "È un imprevisto" è obbligatorio
                   </span>
                 )}
@@ -191,7 +217,7 @@ const EditorSerieNegativa = () => {
               >
                 Bisogna estrarre uno o più giocatori?
                 {errors.ultEstrazione && (
-                  <span className="font-normal italic text-[rgb(var(--clr-txt))]">
+                  <span className="font-normal italic text-red-600">
                     Il campo "estrazione giocatore" è obbligatorio
                   </span>
                 )}
@@ -222,7 +248,7 @@ const EditorSerieNegativa = () => {
               >
                 Quanti giocatori saranno estratti?
                 {errors.numbExtrPlayer && (
-                  <span className="font-normal italic text-[rgb(var(--clr-txt))]">
+                  <span className="font-normal italic text-red-600">
                     Il campo "Quanti Giocatori" è obbligatorio - Inserisci un
                     numero da 0 a 10
                   </span>
@@ -236,7 +262,7 @@ const EditorSerieNegativa = () => {
                   name="numbExtrPlayer"
                   type="number"
                   placeholder="Quanti giocatori?"
-                  className="ms-4 min-w-20 rounded p-1 text-sm font-semibold text-[rgb(var(--clr-bg))] bg-[rgb(var(--clr-txt))] placeholder:italic xl:w-48"
+                  className="ms-4 min-w-20 rounded bg-[rgb(var(--clr-txt))] p-1 text-sm font-semibold text-[rgb(var(--clr-bg))] placeholder:italic xl:w-48"
                 />
               </label>
               <label
@@ -245,7 +271,7 @@ const EditorSerieNegativa = () => {
               >
                 Su quanti giocatori effettuare l'estrazione?
                 {errors.baseEstrazione && (
-                  <span className="font-normal italic text-[rgb(var(--clr-txt))]">
+                  <span className="font-normal italic text-red-600">
                     Il campo "Su quanti giocatori?" è obbligatorio
                   </span>
                 )}
@@ -259,7 +285,7 @@ const EditorSerieNegativa = () => {
                   name="baseEstrazione"
                   type="number"
                   placeholder="11"
-                  className="ms-4 min-w-20 rounded p-1 text-sm font-semibold text-[rgb(var(--clr-bg))] bg-[rgb(var(--clr-txt))] placeholder:italic xl:w-48"
+                  className="ms-4 min-w-20 rounded bg-[rgb(var(--clr-txt))] p-1 text-sm font-semibold text-[rgb(var(--clr-bg))] placeholder:italic xl:w-48"
                 ></input>
               </label>
               <label
@@ -268,7 +294,7 @@ const EditorSerieNegativa = () => {
               >
                 Quale è il "peso" di questo imprevisto?
                 {errors.weight && (
-                  <span className="font-normal italic text-[rgb(var(--clr-txt))]">
+                  <span className="font-normal italic text-red-600">
                     Il campo "Peso Imprevisto" è obbligatorio
                   </span>
                 )}
@@ -280,7 +306,7 @@ const EditorSerieNegativa = () => {
                   name="weight"
                   type="number"
                   placeholder="Inserisci un numero"
-                  className="ms-4 min-w-20 rounded p-1 text-sm font-semibold text-[rgb(var(--clr-bg))] bg-[rgb(var(--clr-txt))] placeholder:italic xl:w-48"
+                  className="ms-4 min-w-20 rounded bg-[rgb(var(--clr-txt))] p-1 text-sm font-semibold text-[rgb(var(--clr-bg))] placeholder:italic xl:w-48"
                 ></input>
               </label>
             </div>

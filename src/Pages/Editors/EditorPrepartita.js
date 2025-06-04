@@ -46,7 +46,7 @@ const EditorPrepartita = () => {
       .from("prepartita")
       .upsert({
         id: isListaVuota ? uuidv4() : data.id,
-        title: !data.isSpecial ? data.title : "IMPREVISTO SPECIALE",
+        title: data.isSpecial === false ? "IMPREVISTO SPECIALE" : data.title,
         description: data.description,
         isImprev: data.isImprev,
         isSpecial: data.isSpecial,
@@ -58,6 +58,7 @@ const EditorPrepartita = () => {
       })
       .select();
     error && console.log(error);
+    console.log(data.isSpecial, data.title);
     fetchPrepartita();
     // *** QUI FINISCE LA LOGICA DI AGGIORNAMENTO PER SUPABASE ***
 
@@ -68,7 +69,7 @@ const EditorPrepartita = () => {
   // Gestore per annullare la modifica
   const handleCancelEdit = () => {
     setEditingItem(null);
-    reset()
+    reset();
   };
 
   const rmVoceDB = async (element) => {
@@ -77,13 +78,15 @@ const EditorPrepartita = () => {
       .delete()
       .eq("id", element);
     error && console.log(error);
-    fetchPrepartita()
+    fetchPrepartita();
   };
-
 
   return (
     <section className="flex h-full w-full flex-col items-center overflow-y-auto p-2 font-semibold xl:overflow-y-hidden xl:font-bold">
       <h1 className="h-fit">Editor Prepartita</h1>
+      <h2 className="w-full text-center">
+        Seleziona una voce per modificarla nell'editor. Oppure inseriscine uno da Zero.
+      </h2>
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -91,20 +94,43 @@ const EditorPrepartita = () => {
         className="flex h-full w-full flex-col items-center justify-around gap-2 rounded-lg text-[rgb(var(--clr-txt))]"
       >
         {/* LISTA ELEMENTI */}
-        <div className="h-full w-full overflow-y-auto pb-2">
+        <div className="h-full w-full overflow-y-auto pb-2 relative">
           {prepartita?.map((item) => (
             <div
               key={item.id} // Importante per le liste in React
               onClick={() => handleEditClick(item)} // Al click, imposta l'elemento in modifica
               className="m-2 cursor-pointer border-[rgb(var(--clr-txt))] py-4 px-2 rounded hover:bg-[rgb(var(--clr-btn)/.7)] relative group"
             >
-              <h3>{item.title}</h3>
+              <h3 className="text-[rgb(var(--clr-ter))]">{item.title}</h3>
               <p className="pe-2 xl:pe-8">{item.description}</p>
+              <p className="pe-2 xl:pe-8">
+                {item.notaBene && "Note: " + item.notaBene}
+              </p>
+              <span className="pe-2 xl:pe-8">
+                Imprevisto: <strong className="text-[rgb(var(--clr-ter))]">{item.isImprev ? "SI" : "NO"}</strong>
+              </span>
+              <span className="pe-2 xl:pe-8">
+                Speciale: <strong className="text-[rgb(var(--clr-ter))]">{item.isSpecial ? "SI" : "NO"}</strong>
+              </span>
+              <span className="pe-2 xl:pe-8">
+                Estrazione: <strong className="text-[rgb(var(--clr-ter))]">{item.ultEstrazione ? "SI" : "NO"}</strong>
+              </span>
+              <span className="pe-2 xl:pe-8">
+                Numero estratti:{" "}
+                <strong className="text-[rgb(var(--clr-ter))]">{item.numbExtrPlayer && item.numbExtrPlayer}</strong>
+              </span>
+              <span className="pe-2 xl:pe-8">
+                Su quanti giocatori:{" "}
+                <strong className="text-[rgb(var(--clr-ter))]">{item.baseEstrazione && item.baseEstrazione}</strong>
+              </span>
+              <span className="pe-2 xl:pe-8">
+                "Peso" dell'estrazione: <strong className="text-[rgb(var(--clr-ter))]">{item.weight}</strong>
+              </span>
               <MdDeleteForever
                 size={28}
                 className="absolute right-0 top-1/2 me-0 xl:me-2 h-full w-8 -translate-y-1/2 cursor-pointer transition-all group-hover:fill-red-600 hover:scale-125"
                 onClick={() => rmVoceDB(item.id)}
-                />
+              />
               {/* Mostra altri dettagli dell'elemento */}
             </div>
           ))}
@@ -112,33 +138,39 @@ const EditorPrepartita = () => {
 
         {/* EDITING ELEMENTO */}
 
-        <div className="mt-4 h-full w-full border-t-2 border-t-[rgb(var(--clr-btn))] xl:m-0">
-          <h2 className="h-fit text-center font-bold uppercase xl:p-4">
-            {isListaVuota ? "LISTA VUOTA: Inserisci" : "Modifica"} Imprevisto
+        <div className="mt-4 h-full w-full border-t-2 border-t-[rgb(var(--clr-btn))] xl:m-0 relative">
+          {editingItem && (
+            <strong className="absolute top-0 w-full text-center italic inline-block text-[rgb(var(--clr-ter))]">
+              Fai doppio Click su ANNULLA per resettare i campi di modifica
+            </strong>
+          )}
+          <h2 className="h-fit text-center font-bold uppercase xl:p-4 mt-2">
+            {!editingItem ? "Inserisci" : "Modifica"} Imprevisto
           </h2>
           <form
             onSubmit={handleSubmit(handleUpdateSubmit)}
             className="flex h-full w-full flex-col items-center justify-around rounded-md font-normal xl:justify-between"
           >
             <div className="flex h-2/3 w-full flex-col items-start justify-between gap-2 px-2 xl:flex-row">
-              <label className="my-1 flex w-full flex-col items-start self-start text-sm font-semibold xl:gap-4">
+              <label htmlFor="title" className="my-1 flex w-full flex-col items-start self-start text-sm font-semibold xl:gap-4">
                 Titolo Imprevisto
                 {errors.title && (
-                  <span className="font-normal italic text-[rgb(var(--clr-txt))]">
-                    Il campo "titolo" è obbligatorio - max 60 caratteri
+                  <span className="font-normal italic text-red-600">
+                    Il campo "Titolo" è obbligatorio - max 60 caratteri
                   </span>
                 )}
                 <input
+                id="title"
                   name="title"
                   {...register("title", { required: true, maxLength: 60 })}
                   className="block w-2/3 self-start rounded p-1 text-sm font-semibold uppercase text-black placeholder:normal-case placeholder:italic"
                   placeholder="Titolo dell'imprevisto"
-                />
+                  />
               </label>
-              <label className="my-1 flex w-full flex-col items-start self-start text-sm font-semibold xl:gap-4">
+              <label htmlFor="description" className="my-1 flex w-full flex-col items-start self-start text-sm font-semibold xl:gap-4">
                 Descrizione Imprevisto
                 {errors.description && (
-                  <span className="font-normal italic text-[rgb(var(--clr-txt))]">
+                  <span className="font-normal italic text-red-600">
                     Il campo "Descrizione" è obbligatorio
                   </span>
                 )}
@@ -149,12 +181,12 @@ const EditorPrepartita = () => {
                   id="description"
                   placeholder="Descrizione dell'imprevisto"
                   className="w-full rounded p-1 text-sm font-semibold text-black placeholder:italic"
-                />
+                  />
               </label>
-              <label className="my-1 flex w-full flex-col self-start text-sm font-semibold xl:items-end xl:gap-4">
+              <label htmlFor="notaBene" className="my-1 flex w-full flex-col self-start text-sm font-semibold xl:items-end xl:gap-4">
                 Nota bene... compilare se è un caso particolare
                 {errors.notaBene && (
-                  <span className="font-normal italic text-[rgb(var(--clr-txt))]">
+                  <span className="font-normal italic text-red-600">
                     Il campo "Nota Bene" è errato
                   </span>
                 )}
@@ -164,17 +196,17 @@ const EditorPrepartita = () => {
                   id="notaBene"
                   placeholder="Scrivi una nota"
                   className="block w-2/3 rounded p-1 text-sm font-semibold uppercase text-black placeholder:normal-case placeholder:italic xl:self-end"
-                />
+                  />
               </label>
             </div>
             <div className="flex h-1/3 w-full flex-col items-start justify-between px-2 xl:grid xl:grid-cols-2 xl:items-center xl:gap-4 xl:px-4">
               <label
-                htmlFor="isImprev"
+                htmlFor="isImprevYES"
                 className="my-1 flex w-full items-center justify-between xl:justify-start gap-2 text-sm font-semibold xl:ms-4 xl:self-start"
-              >
+                >
                 È un imprevisto?
                 {errors.isImprev && (
-                  <span className="font-normal italic text-[rgb(var(--clr-txt))]">
+                  <span className="font-normal italic text-red-600">
                     Il campo "È un imprevisto?" è obbligatorio
                   </span>
                 )}
@@ -187,7 +219,7 @@ const EditorPrepartita = () => {
                     type="radio"
                     value={true}
                     className="ms-2 h-4 w-4 rounded border-[rgb(var(--clr-txt))] text-[rgb(var(--clr-btn))] focus:ring-2 focus:ring-[rgb(var(--clr-btn))] md:m-0 dark:border-[rgb(var(--clr-txt))] dark:bg-[rgb(var(--clr-txt))] dark:ring-offset-[rgb(var(--clr-txt))] dark:focus:ring-[rgb(var(--clr-btn))]"
-                  />
+                    />
                   <label htmlFor="isImprevNO">No</label>
                   <input
                     {...register("isImprev", { required: true })}
@@ -200,12 +232,12 @@ const EditorPrepartita = () => {
                 </div>
               </label>
               <label
-                htmlFor="isSpecial"
+                htmlFor="isSpecialYES"
                 className="my-1 flex w-full items-center justify-between xl:justify-start gap-2 text-sm font-semibold xl:ms-4 xl:self-start"
               >
                 È un imprevisto SPECIALE?
                 {errors.isSpecial && (
-                  <span className="font-normal italic text-[rgb(var(--clr-txt))]">
+                  <span className="font-normal italic text-red-600">
                     Il campo "È un imprevisto SPECIALE?" è obbligatorio
                   </span>
                 )}
@@ -231,12 +263,12 @@ const EditorPrepartita = () => {
                 </div>
               </label>
               <label
-                htmlFor="ultEstrazione"
+                htmlFor="ultEstrazioneYES"
                 className="my-1 flex w-full items-center justify-between xl:justify-start gap-2 text-sm font-semibold xl:ms-4 xl:self-start"
               >
                 Bisogna estrarre uno o più giocatori?
                 {errors.ultEstrazione && (
-                  <span className="font-normal italic text-[rgb(var(--clr-txt))]">
+                  <span className="font-normal italic text-red-600">
                     Il campo "estrazione giocatore" è obbligatorio
                   </span>
                 )}
@@ -269,7 +301,7 @@ const EditorPrepartita = () => {
               >
                 Quanti giocatori saranno estratti?
                 {errors.numbExtrPlayer && (
-                  <span className="font-normal italic text-[rgb(var(--clr-txt))]">
+                  <span className="font-normal italic text-red-600">
                     Il campo "Quanti Giocatori" è obbligatorio - Inserisci un
                     numero da 0 a 10
                   </span>
@@ -292,7 +324,7 @@ const EditorPrepartita = () => {
               >
                 Su quanti giocatori effettuare l'estrazione?
                 {errors.baseEstrazione && (
-                  <span className="font-normal italic text-[rgb(var(--clr-txt))]">
+                  <span className="font-normal italic text-red-600">
                     Il campo "Su quanti giocatori?" è obbligatorio
                   </span>
                 )}
@@ -315,7 +347,7 @@ const EditorPrepartita = () => {
               >
                 Quale è il "peso" di questo imprevisto?
                 {errors.weight && (
-                  <span className="font-normal italic text-[rgb(var(--clr-txt))]">
+                  <span className="font-normal italic text-red-600">
                     Il campo "Peso Imprevisto" è obbligatorio
                   </span>
                 )}

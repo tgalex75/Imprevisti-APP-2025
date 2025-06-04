@@ -26,13 +26,14 @@ const ImgUploaderList = () => {
     (item) => item.props.nome === selectRefState,
   );
 
+
   return (
     <section className="flex h-full gap-4 w-full items-center flex-col p-4">
         <h6 className="">Scegli per quale elemento vuoi caricare l'immagine</h6>
       <label className="gap-2" htmlFor="uploaderFilter">
         <select
           id="uploaderFilter"
-          className="h-8 w-32 rounded bg-[rgb(var(--clr-txt))] p-2 text-[rgb(var(--clr-bg))]"
+          className="h-8 w-48 text-center uppercase rounded bg-[rgb(var(--clr-txt))] p-2 text-[rgb(var(--clr-bg))]"
           ref={selectRef}
           onChange={handleSelectRef}
         >

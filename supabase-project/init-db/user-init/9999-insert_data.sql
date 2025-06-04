@@ -259,7 +259,8 @@ VALUES ( 1,'Prepartita', NULL),
 	( 3,'Serie Negativa', NULL),
 	( 4,'Ingaggi', NULL),
 	( 5,'Mercato', NULL),
-	( 6,'Saldo Punti', NULL);
+	( 6,'Saldo Punti', NULL),
+	( 7,'Logo Squadra', NULL);
 
 
 

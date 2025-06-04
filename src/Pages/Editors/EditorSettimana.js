@@ -7,7 +7,6 @@ import { MdDeleteForever } from "react-icons/md";
 
 import DatiImprevistiContext from "../../context/datiImprevisti";
 
-
 const EditorSettimana = () => {
   const { settimana, fetchSettimana } = useContext(DatiImprevistiContext);
 
@@ -66,7 +65,7 @@ const EditorSettimana = () => {
   // Gestore per annullare la modifica
   const handleCancelEdit = () => {
     setEditingItem(null);
-    reset()
+    reset();
   };
 
   const rmVoceDB = async (element) => {
@@ -75,17 +74,20 @@ const EditorSettimana = () => {
       .delete()
       .eq("id", element);
     error && console.log(error);
-    fetchSettimana()
+    fetchSettimana();
   };
 
   return (
-    <section className="flex h-full w-full flex-col items-center p-2 overflow-y-auto xl:overflow-y-hidden font-semibold xl:font-bold">
+    <section className="flex h-full w-full flex-col items-center overflow-y-auto p-2 font-semibold xl:overflow-y-hidden xl:font-bold">
       <h1 className="h-fit">Editor Settimana</h1>
+      <h2 className="w-full text-center">
+        Seleziona una voce per modificarla nell'editor. Oppure inseriscine uno da Zero.
+      </h2>
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.7, duration: 0.7 }}
-        className="flex h-full w-full flex-col items-center justify-around rounded-lg gap-2 text-[rgb(var(--clr-txt))]"
+        className="flex h-full w-full flex-col items-center justify-around gap-2 rounded-lg text-[rgb(var(--clr-txt))]"
       >
         {/* LISTA ELEMENTI */}
         <div className="h-full w-full overflow-y-auto pb-2">
@@ -93,13 +95,19 @@ const EditorSettimana = () => {
             <div
               key={item.id} // Importante per le liste in React
               onClick={() => handleEditClick(item)} // Al click, imposta l'elemento in modifica
-              className="m-2 cursor-pointer border-[rgb(var(--clr-txt))] py-4 px-2 rounded hover:bg-[rgb(var(--clr-btn)/.7)] relative group"
+              className="group relative m-2 cursor-pointer rounded border-[rgb(var(--clr-txt))] px-2 py-4 hover:bg-[rgb(var(--clr-btn)/.7)]"
             >
-              <h3>{item.title}</h3>
+              <h3 className="text-[rgb(var(--clr-ter))]" >{item.title}</h3>
               <p> {item.description}</p>
+              <span className="pe-2 xl:pe-8">
+                Imprevisto: <strong className="text-[rgb(var(--clr-ter))]">{item.isImprev ? "SI" : "NO"}</strong>
+              </span>
+              <span className="pe-2 xl:pe-8">
+                "Peso" dell'estrazione: <strong className="text-[rgb(var(--clr-ter))]">{item.weight}</strong>
+              </span>
               <MdDeleteForever
                 size={28}
-                className="absolute right-0 top-1/2 me-0 xl:me-2 h-full w-8 -translate-y-1/2 cursor-pointer transition-all group-hover:fill-red-600 hover:scale-125"
+                className="absolute right-0 top-1/2 me-0 h-full w-8 -translate-y-1/2 cursor-pointer transition-all group-hover:fill-red-600 hover:scale-125 xl:me-2"
                 onClick={() => rmVoceDB(item.id)}
               />
 
@@ -110,33 +118,39 @@ const EditorSettimana = () => {
 
         {/* EDITING ELEMENTO */}
 
-        <div className="h-full w-full border-t-2 border-t-[rgb(var(--clr-btn))] mt-4 xl:m-0">
-          <h2 className="h-fit text-center font-bold uppercase xl:p-4">
-            {isListaVuota ? "LISTA VUOTA: Inserisci" : "Modifica"} Imprevisto
+        <div className="relative mt-4 h-full w-full border-t-2 border-t-[rgb(var(--clr-btn))] xl:m-0">
+          {editingItem && (
+            <strong className="absolute top-0 inline-block w-full text-center italic text-[rgb(var(--clr-ter))]">
+              Fai doppio Click su ANNULLA per resettare i campi di modifica
+            </strong>
+          )}
+          <h2 className="mt-2 h-fit text-center font-bold uppercase xl:p-4">
+            {!editingItem ? "Inserisci" : "Modifica"} Imprevisto
           </h2>
           <form
             onSubmit={handleSubmit(handleUpdateSubmit)}
             className="flex h-full w-full flex-col items-center justify-around rounded-md font-normal xl:justify-between"
           >
             <div className="flex h-2/3 w-full flex-col items-start justify-between gap-2 px-2 xl:flex-row">
-              <label className="my-1 flex w-full flex-col items-start xl:gap-4 self-start text-sm font-semibold">
+              <label htmlFor="title" className="my-1 flex w-full flex-col items-start self-start text-sm font-semibold xl:gap-4">
                 Titolo Imprevisto
                 {errors.title && (
-                  <span className="font-normal italic text-[rgb(var(--clr-txt))]">
+                  <span className="font-normal italic text-red-600">
                     Il campo "Titolo" è obbligatorio - max 60 caratteri
                   </span>
                 )}
                 <input
                   name="title"
+                  id="title"
                   {...register("title", { required: true, maxLength: 60 })}
                   className="block w-2/3 self-start rounded p-1 text-sm font-semibold uppercase text-black placeholder:normal-case placeholder:italic"
                   placeholder="Titolo dell'imprevisto"
                 />
               </label>
-              <label className="my-1 flex w-full flex-col items-start xl:gap-4 self-start text-sm font-semibold">
+              <label htmlFor="description" className="my-1 flex w-full flex-col items-start self-start text-sm font-semibold xl:gap-4">
                 Descrizione Imprevisto
                 {errors.description && (
-                  <span className="font-normal italic text-[rgb(var(--clr-txt))]">
+                  <span className="font-normal italic text-red-600">
                     Il campo "Descrizione" è obbligatorio
                   </span>
                 )}
@@ -150,18 +164,18 @@ const EditorSettimana = () => {
                 />
               </label>
             </div>
-            <div className="flex h-1/3 w-full flex-col items-start justify-between xl:gap-2 px-2 xl:flex-row">
+            <div className="flex h-1/3 w-full flex-col items-start justify-between px-2 xl:flex-row xl:gap-2">
               <label
                 htmlFor="isImprev"
-                className="my-1 xl:ms-4 flex w-full items-center gap-2 justify-between xl:justify-start xl:self-start text-sm font-semibold "
+                className="my-1 flex w-full items-center justify-between gap-2 text-sm font-semibold xl:ms-4 xl:justify-start xl:self-start"
               >
                 È un imprevisto?
                 {errors.isImprev && (
-                  <span className="font-normal italic text-[rgb(var(--clr-txt))]">
+                  <span className="font-normal italic text-red-600">
                     Il campo "estrazione giocatore" è obbligatorio
                   </span>
                 )}
-                <div className="px-4 w-1/4 h-fit flex items-center justify-around xl:gap-2 ms-4">
+                <div className="ms-4 flex h-fit w-1/4 items-center justify-around px-4 xl:gap-2">
                   <label htmlFor="isImprevYES">Sì</label>
                   <input
                     {...register("isImprev", { required: true })}
@@ -184,11 +198,11 @@ const EditorSettimana = () => {
               </label>
               <label
                 htmlFor="weight"
-                className="my-1 flex w-full items-center justify-between xl:justify-start gap-2 text-sm font-semibold xl:ms-4 xl:self-start"
+                className="my-1 flex w-full items-center justify-between gap-2 text-sm font-semibold xl:ms-4 xl:justify-start xl:self-start"
               >
                 Quale è il "peso" di questo imprevisto?
                 {errors.weight && (
-                  <span className="font-normal italic text-[rgb(var(--clr-txt))]">
+                  <span className="font-normal italic text-red-600">
                     Il campo "Peso Imprevisto" è obbligatorio
                   </span>
                 )}
@@ -204,9 +218,9 @@ const EditorSettimana = () => {
                 ></input>
               </label>
             </div>
-            <div className="flex h-full w-full flex-col items-center justify-center gap-1 xl:gap-2 xl:flex-row">
+            <div className="flex h-full w-full flex-col items-center justify-center gap-1 xl:flex-row xl:gap-2">
               <button
-                className="h-12 w-full flex flex-col items-center justify-center rounded-lg border-2 border-red-700 py-1 font-semibold hover:bg-red-700 xl:h-16 xl:w-1/3"
+                className="flex h-12 w-full flex-col items-center justify-center rounded-lg border-2 border-red-700 py-1 font-semibold hover:bg-red-700 xl:h-16 xl:w-1/3"
                 type="button"
                 onClick={handleCancelEdit}
               >
@@ -214,7 +228,7 @@ const EditorSettimana = () => {
               </button>
               <button
                 type="submit"
-                className="h-12 w-full flex flex-col items-center justify-center rounded-lg border-2 border-[rgb(var(--clr-btn))] py-1 font-semibold hover:bg-[rgb(var(--clr-btn)/.7)] xl:h-16 xl:w-1/3"
+                className="flex h-12 w-full flex-col items-center justify-center rounded-lg border-2 border-[rgb(var(--clr-btn))] py-1 font-semibold hover:bg-[rgb(var(--clr-btn)/.7)] xl:h-16 xl:w-1/3"
               >
                 Salva ed Invia
               </button>

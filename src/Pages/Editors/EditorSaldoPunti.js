@@ -73,15 +73,15 @@ const EditorSaldoPunti = () => {
         valoreSerieMinoreOver: valoreSerieMinoreOver,
       })
       .select();
-      error && console.log(error);
-      fetchBonusMalus();
-      
-      // *** QUI FINISCE LA LOGICA DI AGGIORNAMENTO PER SUPABASE ***
-      
-      // Dopo l'aggiornamento, resettiamo lo stato di modifica per tornare alla lista
-      setEditingItem(null);
-    };
-    
+    error && console.log(error);
+    fetchBonusMalus();
+
+    // *** QUI FINISCE LA LOGICA DI AGGIORNAMENTO PER SUPABASE ***
+
+    // Dopo l'aggiornamento, resettiamo lo stato di modifica per tornare alla lista
+    setEditingItem(null);
+  };
+
   // Gestore per annullare la modifica
   const handleCancelEdit = () => {
     setEditingItem(null);
@@ -105,13 +105,17 @@ const EditorSaldoPunti = () => {
     setSelectRefState(selectRef.current.value);
   };
 
-  const listaFiltrata = bonusMalus.filter(
-    (element) => element.tipo === selectRefState,
-  ).sort((a, b) => a.id - b.id);
+  const listaFiltrata = bonusMalus
+    .filter((element) => element.tipo === selectRefState)
+    .sort((a, b) => a.id - b.id);
 
   return (
     <section className="flex h-full w-full flex-col items-center overflow-y-auto p-2 font-semibold xl:overflow-y-hidden xl:font-bold">
       <h1 className="h-fit">Editor Bonus/Malus Punti</h1>
+      <h2 className="w-full text-center">
+        Seleziona una voce per modificarla nell'editor. Oppure inseriscine uno
+        da Zero.
+      </h2>
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -127,6 +131,7 @@ const EditorSaldoPunti = () => {
             >
               Lista da editare
               <select
+                id="tipoImprevisto"
                 ref={selectRef}
                 onChange={handleSelectRef}
                 className="w-1/2 self-center rounded-md border bg-[rgb(var(--clr-txt))] p-1 text-sm font-semibold text-[rgb(var(--clr-bg))] placeholder-[rgb(var(--clr-txt))] xl:w-fit dark:focus:border-blue-500 dark:focus:ring-blue-500"
@@ -143,14 +148,20 @@ const EditorSaldoPunti = () => {
             <div
               key={item.id} // Importante per le liste in React
               onClick={() => handleEditClick(item)} // Al click, imposta l'elemento in modifica
-              className="group relative m-2 cursor-pointer border border-[rgb(var(--clr-txt))] hover:bg-[rgb(var(--clr-btn)/.7)] xl:py-4 xl:px-2 rounded"
+              className="group relative m-2 cursor-pointer rounded border border-[rgb(var(--clr-txt))] hover:bg-[rgb(var(--clr-btn)/.7)] xl:px-2 xl:py-4"
             >
               {selectRefState === "acquisti" ? (
                 <>
                   <div className="grid grid-cols-2 items-center p-2 font-bold xl:grid-cols-4 xl:gap-2">
-                    <span>
+                    <span className="text-[rgb(var(--clr-ter))]">
                       {item.nomeUnder && `Overall ≥ ` + item.nomeUnder}
                     </span>
+                  </div>
+                  <div className="grid grid-cols-2 items-center gap-2 p-2 xl:grid-cols-4">
+                    <span>Under 32</span>
+                    <span>Over 32</span>
+                    <span>Serie Minore Under 32</span>
+                    <span>Serie Minore Over 32</span>
                   </div>
                   <div className="grid grid-cols-2 items-center gap-2 p-2 xl:grid-cols-4">
                     <span>{item.valoreUnder && item.valoreUnder}</span>
@@ -167,13 +178,15 @@ const EditorSaldoPunti = () => {
                 <>
                   <div className="grid grid-cols-2 items-center p-2 font-bold xl:grid-cols-2 xl:gap-2">
                     {item.tipo === "cessioni" && (
-                      <span>{item.nome && `Overall ≥ ` + item.nome}</span>
+                      <span className="text-[rgb(var(--clr-ter))]">
+                        {item.nome && `Overall ≥ ` + item.nome}
+                      </span>
                     )}
                     {item.tipo !== "cessioni" && (
-                      <span>{item.nome && item.nome}</span>
+                      <span className="text-[rgb(var(--clr-ter))]">
+                        {item.nome && item.nome}
+                      </span>
                     )}
-                  </div>
-                  <div className="grid grid-cols-2 items-center gap-2 p-2 xl:grid-cols-2">
                     <span>{item.valore && item.valore + ` pt`}</span>
                   </div>
                 </>
@@ -190,9 +203,14 @@ const EditorSaldoPunti = () => {
 
         {/* EDITING ELEMENTO */}
 
-        <div className="mt-4 h-full w-full border-t-2 border-t-[rgb(var(--clr-btn))] xl:m-0">
+        <div className="relative mt-4 h-full w-full border-t-2 border-t-[rgb(var(--clr-btn))] xl:m-0">
+          {editingItem && (
+            <strong className="absolute top-0 inline-block w-full text-center italic text-[rgb(var(--clr-ter))]">
+              Fai doppio Click su ANNULLA per resettare i campi di modifica
+            </strong>
+          )}
           <h2 className="mt-2 h-fit text-center font-bold uppercase xl:p-4">
-            {isListaVuota ? "LISTA VUOTA: Inserisci" : "Modifica"} Bonus/Malus{" "}
+            {!editingItem ? "Inserisci" : "Modifica"} Bonus/Malus{" "}
             {selectRefState}
           </h2>
           <form
@@ -206,7 +224,7 @@ const EditorSaldoPunti = () => {
                 <label className="my-1 flex w-full flex-col items-center gap-2 text-sm font-semibold xl:gap-4">
                   Valore ≥ di
                   {errors.nome && (
-                    <span className="font-normal italic text-[rgb(var(--clr-txt))]">
+                    <span className="font-normal italic text-red-600">
                       Il campo "Valore ≥ di" è obbligatorio - min. 30 max 99
                     </span>
                   )}
@@ -223,7 +241,7 @@ const EditorSaldoPunti = () => {
                 <label className="my-1 flex w-full flex-col items-center gap-2 text-sm font-semibold xl:gap-4">
                   Punti
                   {errors.valore && (
-                    <span className="font-normal italic text-[rgb(var(--clr-txt))]">
+                    <span className="font-normal italic text-red-600">
                       Il campo "Punti" è obbligatorio
                     </span>
                   )}
@@ -249,7 +267,7 @@ const EditorSaldoPunti = () => {
                   <label className="my-1 flex w-full flex-col items-center text-sm font-semibold xl:gap-4">
                     Valore Overall Under 32 ≥ di
                     {errors.nomeUnder && (
-                      <span className="font-normal italic text-[rgb(var(--clr-txt))]">
+                      <span className="font-normal italic text-red-600">
                         Il campo "Valore ≥ di" è obbligatorio - min. 30 max 99
                       </span>
                     )}
@@ -270,7 +288,7 @@ const EditorSaldoPunti = () => {
                   <label className="my-1 flex w-full flex-col items-center text-sm font-semibold xl:gap-4">
                     Punti Under 32
                     {errors.valoreUnder && (
-                      <span className="font-normal italic text-[rgb(var(--clr-txt))]">
+                      <span className="font-normal italic text-red-600">
                         Il campo "Punti" è obbligatorio
                       </span>
                     )}
@@ -290,7 +308,7 @@ const EditorSaldoPunti = () => {
                   <label className="my-1 flex w-full flex-col items-center text-sm font-semibold xl:gap-4">
                     Valore Overall Over 32 ≥ di
                     {errors.nomeOver && (
-                      <span className="font-normal italic text-[rgb(var(--clr-txt))]">
+                      <span className="font-normal italic text-red-600">
                         Il campo "Valore ≥ di" è obbligatorio - min. 30 max 99
                       </span>
                     )}
@@ -311,7 +329,7 @@ const EditorSaldoPunti = () => {
                   <label className="my-1 flex w-full flex-col items-center text-sm font-semibold xl:gap-4">
                     Punti Over 32
                     {errors.valoreOver && (
-                      <span className="font-normal italic text-[rgb(var(--clr-txt))]">
+                      <span className="font-normal italic text-red-600">
                         Il campo "Punti" è obbligatorio
                       </span>
                     )}
@@ -331,7 +349,7 @@ const EditorSaldoPunti = () => {
                   <label className="my-1 flex w-full flex-col items-center text-sm font-semibold xl:gap-4">
                     Valore Overall Serie Minore ≥ di
                     {errors.nomeSerieMinore && (
-                      <span className="font-normal italic text-[rgb(var(--clr-txt))]">
+                      <span className="font-normal italic text-red-600">
                         Il campo "Valore ≥ di" è obbligatorio - min. 30 max 99
                       </span>
                     )}
@@ -352,7 +370,7 @@ const EditorSaldoPunti = () => {
                   <label className="my-1 flex w-full flex-col items-center text-sm font-semibold xl:gap-4">
                     Punti Serie Minore
                     {errors.valoreSerieMinore && (
-                      <span className="font-normal italic text-[rgb(var(--clr-txt))]">
+                      <span className="font-normal italic text-red-600">
                         Il campo "Punti" è obbligatorio
                       </span>
                     )}
@@ -372,7 +390,7 @@ const EditorSaldoPunti = () => {
                   <label className="my-1 flex w-full flex-col items-center text-sm font-semibold xl:gap-4">
                     Valore Overall Serie Minore Over 32 ≥ di
                     {errors.nomeSerieMinoreOver && (
-                      <span className="font-normal italic text-[rgb(var(--clr-txt))]">
+                      <span className="font-normal italic text-red-600">
                         Il campo "Valore ≥ di" è obbligatorio - min. 30 max 99
                       </span>
                     )}
@@ -393,7 +411,7 @@ const EditorSaldoPunti = () => {
                   <label className="my-1 flex w-full flex-col items-center text-sm font-semibold xl:gap-4">
                     Punti Serie Minore Over 32
                     {errors.valoreSerieMinoreOver && (
-                      <span className="font-normal italic text-[rgb(var(--clr-txt))]">
+                      <span className="font-normal italic text-red-600">
                         Il campo "Punti" è obbligatorio
                       </span>
                     )}
@@ -421,7 +439,7 @@ const EditorSaldoPunti = () => {
                 <label className="my-1 flex w-full flex-col items-center gap-2 text-sm font-semibold xl:gap-4">
                   Nome
                   {errors.nome && (
-                    <span className="font-normal italic text-[rgb(var(--clr-txt))]">
+                    <span className="font-normal italic text-red-600">
                       Il campo "Nome" è obbligatorio
                     </span>
                   )}
@@ -437,7 +455,7 @@ const EditorSaldoPunti = () => {
                 <label className="my-1 flex w-full flex-col items-center gap-2 text-sm font-semibold xl:gap-4">
                   Punti
                   {errors.valore && (
-                    <span className="font-normal italic text-[rgb(var(--clr-txt))]">
+                    <span className="font-normal italic text-red-600">
                       Il campo "Punti" è obbligatorio
                     </span>
                   )}

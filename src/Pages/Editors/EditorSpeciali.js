@@ -64,7 +64,7 @@ const EditorSpeciali = () => {
 
   // Gestore per annullare la modifica
   const handleCancelEdit = () => {
-    reset()
+    reset();
     setEditingItem(null);
   };
 
@@ -80,6 +80,9 @@ const EditorSpeciali = () => {
   return (
     <section className="flex h-full w-full flex-col items-center overflow-y-auto p-2 font-semibold xl:overflow-y-hidden xl:font-bold">
       <h1 className="h-fit">Editor Speciali</h1>
+      <h2 className="w-full text-center">
+        Seleziona una voce per modificarla nell'editor. Oppure inseriscine uno da Zero.
+      </h2>
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -92,13 +95,37 @@ const EditorSpeciali = () => {
             <div
               key={item.id} // Importante per le liste in React
               onClick={() => handleEditClick(item)} // Al click, imposta l'elemento in modifica
-              className="group relative m-2 cursor-pointer border-[rgb(var(--clr-txt))] py-4 px-2 rounded hover:bg-[rgb(var(--clr-btn)/.7)]"
+              className="group relative m-2 cursor-pointer rounded border-[rgb(var(--clr-txt))] px-2 py-4 hover:bg-[rgb(var(--clr-btn)/.7)]"
             >
-              <h3> {item.titolo}</h3>
+              <h3 className="text-[rgb(var(--clr-ter))]"> {item.titolo}</h3>
               <p className="pe-8"> {item.descrizione}</p>
+              <span className="pe-2 xl:pe-8">
+                Imprevisto:{" "}
+                <strong className="text-[rgb(var(--clr-ter))]">
+                  {item.isImprev ? "SI" : "NO"}
+                </strong>
+              </span>
+              <span className="pe-2 xl:pe-8">
+                Estrazione:{" "}
+                <strong className="text-[rgb(var(--clr-ter))]">
+                  {item.ultEstrazione ? "SI" : "NO"}
+                </strong>
+              </span>
+              <span className="pe-2 xl:pe-8">
+                Numero estratti:{" "}
+                <strong className="text-[rgb(var(--clr-ter))]">
+                  {item.qtGiocatori && item.qtGiocatori}
+                </strong>
+              </span>
+              <span className="pe-2 xl:pe-8">
+                Su quanti giocatori:{" "}
+                <strong className="text-[rgb(var(--clr-ter))]">
+                  {item.titolariRosa && item.titolariRosa}
+                </strong>
+              </span>
               <MdDeleteForever
                 size={28}
-                className="absolute right-0 top-1/2 me-0 xl:me-2 h-full w-8 -translate-y-1/2 cursor-pointer transition-all group-hover:fill-red-600 hover:scale-125"
+                className="absolute right-0 top-1/2 me-0 h-full w-8 -translate-y-1/2 cursor-pointer transition-all group-hover:fill-red-600 hover:scale-125 xl:me-2"
                 onClick={() => rmVoceDB(item.id)}
               />
 
@@ -109,33 +136,39 @@ const EditorSpeciali = () => {
 
         {/* EDITING ELEMENTO */}
 
-        <div className="mt-4 h-full w-full border-t-2 border-t-[rgb(var(--clr-btn))] xl:m-0">
-          <h2 className="h-fit text-center font-bold uppercase xl:p-4">
-            {isListaVuota ? "LISTA VUOTA: Inserisci" : "Modifica"} Imprevisto
+        <div className="relative mt-4 h-full w-full border-t-2 border-t-[rgb(var(--clr-btn))] xl:m-0">
+          {editingItem && (
+            <strong className="absolute top-0 inline-block w-full text-center italic text-[rgb(var(--clr-ter))]">
+              Fai doppio Click su ANNULLA per resettare i campi di modifica
+            </strong>
+          )}
+          <h2 className="mt-2 h-fit text-center font-bold uppercase xl:p-4">
+            {!editingItem ? "Inserisci" : "Modifica"} Imprevisto
           </h2>
           <form
             onSubmit={handleSubmit(handleUpdateSubmit)}
             className="flex h-full w-full flex-col items-center justify-around rounded-md font-normal xl:justify-between"
           >
             <div className="flex h-1/3 w-full flex-col items-start justify-between gap-2 px-2 xl:flex-row">
-              <label className="my-1 flex w-full flex-col items-start self-start text-sm font-semibold xl:gap-4">
+              <label htmlFor="titolo" className="my-1 flex w-full flex-col items-start self-start text-sm font-semibold xl:gap-4">
                 Titolo Imprevisto
                 {errors.titolo && (
-                  <span className="font-normal italic text-[rgb(var(--clr-txt))]">
+                  <span className="font-normal italic text-red-600">
                     Il campo "Titolo" è obbligatorio - max 60 caratteri
                   </span>
                 )}
                 <input
                   name="titolo"
+                  id="titolo"
                   {...register("titolo", { required: true, maxLength: 60 })}
                   className="block w-2/3 self-start rounded p-1 text-sm font-semibold uppercase text-black placeholder:normal-case placeholder:italic"
                   placeholder="Titolo dell'imprevisto"
                 />
               </label>
-              <label className="my-1 flex w-full flex-col items-start self-start text-sm font-semibold xl:gap-4">
+              <label htmlFor="descrizione" className="my-1 flex w-full flex-col items-start self-start text-sm font-semibold xl:gap-4">
                 Descrizione Imprevisto
                 {errors.descrizione && (
-                  <span className="font-normal italic text-[rgb(var(--clr-txt))]">
+                  <span className="font-normal italic text-red-600">
                     Il campo "Descrizione" è obbligatorio
                   </span>
                 )}
@@ -156,7 +189,7 @@ const EditorSpeciali = () => {
               >
                 Bisogna estrarre uno o più giocatori?
                 {errors.ultEstrazione && (
-                  <span className="font-normal italic text-[rgb(var(--clr-txt))]">
+                  <span className="font-normal italic text-red-600">
                     Il campo "estrazione giocatore" è obbligatorio
                   </span>
                 )}
@@ -187,7 +220,7 @@ const EditorSpeciali = () => {
               >
                 Quanti giocatori saranno estratti?
                 {errors.qtGiocatori && (
-                  <span className="font-normal italic text-[rgb(var(--clr-txt))]">
+                  <span className="font-normal italic text-red-600">
                     Il campo "Quanti Giocatori" è obbligatorio - Inserisci un
                     numero da 0 a 10
                   </span>
@@ -205,12 +238,12 @@ const EditorSpeciali = () => {
                 />
               </label>
               <label
-                htmlFor="qtGiocatori"
+                htmlFor="titolariRosa"
                 className="my-1 flex w-full items-center justify-between gap-2 text-sm font-semibold xl:ms-4 xl:self-start"
               >
                 Su quanti giocatori effettuare l'estrazione?
                 {errors.titolariRosa && (
-                  <span className="font-normal italic text-[rgb(var(--clr-txt))]">
+                  <span className="font-normal italic text-red-600">
                     Il campo "Su quanti giocatori?" è obbligatorio
                   </span>
                 )}

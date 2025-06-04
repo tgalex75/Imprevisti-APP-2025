@@ -48,7 +48,7 @@ L'applicazione necessita di alcune chiavi di configurazione per connettersi a Su
    
    * Su Linux e macOS puoi usare il comando: `cp .env.example .env`
    * Su Windows puoi usare il comando: `copy .env.example .env`
-3. **Inserisci i tuoi valori - (PASSAGGIO NON OBBLIGATORIO)**, se desideri personalizzarli (non necessario finché fai girare la app in locale: questa infatti comprende già dei valori di **default**. Apri i file `.env` con un editor di testo e inserisci i valori corretti per le variabili d'ambiente relative a Supabase (come `SUPABASE_URL` e `SUPABASE_ANON_KEY`). Queste informazioni dovresti averle dal tuo progetto Supabase.
+3. **Inserisci i tuoi valori - (PASSAGGIO NON OBBLIGATORIO)**, se desideri personalizzarli (non necessario finché fai girare la app in locale: questa infatti comprende già dei valori di **default**: è importante però sapere che questi valori di **default** non devono essere toccati se la app verrà fatta girare su un browser "locale", vale a dire installato sulla stessa macchina dove è appena stata installata. Nel caso si volesse modificare, apri i file `.env` con un editor di testo e inserisci i valori corretti per le variabili d'ambiente relative a Supabase (come `SUPABASE_URL` e `SUPABASE_ANON_KEY`). Queste informazioni dovresti averle dal tuo progetto Supabase.
 
 > `# Esempio di contenuto del file .env` <br>
 > `REACT_APP_SUPABASE_URL=IL_TUO_URL_SUPABASE` <br>
