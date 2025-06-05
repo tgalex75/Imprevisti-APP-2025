@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import Dado from "../Components/Dado";
 import rnd from "random-weight";
-import {v4 as uuidv4} from "uuid"
+import { v4 as uuidv4 } from "uuid";
 import LayoutBase from "../Components/LayoutBase";
 import DatiImprevistiContext from "../context/datiImprevisti";
 import Spinner from "../Components/Spinner";
@@ -20,11 +20,11 @@ const Settimana = () => {
     } else if (settimana === null || settimana === undefined) {
       setIsLoading(true); // Mantieni isLoading a true se settimana è null o undefined
     } else if (settimana && settimana.length === 0 && isLoading) {
-        // Se settimana è un array vuoto ma stavamo ancora caricando (es. primo render)
-        // decidiamo se considerarlo "caricato" (array vuoto è uno stato valido)
-        // o se aspettare ulteriormente (dipende dalla logica dell'app)
-        // In questo caso, lo considero caricato.
-        setIsLoading(false);
+      // Se settimana è un array vuoto ma stavamo ancora caricando (es. primo render)
+      // decidiamo se considerarlo "caricato" (array vuoto è uno stato valido)
+      // o se aspettare ulteriormente (dipende dalla logica dell'app)
+      // In questo caso, lo considero caricato.
+      setIsLoading(false);
     }
   }, [settimana, isLoading]); // Aggiungi isLoading alle dipendenze di useEffect
 
@@ -35,7 +35,7 @@ const Settimana = () => {
   // Se settimana è un array vuoto dopo il caricamento e vuoi mostrare un messaggio specifico
   if (!isLoading && settimana.length === 0) {
     return (
-      <div className=" absolute text-3xl left-1/2 top-1/2 -translate-x-1/2 transform text-center">
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 transform text-center text-3xl">
         Nessun dato disponibile. Controlla l'Editor.
       </div>
     );
@@ -49,22 +49,18 @@ const Settimana = () => {
     setCount(uuidv4());
   };
 
-  const titoloH1 = "Imprevisto della Settimana";
+  const titoloH1 = "Settimana";
 
   return (
-    <div className="xl-p-0 flex h-full w-full flex-col items-center justify-center p-2 text-center xl:flex-row">
-      {!casuale ? (
-        <h2 className="flex h-full items-center justify-center text-5xl italic">
-          Vai!
-        </h2>
-      ) : (
-        <LayoutBase
-          key={count}
-          titoloH1={titoloH1}
-          id={casuale?.id}
-          isImprev={casuale?.isImprev}
-          casuale={casuale}
-        >
+    <>
+      <LayoutBase
+        key={count}
+        titoloH1={titoloH1}
+        id={casuale?.id}
+        isImprev={casuale?.isImprev}
+        casuale={casuale}
+      >
+        {casuale && (
           <>
             <h2
               className={
@@ -85,10 +81,10 @@ const Settimana = () => {
               {casuale?.description}
             </p>
           </>
-        </LayoutBase>
-      )}
+        )}
+      </LayoutBase>
       {<Dado clickFunc={estraiNumeroCasuale} />}
-    </div>
+    </>
   );
 };
 

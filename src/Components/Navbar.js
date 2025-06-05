@@ -26,47 +26,48 @@ const Navbar = () => {
       linkTo: "/offerte-mercato",
     },
     { id: 6, voceLi: "Imprevisti di Ingaggio", linkTo: "/ingaggio" },
-    { id: 7, voceLi: "Saldo Punti", linkTo: "/saldo-punti" },
+    { id: 7, voceLi: "Media Overall", linkTo: "/media-overall" },
+    { id: 8, voceLi: "Saldo Punti", linkTo: "/saldo-punti" },
     {
-      id: 8,
+      id: 9,
       voceLi: "Editor Imprevisti",
       linkTo: "/editor-imprevisti",
       subMenu: [
         {
-          id: 8.1,
+          id: 9.1,
           subVoceLi: "Editor Prepartita",
           subLinkTo: "/editor-prepartita",
         },
         {
-          id: 8.2,
+          id: 9.2,
           subVoceLi: "Editor Settimana",
           subLinkTo: "/editor-settimana",
         },
         {
-          id: 8.3,
+          id: 9.3,
           subVoceLi: "Editor Serie Negativa",
           subLinkTo: "/editor-serie-negativa",
         },
         {
-          id: 8.4,
+          id: 9.4,
           subVoceLi: "Editor Ingaggi e Mercato",
           subLinkTo: "/editor-ingaggi",
         },
         {
-          id: 8.5,
+          id: 9.5,
           subVoceLi: "Editor Speciali",
           subLinkTo: "/editor-speciali",
         },
         {
-          id: 8.6,
+          id: 9.6,
           subVoceLi: "Editor Saldo Punti",
           subLinkTo: "/editor-saldo-punti",
         },
       ],
     },
-    { id: 9, voceLi: "Imprevisti Sospesi", linkTo: "/imprevisti-sospesi" },
-    { id: 10, voceLi: "Estrazione Libera", linkTo: "/estrazione-libera" },
-    { id: 11, voceLi: "Impostazioni App", linkTo: "/impostazioni-app" },
+    { id: 10, voceLi: "Imprevisti Sospesi", linkTo: "/imprevisti-sospesi" },
+    { id: 11, voceLi: "Estrazione Libera", linkTo: "/estrazione-libera" },
+    { id: 12, voceLi: "Impostazioni App", linkTo: "/impostazioni-app" },
   ];
 
   /* https://codesandbox.io/p/sandbox/map-nested-array-of-objects-kct7e?file=%2Fsrc%2Fdata.js */
@@ -75,42 +76,39 @@ const Navbar = () => {
   const linksMenu = dettagliMenu.map((voce) => {
     return (
       <div key={voce.id}>
-        <Link to={voce.linkTo}>
-          <motion.li
-            layout
-            whileHover={{ scale: 1.2 }}
-            transition={{
-              type: "spring",
-              duration: 0.4,
-              ease: "easeIn",
-              stiffness: 200,
-            }}
-            className="lg:text-xl p-4 px-8 text-lg font-bold uppercase hover:text-[rgb(var(--clr-ter))] xl:text-2xl relative group"
-          >
-            {voce.voceLi}
-            {voce?.subMenu && (
-              <div className="xl:absolute p-2 xl:top-0 w-full xl:right-full bg-[rgb(var(--clr-bg)/.95)] xl:group-hover:block hidden">
-                {voce?.subMenu.map((element) => (
-                  <Link key={element.id} to={element.subLinkTo}>
-                    <motion.li
-                      layout
-                      whileHover={{ scale: 1.2 }}
-                      transition={{
-                        type: "spring",
-                        duration: 0.4,
-                        ease: "easeIn",
-                        stiffness: 200,
-                      }}
-                      className="p-4 w-full text-base font-bold uppercase text-[rgb(var(--clr-txt))] hover:text-[rgb(var(--clr-ter))] xl:text-lg relative"
-                    >
-                      {element.subVoceLi}
-                    </motion.li>
-                  </Link>
-                ))}
-              </div>
-            )}
-          </motion.li>
-        </Link>
+        <motion.li
+          layout
+          whileHover={{ scale: 1.2 }}
+          transition={{
+            type: "spring",
+            duration: 0.4,
+            ease: "easeIn",
+            stiffness: 200,
+          }}
+          className="group relative p-4 px-8 text-lg font-bold uppercase hover:text-[rgb(var(--clr-ter))] lg:text-xl xl:text-2xl"
+        >
+          <Link to={voce.linkTo}>{voce.voceLi}</Link>
+          {voce?.subMenu && (
+            <ul className="hidden w-full bg-[rgb(var(--clr-bg)/.95)] p-2 xl:absolute xl:right-full xl:top-0 xl:group-hover:block">
+              {voce?.subMenu.map((element) => (
+                <motion.li
+                  key={element.id}
+                  layout
+                  whileHover={{ scale: 1.2 }}
+                  transition={{
+                    type: "spring",
+                    duration: 0.4,
+                    ease: "easeIn",
+                    stiffness: 200,
+                  }}
+                  className="relative w-full p-4 text-base font-bold uppercase text-[rgb(var(--clr-txt))] hover:text-[rgb(var(--clr-ter))] xl:text-lg"
+                >
+                  <Link to={element.subLinkTo}>{element.subVoceLi}</Link>
+                </motion.li>
+              ))}
+            </ul>
+          )}
+        </motion.li>
       </div>
     );
   });
@@ -145,7 +143,7 @@ const Navbar = () => {
         <ul
           style={isOpenMenu ? { right: 0 } : { right: "-100%" }}
           onClick={handleClick}
-          className="absolute top-0 z-[-1] flex h-screen w-full flex-col items-center gap-3 justify-center bg-[rgb(var(--clr-bg)/.95)] text-center text-[rgb(var(--clr-txt))] transition-all duration-300 xl:duration-500 xl:h-screen xl:w-[30vw] xl:gap-2"
+          className="absolute top-0 z-[-1] flex h-screen w-full flex-col items-center justify-center gap-3 bg-[rgb(var(--clr-bg)/.95)] text-center text-[rgb(var(--clr-txt))] transition-all duration-300 xl:h-screen xl:w-[30vw] xl:gap-2 xl:duration-500"
         >
           {linksMenu}
         </ul>

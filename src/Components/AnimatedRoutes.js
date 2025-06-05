@@ -5,6 +5,7 @@ import Prepartita from "../Pages/Prepartita";
 import Settimana from "../Pages/Settimana";
 import SalvaPerDopo from "../Pages/SalvaPerDopo";
 import IngaggiMercato from "../Pages/IngaggiMercato";
+import MediaOverall from "../Pages/MediaOverall"
 import SaldoPunti from "../Pages/SaldoPunti";
 import SerieNegativa from "../Pages/SerieNegativa";
 import ErrorPage from "../Pages/ErrorPage";
@@ -36,6 +37,7 @@ const AnimatedRoutes = () => {
         <Route path="/editor-saldo-punti" element={<EditorSaldoPunti />} />
         <Route path="/impostazioni-app" element={<EditorInterfaccia />} />
         <Route path="/imprevisti-sospesi" element={<SalvaPerDopo />} />
+        <Route path="/media-overall" element={<MediaOverall />} />
         <Route path="/saldo-punti" element={<SaldoPunti />} />
         <Route
           path="/ingaggio"

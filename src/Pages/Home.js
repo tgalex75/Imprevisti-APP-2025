@@ -10,7 +10,9 @@ import {
   FaArrowTrendDown,
   FaFileInvoiceDollar,
   FaMoneyBill1Wave,
+  FaScaleBalanced,
   FaArrowRightArrowLeft,
+  FaListCheck,
 } from "react-icons/fa6";
 
 const Home = () => {
@@ -53,13 +55,25 @@ const Home = () => {
     },
     {
       id: 6,
+      nome: "Media Overall",
+      img: <FaScaleBalanced size="80%" />,
+      link: "/media-overall",
+    },
+    {
+      id: 7,
       nome: "Saldo Punti",
       img: <FaArrowRightArrowLeft className="rotate-90" size="80%" />,
       link: "/saldo-punti",
     },
+    {
+      id: 8,
+      nome: "Editor Imprevisti",
+      img: <FaListCheck size="80%" />,
+      link: "/editor-imprevisti",
+    },
   ];
 
-  const sorted = data.sort((a, b) => a.id - b.id).slice(0, 6);
+  const sorted = data.sort((a, b) => a.id - b.id).slice(0, 8);
   const listaCompleta = dettagliImprevisti.map((item, i) => ({
     ...item,
     url: sorted[i]?.url ?? null,
@@ -78,10 +92,10 @@ const Home = () => {
           style={{
             zIndex: el.id,
           }}
-          className="ease-[cubic-bezier(0.770, 0.000, 0.175, 1.000)] group relative h-1/3 grow basis-1/2 cursor-pointer items-center justify-start overflow-hidden transition-all duration-150 [box-shadow:-12px_0px_10px_-3px_rgba(2,2,2,0.5)] hover:text-[rgb(var(--clr-txt))] xl:h-1/2 xl:basis-1/3"
+          className="ease-[cubic-bezier(0.770, 0.000, 0.175, 1.000)] border-2 border-[rgb(var(--clr-txt)/.5)] hover:border-[rgb(var(--clr-txt))] xl:border-none group relative h-1/4 grow basis-1/2 cursor-pointer items-center justify-start overflow-hidden transition-all duration-150 xl:[box-shadow:-12px_0px_10px_-3px_rgba(2,2,2,0.5)] hover:text-[rgb(var(--clr-txt))] xl:h-1/2 xl:basis-1/4"
         >
-          <Link to={el.link} className="flex h-full bg-transparent">
-            <h2 className="flex rotate-180 items-center justify-center px-4 text-center text-[.4rem] font-bold uppercase text-[rgb(var(--clr-txt))] drop-shadow-lg transition-all [text-shadow:rgb(34,34,34)_0px_4px_4px] [writing-mode:vertical-lr] bg-[rgb(var(--clr-prim))] group-hover:bg-[rgb(var(--clr-btn)/.7)] md:justify-start md:px-2 md:ps-8 md:text-[1.5dvw]">
+          <Link to={el.link} className="flex flex-col xl:flex-row h-full bg-transparent">
+            <h2 className="flex xl:rotate-180 items-center justify-center p-2 xl:px-4 text-center text-[.4rem] font-bold uppercase text-[rgb(var(--clr-txt))] xl:drop-shadow-lg transition-all xl:[text-shadow:rgb(34,34,34)_0px_4px_4px] xl:[writing-mode:vertical-lr] bg-[rgb(var(--clr-prim))] group-hover:bg-[rgb(var(--clr-btn)/.7)] md:justify-start md:px-2 md:ps-10 md:text-[1.5dvw]">
               {el.nome}
             </h2>
 
@@ -91,7 +105,7 @@ const Home = () => {
             ></div>
 
             <div
-              className={`flex w-full items-center justify-center transition-all group-hover:bg-[rgb(var(--clr-sec))]`}
+              className={`flex w-full h-full items-center justify-center duration-300 ease-out transition-all group-hover:bg-[rgb(var(--clr-sec))]`}
               style={
                 el.url
                   ? {
