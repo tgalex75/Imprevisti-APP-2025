@@ -16,6 +16,8 @@ const Sfondo = () => {
     fetchLogoURL();
   }, []);
 
+  console.log(logoURL)
+
   return (
     <section className="absolute bottom-4 left-1/2 -z-50 h-1/3 w-1/3 -translate-x-1/2 overflow-hidden bg-transparent">
       <div

@@ -8,8 +8,10 @@ const ImgUploaderList = () => {
     { id: 3, nome: "Serie Negativa", urlName: "serie-negativa" },
     { id: 4, nome: "Ingaggi", urlName: "ingaggi" },
     { id: 5, nome: "Mercato", urlName: "mercato" },
-    { id: 6, nome: "Saldo Punti", urlName: "saldo-punti" },
-    { id: 7, nome: "Logo Squadra", urlName: "logo" },
+    { id: 6, nome: "Media Overall Squadra", urlName: "media-overall" },
+    { id: 7, nome: "Saldo Punti", urlName: "saldo-punti" },
+    { id: 8, nome: "Editor Imprevisti", urlName: "editor-imprevisti" },
+    { id: 9, nome: "Logo Squadra", urlName: "logo" },
   ];
   const mappedUploader = listaUploader.map((el) => (
     <ImageUploader key={el.id} id={el.id} nome={el.nome} urlName={el.urlName} />
@@ -42,7 +44,9 @@ const ImgUploaderList = () => {
           <option value="Serie Negativa">Serie Negativa</option>
           <option value="Ingaggi">Ingaggi</option>
           <option value="Mercato">Mercato</option>
+          <option value="Media Overall">Media Overall</option>
           <option value="Saldo Punti">Saldo Punti</option>
+          <option value="Editor Imprevisti">Editor Imprevisti</option>
           <option value="Logo Squadra">Logo Squadra</option>
         </select>
       </label>

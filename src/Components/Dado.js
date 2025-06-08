@@ -8,8 +8,9 @@ const Dado = (props) => {
   const { clickFunc } = props;
   const { data } = useFetchData("preferenze-immagini");
 
-  const dadoImg = data.filter((item) => item.id === 7)[0]?.url;
+  const dadoImg = data.filter((item) => item.id === 9)[0]?.url;
   const urlDiretto = `${supabase.storageUrl}/object/public/immagini/${dadoImg}`;
+  
 
   return (
     <motion.div
