@@ -33,9 +33,9 @@ Segui questi passaggi per mettere in funzione l'applicazione:
 
 Apri un terminale (su Windows puoi usare Git Bash, PowerShell o il Prompt dei Comandi; su macOS e Linux puoi usare il Terminale) e clona il repository dell'applicazione:
 
-> `git clone https://github.com/tgalex75/imprevisti-supabase-docker.git`
+> `git clone https://github.com/tgalex75/Imprevisti-APP-2025.git`
 > 
-> `cd imprevisti-supabase-docker`
+> `cd Imprevisti-APP-2025`
 
 Verifica l'URL effettivo del repository del tuo progetto ed il nome della cartella che viene creata dopo la clonazione.
 
@@ -67,23 +67,24 @@ L'applicazione necessita di alcune chiavi di configurazione per connettersi a Su
 
 Per costruire il frontend che ti consentirà di interagire con la APP da Browser, è necessario costruire l'immagine docker che si occuperà di scaricare ed installare tutto il necessario.
 
-1. **Apri il terminale** nella cartella radice `imprevisti-supabase-docker` (la stessa dove si trovano il `Dockerfile` ed il `package.json`).
+1. **Apri il terminale** nella cartella radice `Imprevisti-APP-2025` (la stessa dove si trovano il `Dockerfile` ed il `package.json`).
 2. **Esegui il seguente comando** per costruire l'immagine di base Docker: `docker build -t frontend .`
    **Importante**: Attenzione al *punto* alla fine del comando appena indicato: esso è infatti necessario per dirgli di installare il necessario nella cartella attuale.
+   Ignora eventuali **Warnings** che possono comparire nel terminale alla fine dell'operazione di **build**. 
 
 ### **4\. Avvia l'Applicazione con Docker Compose 🚀**
 
-Docker Compose è uno strumento per definire ed eseguire applicazioni Docker multi-container. Il tuo progetto dovrebbe includere un file docker-compose.yml che definisce i servizi per il front-end e il backend.
+Docker Compose è uno strumento per definire ed eseguire applicazioni Docker multi-container. Questo progetto include un file docker-compose.yml che definisce i servizi per il front-end e il backend.
 
 1. **Spostati** nella cartella principale del progetto `supabase-project`  (la stessa dove si trova il file `docker-compose.yml`).
 2. **Esegui il seguente comando** per costruire le immagini Docker (se non esistono già) e avviare i container: 
->`docker-compose up -d`
-
-Oppure, più probabile nelle versioni più recenti di Docker:
-
 >`docker compose up -d`
+
+Oppure, per le versioni meno recenti di Docker:
+
+>`docker-compose up -d`
    
-   * `docker-compose up`: Questo comando avvia i servizi definiti nel file docker-compose.yml.
+   * `docker compose up`: Questo comando avvia i servizi definiti nel file docker-compose.yml.
    * `--build`: Questa opzione forza la ricostruzione delle immagini Docker prima di avviare i container. È utile se hai apportato modifiche al codice sorgente o ai Dockerfile.
 
 Attendi che il processo di avvio dei containers e avvio sia completato. Se preferisci vedere i log nel terminale che indicano lo stato dei container, avvia invece con:
@@ -101,15 +102,15 @@ Controlla i log nel terminale o il file docker-compose.yml per vedere su quale p
 
 Per fermare l'applicazione e i relativi container Docker:
 
-1. Torna al terminale dove hai eseguito docker-compose up.
+1. Torna al terminale dove hai eseguito docker-compose up. Nel caso tu lo abbia eseguito con docker compose up -d, fai riferimento al seguente punto 4.
 2. Premi Ctrl \+ C.
 3. Potrebbe essere necessario attendere qualche secondo affinché i container si arrestino correttamente.
 4. Per assicurarti che i container siano rimossi (opzionale, ma utile per liberare risorse), puoi eseguire:
-> `docker-compose down`
-
-o, per le versioni più recenti:
-
 > `docker compose down`
+
+o, per le versioni meno recenti:
+
+> `docker-compose down`
 
    Questo comando ferma e rimuove i container, le reti e, opzionalmente, i volumi definiti nel `docker-compose.yml`.
 
@@ -133,4 +134,3 @@ o, per le versioni più recenti:
   * Controlla i log dei container per errori specifici: `docker logs supabase-frontend-1` e `docker logs supabase-db`. Puoi trovare i nomi dei container con `docker ps`.
   * Verifica la configurazione di rete nel `docker-compose.yml` e assicurati che le porte siano esposte correttamente.
   * Assicurati che le variabili d'ambiente per la connessione a Supabase (`REACT_APP_SUPABASE_URL` e `REACT_APP_SUPABASE_ANON_KEY`) siano corrette e accessibili dal container del front-end.
-
