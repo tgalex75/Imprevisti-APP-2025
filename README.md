@@ -10,7 +10,7 @@ Prima di iniziare, assicurati di avere installato Docker e Git sul tuo sistema.
 
 Docker è una piattaforma che permette di eseguire applicazioni in ambienti isolati chiamati container.
 
-* **Windows**: Scarica e installa [Docker Desktop for Windows](https://docs.docker.com/desktop/install/windows-install/).
+* **Windows**: Scarica e installa [Docker Desktop for Windows](https://docs.docker.com/desktop/install/windows-install/). È sconsigliato l'uso della versione che è possibile scaricare ed installare da Microsoft Store.
 * **macOS**: Scarica e installa [Docker Desktop for Mac](https://docs.docker.com/desktop/install/mac-install/).
 * **Linux**: Installa Docker Engine seguendo la guida per la tua distribuzione specifica. Puoi trovare le istruzioni su [Install Docker Engine](https://docs.docker.com/engine/install/). Generalmente, dopo l'installazione di Docker Engine, avrai bisogno anche di Docker Compose. Su molte distribuzioni Linux, Docker Compose viene installato come plugin di Docker CLI (`docker compose`) oppure come pacchetto separato (`docker-compose`). Verifica la documentazione per la tua distribuzione.
 
@@ -46,9 +46,10 @@ L'applicazione necessita di alcune chiavi di configurazione per connettersi a Su
 1. **Cerca i file di esempio**: All'interno della cartella del progetto, dovresti trovare un file chiamato `.env.example`. Questi file mostrano quali variabili d'ambiente sono necessarie, sia per il Frontend che per il Backend (il database insomma!).
 2. **Crea i due file .env**: Duplica i rispettivi file .env.example e rinominali in .env (in entrambe le cartelle **ricordalo**!).
    
-   * Su Linux e macOS puoi usare il comando: `cp .env.example .env`
-   * Su Windows puoi usare il comando: `copy .env.example .env`
-3. **Inserisci i tuoi valori - (PASSAGGIO NON OBBLIGATORIO)**, se desideri personalizzarli (non necessario finché fai girare la app in locale: questa infatti comprende già dei valori di **default**: è importante però sapere che questi valori di **default** non devono essere toccati se la app verrà fatta girare su un browser "locale", vale a dire installato sulla stessa macchina dove è appena stata installata. Nel caso si volesse modificare, apri i file `.env` con un editor di testo e inserisci i valori corretti per le variabili d'ambiente relative a Supabase (come `SUPABASE_URL` e `SUPABASE_ANON_KEY`). Queste informazioni dovresti averle dal tuo progetto Supabase.
+   * Su Linux e MacOS ma anche su Windows se si usa Git Bash, puoi usare il comando: `cp .env.example .env`
+   * Su Windows (Terminale, Prompt di Comandi e Powershell) puoi usare il comando: `copy .env.example .env`
+   * Ovviamente puoi modificare i files anche con un editor di testo del tuo sistema operativo, che esso sia Windows, MacOS o Linux, rinominando i due files da `.env.example` a `.env`. 
+3. **(PASSAGGIO FACOLTATIVO) - Inserisci i tuoi valori**, se desideri personalizzarli anche se ciò non è necessario finché fai girare la app in locale: questa infatti comprende già dei valori di **default**: è importante però sapere che questi valori di **default** non devono essere modificati se la app verrà fatta girare su un browser "locale", vale a dire eseguito sulla stessa macchina dove è appena stata installata. Nel caso si volesse modificarli, apri i file `.env` con un editor di testo e inserisci i valori corretti per le variabili d'ambiente relative a Supabase (come `SUPABASE_URL` e `SUPABASE_ANON_KEY`). Queste informazioni dovresti averle dal tuo progetto Supabase.
 
 > `# Esempio di contenuto del file .env` <br>
 > `REACT_APP_SUPABASE_URL=IL_TUO_URL_SUPABASE` <br>
