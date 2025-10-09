@@ -44,6 +44,7 @@ Verifica l'URL effettivo del repository del tuo progetto ed il nome della cartel
 L'applicazione necessita di alcune chiavi di configurazione per connettersi a Supabase. Solitamente, queste sono gestite tramite un file `.env`. Ne troverai due uno nella directory primaria (dove si trova il Dockerfile insomma) e l'altro nella cartella del progetto docker, ossia la cartella chiamata `supabase-project`.
 
 2.1 - **Cerca i file di esempio**: All'interno della cartella del progetto, dovresti trovare un file chiamato `.env.example`. Questi file mostrano quali variabili d'ambiente sono necessarie, sia per il Frontend che per il Backend (il database insomma!).
+
 2.2 - **Crea i due file .env**: Duplica i rispettivi file .env.example e rinominali in .env (in entrambe le cartelle **ricordalo**!).
 
 * Su Linux e MacOS ma anche su Windows se si usa Git Bash, puoi usare il comando: `cp .env.example .env`
