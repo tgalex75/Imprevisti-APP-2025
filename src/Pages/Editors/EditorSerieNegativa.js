@@ -74,7 +74,7 @@ const EditorSerieNegativa = () => {
 
   const rmVoceDB = async (element) => {
     const { error } = await supabase
-      .from("prepartita")
+      .from("serie-negativa")
       .delete()
       .eq("id", element);
     error && console.log(error);
