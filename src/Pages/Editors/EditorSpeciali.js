@@ -70,7 +70,7 @@ const EditorSpeciali = () => {
 
   const rmVoceDB = async (element) => {
     const { error } = await supabase
-      .from("prepartita")
+      .from("speciali")
       .delete()
       .eq("id", element);
     error && console.log(error);
