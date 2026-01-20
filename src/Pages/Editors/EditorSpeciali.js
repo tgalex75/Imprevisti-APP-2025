@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { supabase } from "../../supabaseClient";
+import { db } from "../../Db/db";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { v4 as uuidv4 } from "uuid";
@@ -7,7 +7,7 @@ import { MdDeleteForever } from "react-icons/md";
 import DatiImprevistiContext from "../../context/datiImprevisti";
 
 const EditorSpeciali = () => {
-  const { speciali, fetchSpeciali } = useContext(DatiImprevistiContext);
+  const { speciali } = useContext(DatiImprevistiContext);
 
   // Stato per memorizzare l'elemento attualmente in modifica (null se nessuno)
   const [editingItem, setEditingItem] = useState(null);
@@ -42,21 +42,21 @@ const EditorSpeciali = () => {
   const handleUpdateSubmit = async (data) => {
     console.log("Dati aggiornati dal form:", data);
 
-    const { error } = await supabase
-      .from("speciali")
-      .upsert({
+    try {
+      const idPunti = await db.speciali.put({
         id: isListaVuota ? uuidv4() : data.id,
         titolo: data.titolo,
         descrizione: data.descrizione,
-        ultEstrazione: data.ultEstrazione,
-        qtGiocatori: data.qtGiocatori,
-        titolariRosa: data.titolariRosa,
-      })
-      .select();
-    error && console.log(error);
-    fetchSpeciali();
+        ultEstrazione: parseInt(data.ultEstrazione),
+        qtGiocatori: parseInt(data.qtGiocatori),
+        titolariRosa: parseInt(data.titolariRosa),
+      });
+      console.log(idPunti, data);
+    } catch (error) {
+      error && console.log(error);
+    }
 
-    // *** QUI FINISCE LA LOGICA DI AGGIORNAMENTO PER SUPABASE ***
+    // *** QUI FINISCE LA LOGICA DI AGGIORNAMENTO PER DATABASE ***
 
     // Dopo l'aggiornamento, resettiamo lo stato di modifica per tornare alla lista
     setEditingItem(null);
@@ -69,19 +69,20 @@ const EditorSpeciali = () => {
   };
 
   const rmVoceDB = async (element) => {
-    const { error } = await supabase
-      .from("speciali")
-      .delete()
-      .eq("id", element);
-    error && console.log(error);
-    fetchSpeciali();
+    try {
+      const idPunti = await db.speciali.delete(element);
+      console.log(idPunti, element);
+    } catch (error) {
+      error && console.log(error);
+    }
   };
 
   return (
     <section className="flex h-full w-full flex-col items-center overflow-y-auto p-2 font-semibold xl:overflow-y-hidden xl:font-bold">
       <h1 className="h-fit">Editor Speciali</h1>
       <h2 className="w-full text-center">
-        Seleziona una voce per modificarla nell'editor. Oppure inseriscine uno da Zero.
+        Seleziona una voce per modificarla nell'editor. Oppure inseriscine uno
+        da Zero.
       </h2>
       <motion.div
         initial={{ opacity: 0 }}
@@ -102,13 +103,13 @@ const EditorSpeciali = () => {
               <span className="pe-2 xl:pe-8">
                 Imprevisto:{" "}
                 <strong className="text-[rgb(var(--clr-ter))]">
-                  {item.isImprev ? "SI" : "NO"}
+                  {item.isImprev === 1 ? "SI" : "NO"}
                 </strong>
               </span>
               <span className="pe-2 xl:pe-8">
                 Estrazione:{" "}
                 <strong className="text-[rgb(var(--clr-ter))]">
-                  {item.ultEstrazione ? "SI" : "NO"}
+                  {item.ultEstrazione === 1 ? "SI" : "NO"}
                 </strong>
               </span>
               <span className="pe-2 xl:pe-8">
@@ -147,10 +148,13 @@ const EditorSpeciali = () => {
           </h2>
           <form
             onSubmit={handleSubmit(handleUpdateSubmit)}
-            className="flex h-full w-full flex-col items-center justify-around rounded-md font-normal xl:justify-between"
+            className="flex h-full w-full flex-col items-center justify-around rounded-md pb-6 font-normal xl:justify-between"
           >
             <div className="flex h-1/3 w-full flex-col items-start justify-between gap-2 px-2 xl:flex-row">
-              <label htmlFor="titolo" className="my-1 flex w-full flex-col items-start self-start text-sm font-semibold xl:gap-4">
+              <label
+                htmlFor="titolo"
+                className="my-1 flex w-full flex-col items-start self-start text-sm font-semibold xl:gap-4"
+              >
                 Titolo Imprevisto
                 {errors.titolo && (
                   <span className="font-normal italic text-red-600">
@@ -165,7 +169,10 @@ const EditorSpeciali = () => {
                   placeholder="Titolo dell'imprevisto"
                 />
               </label>
-              <label htmlFor="descrizione" className="my-1 flex w-full flex-col items-start self-start text-sm font-semibold xl:gap-4">
+              <label
+                htmlFor="descrizione"
+                className="my-1 flex w-full flex-col items-start self-start text-sm font-semibold xl:gap-4"
+              >
                 Descrizione Imprevisto
                 {errors.descrizione && (
                   <span className="font-normal italic text-red-600">
@@ -200,7 +207,7 @@ const EditorSpeciali = () => {
                     id="ultEstrazioneYES"
                     name="ultEstrazione"
                     type="radio"
-                    value={true}
+                    value={1}
                     className="ms-2 h-4 w-4 rounded border-[rgb(var(--clr-txt))] text-[rgb(var(--clr-btn))] focus:ring-2 focus:ring-[rgb(var(--clr-btn))] md:m-0 dark:border-[rgb(var(--clr-txt))] dark:bg-[rgb(var(--clr-txt))] dark:ring-offset-[rgb(var(--clr-txt))] dark:focus:ring-[rgb(var(--clr-btn))]"
                   />
                   <label htmlFor="ultEstrazioneNO">No</label>
@@ -209,7 +216,7 @@ const EditorSpeciali = () => {
                     id="ultEstrazioneNO"
                     name="ultEstrazione"
                     type="radio"
-                    value={false}
+                    value={0}
                     className="ms-2 h-4 w-4 rounded border-[rgb(var(--clr-txt))] text-[rgb(var(--clr-btn))] focus:ring-2 focus:ring-[rgb(var(--clr-btn))] md:m-0 dark:border-[rgb(var(--clr-txt))] dark:bg-[rgb(var(--clr-txt))] dark:ring-offset-[rgb(var(--clr-txt))] dark:focus:ring-[rgb(var(--clr-btn))]"
                   />
                 </div>

@@ -1,31 +1,31 @@
 import { createContext, useState, useEffect } from "react";
-import { supabase } from "../supabaseClient";
+import { db } from "../Db/db";
 
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-  const [cartItems, setCartItems] = useState([]);
+  const [registro, setRegistro] = useState([]);
 
-  const fetchDataDB = async () => {
-    let { data: registroimprevisti, error } = await supabase
-      .from("registroimprevisti")
-      .select("*");
-      error && console.log("error: ", error);
-      setCartItems(registroimprevisti ? registroimprevisti : [])
+  const fetchDataDB = () => {
+    const fetchData = async () => {
+      const registroImprevisti = await db.registroImprevisti.toArray();
+      setRegistro(registroImprevisti ? registroImprevisti : []);
+    };
+    fetchData();
   };
 
   useEffect(() => {
-    fetchDataDB()
-  },[])
+    fetchDataDB(); // eslint-disable-next-line
+  }, []);
 
   const addToCart = (item) => {
-    const isItemInCart = cartItems.find(
+    const isItemInCart = registro.find(
       (cartItem) => cartItem.title === item.title,
     );
 
     if (isItemInCart) {
-      setCartItems(
-        cartItems.map((cartItem) =>
+      setRegistro(
+        registro?.map((cartItem) =>
           cartItem.title === item.title
             ? { ...cartItem, quantity: cartItem.quantity + 1 }
             : cartItem,
@@ -33,24 +33,24 @@ export const CartProvider = ({ children }) => {
       );
       updateValueDBAdd(item, isItemInCart);
     } else {
-      setCartItems([...cartItems, { ...item }]);
+      setRegistro([...registro, { ...item }]);
       insertItem(item);
     }
   };
 
   const removeFromCart = (item) => {
-    const isItemInCart = cartItems.find(
+    const isItemInCart = registro.find(
       (cartItem) => cartItem.title === item.title,
     );
 
     if (isItemInCart.quantity === 1) {
-      setCartItems(
-        cartItems.filter((cartItem) => cartItem.title !== item.title),
+      setRegistro(
+        registro?.filter((cartItem) => cartItem.title !== item.title),
       );
       removeItem(item);
     } else {
-      setCartItems(
-        cartItems.map((cartItem) =>
+      setRegistro(
+        registro?.map((cartItem) =>
           cartItem.title === item.title
             ? { ...cartItem, quantity: cartItem.quantity - 1 }
             : cartItem,
@@ -61,59 +61,69 @@ export const CartProvider = ({ children }) => {
   };
 
   const insertItem = async (impr) => {
-    const { error } = await supabase
-      .from("registroimprevisti")
-      .insert([{ title: impr.title, quantity: impr.quantity }])
-      .select();
-    error && console.log("error: ", error);
+    try {
+      const id = await db.registroImprevisti.add({
+        title: impr.title,
+        quantity: impr.quantity,
+      });
+      !id && console.log(id, impr);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const removeItem = async (element) => {
-    const { error } = await supabase
-      .from("registroimprevisti")
-      .delete()
-      .eq("id", element.id);
-    error && console.log(error);
-    fetchDataDB()
+    try {
+      const id = await db.registroImprevisti.delete(element.id);
+      console.log(id, element);
+    } catch (error) {
+      console.log(error);
+    }
+    fetchDataDB();
   };
 
   const deleteListDB = async () => {
-    const { error } = await supabase
-      .from("registroimprevisti")
-      .delete()
-      .neq("title", -1);
-    error && console.log(error);
+    try {
+      const id = await db.registroImprevisti.clear();
+      console.log(id);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const updateValueDBAdd = async (item, itemQuantity) => {
-    const { error } = await supabase
-      .from("registroimprevisti")
-      .update({
+    try {
+      const id = await db.registroImprevisti.put({
+        id: item.id,
         quantity: itemQuantity.quantity === 3 ? 3 : itemQuantity.quantity + 1,
-      })
-      .eq("title", item.title)
-      .select();
-      error && console.log("error: ", error);
-    };
+      });
+      console.log(id);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const updateValueDBDel = async (item, itemQuantity) => {
-    const { error } = await supabase
-      .from("registroimprevisti")
-      .update({ quantity: itemQuantity.quantity - 1 })
-      .eq("title", item.title)
-      .select();
-      error && console.log("error: ", error);
-    };
+    try {
+      const id = await db.registroImprevisti.put({
+        id: item.id,
+        quantity: itemQuantity.quantity - 1,
+      });
+      console.log(id);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const clearCart = () => {
-    setCartItems([]);
+    setRegistro([]);
     deleteListDB();
   };
 
   return (
     <CartContext.Provider
       value={{
-        cartItems,
+        registro,
         addToCart,
         removeFromCart,
         clearCart,

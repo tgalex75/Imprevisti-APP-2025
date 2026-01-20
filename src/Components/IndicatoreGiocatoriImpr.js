@@ -1,5 +1,10 @@
 import { useState, useEffect, useRef } from "react";
-import { mySelect, tattiche, listaTattiche, extrTitolari } from "../Funzioni/schemi";
+import {
+  mySelect,
+  tattiche,
+  listaTattiche,
+  extrTitolari,
+} from "../Funzioni/schemi";
 import { v4 as uuidv4 } from "uuid";
 
 const IndicatoreGiocatoriImpr = (props) => {
@@ -37,7 +42,7 @@ const IndicatoreGiocatoriImpr = (props) => {
           {arr.slice(start, end).map((el) => (
             <div
               key={uuidv4()}
-              className="my-2 flex w-2 items-center justify-center rounded-full border px-3 py-[.3rem] xl:px-4 xl:py-2 text-xs font-semibold text-[rgb(var(--clr-txt))]"
+              className="my-2 flex w-2 items-center justify-center rounded-full border px-3 py-[.3rem] text-xs font-semibold text-[rgb(var(--clr-txt))] xl:px-4 xl:py-2"
               style={
                 extractedPlayer?.find((item) => item === el.nome) &&
                 extractedPlayerStyle
@@ -52,10 +57,10 @@ const IndicatoreGiocatoriImpr = (props) => {
   };
 
   return (
-    <div className="flex h-full w-full xl:w-auto flex-row xl:flex-col items-center xl:justify-around px-8 xl:px-2 pb-4 ">
-      <h5>{schema}</h5>
+    <div className="flex h-full w-full flex-col items-center px-8 pb-4 lg:gap-2 xl:w-auto xl:justify-between xl:px-2">
+      <h5 className="text-xs md:text-sm">{schema}</h5>
       <div className="flex w-full flex-col-reverse justify-center">
-        {filteredTactics[0].formazione.map((el, i, array) =>
+        {filteredTactics[0].formazione?.map((el, i, array) =>
           tactics(extrTitolari, el === 1 ? 0 : array[i - 1], el),
         )}
       </div>

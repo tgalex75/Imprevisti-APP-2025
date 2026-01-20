@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import { supabase } from "../supabaseClient";
+import { db } from "../Db/db";
 
-const useFetchData = (dbSupabase) => {
+const useFetchData = (dexieTable) => {
   const [data, setData] = useState([]);
 
   const fetchRegistryList = async () => {
-    const { data: fetchedData } = await supabase.from(dbSupabase).select("*");
+    const { data: fetchedData } = await db.dexieTable.toArray();
     setData(fetchedData ? fetchedData : []);
   };
 

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useState, useEffect, useContext, useCallback } from "react";
+import { useState, useContext, useCallback } from "react";
 import Dado from "../Components/Dado";
 import { motion } from "framer-motion";
 import rnd from "random-weight";
@@ -9,10 +9,9 @@ import DatiImprevistiContext from "../context/datiImprevisti";
 import Spinner from "../Components/Spinner";
 
 const IngaggiMercato = (props) => {
-  const { ingaggiMercato } = useContext(DatiImprevistiContext);
+  const { ingaggiMercato, dbReady } = useContext(DatiImprevistiContext);
   const [casuale, setCasuale] = useState(null);
   const [count, setCount] = useState(0);
-  const [isLoading, setIsLoading] = useState(true); // Nuovo stato isLoading
 
   const { tipoImprevisto } = props;
 
@@ -28,27 +27,12 @@ const IngaggiMercato = (props) => {
 
   const { titolo, descrizione, isImprev } = casuale ? casuale : {};
 
-  useEffect(() => {
-    // Controlla se ingaggiMercato ha dati
-    if (ingaggiMercato && ingaggiMercato.length > 0) {
-      setIsLoading(false); // Imposta isLoading a false quando i dati sono disponibili
-    } else if (ingaggiMercato === null || ingaggiMercato === undefined) {
-      setIsLoading(true); // Mantieni isLoading a true se ingaggiMercato è null o undefined
-    } else if (ingaggiMercato && ingaggiMercato.length === 0 && isLoading) {
-      // Se ingaggiMercato è un array vuoto ma stavamo ancora caricando (es. primo render)
-      // decidiamo se considerarlo "caricato" (array vuoto è uno stato valido)
-      // o se aspettare ulteriormente (dipende dalla logica dell'app)
-      // In questo caso, lo considero caricato.
-      setIsLoading(false);
-    }
-  }, [ingaggiMercato, isLoading]); // Aggiungi isLoading alle dipendenze di useEffect
-
-  if (isLoading) {
-    return <Spinner />; // Mostra lo spinner se isLoading è true
+  if (!dbReady || ingaggiMercato === undefined) {
+    return <Spinner />; // Mostra lo spinner se dbReady non è true
   }
 
   // Se ingaggiMercato è un array vuoto dopo il caricamento e vuoi mostrare un messaggio specifico
-  if (!isLoading && ingaggiMercato.length === 0) {
+  if (dbReady && ingaggiMercato.length === 0) {
     return (
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 transform text-center text-3xl">
         Nessun dato disponibile. Controlla l'Editor.
@@ -66,7 +50,7 @@ const IngaggiMercato = (props) => {
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.4, duration: 0.4, type: "spring" }}
         id="containerPrimaEstrazione"
-        style={isImprev ? { color: "rgb(var(--clr-ter))" } : {}}
+        style={isImprev === 1 ? { color: "rgb(var(--clr-ter))" } : {}}
         className="flex h-full w-full select-none flex-col items-center justify-around rounded-xl pt-2 text-center shadow-lg ring ring-inset ring-[rgb(var(--clr-txt))] xl:px-10 xl:pb-8"
       >
         {!casuale && (
@@ -78,7 +62,7 @@ const IngaggiMercato = (props) => {
           <>
             <h2
               className={
-                isImprev
+                isImprev === 1
                   ? "text-7xl font-extrabold uppercase xl:text-5xl"
                   : "hidden"
               }
@@ -98,7 +82,7 @@ const IngaggiMercato = (props) => {
             </p>
           </>
         )}
-        {isImprev && <BonusAnnuali />}
+        {isImprev === 1 && <BonusAnnuali />}
       </motion.div>
 
       {<Dado clickFunc={estraiNumeroCasuale} />}

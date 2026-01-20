@@ -13,7 +13,7 @@ const ImgUploaderList = () => {
     { id: 8, nome: "Editor Imprevisti", urlName: "editor-imprevisti" },
     { id: 9, nome: "Logo Squadra", urlName: "logo" },
   ];
-  const mappedUploader = listaUploader.map((el) => (
+  const mappedUploader = listaUploader?.map((el) => (
     <ImageUploader key={el.id} id={el.id} nome={el.nome} urlName={el.urlName} />
   ));
 

@@ -2,7 +2,7 @@ import { useContext, useRef } from "react";
 import { CartContext } from "../context/regContext";
 
 const UploadRegistro = (props) => {
-  const { title } = props;
+  const { titolo } = props;
   const { addToCart } = useContext(CartContext);
   
   const inputRef = useRef(null);
@@ -11,7 +11,7 @@ const UploadRegistro = (props) => {
   }
   const addToCartAndClearInput = ()=> {
     addToCart({
-      title: `${inputRef.current.value} - ${title}`.toUpperCase(),
+      title: `${inputRef.current.value} - ${titolo}`.toUpperCase(),
       quantity: 1,
     })
     resetInput()

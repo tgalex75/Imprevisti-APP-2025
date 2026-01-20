@@ -1,44 +1,36 @@
 import { useState } from "react";
-import { MdOutlineSnooze } from "react-icons/md";
-import { db } from "../Db/db";
+import { delImprevisto } from "./delImprevisto";
+import { MdDeleteForever } from "react-icons/md";
 
-const RimandaImprevisto = (props) => {
-  const { titolo, descrizione } = props;
+const EliminaImprevisto = (props) => {
+  const { id } = props;
 
   const [isSaved, setIsSaved] = useState(false);
 
-  const rimandaImprevisto = async () => {
-    try {
-      const id = await db.salvaxdopo.add({
-        titolo: titolo,
-        descrizione: descrizione,
-      });
-      console.log(id);
-    } catch (error) {
-      console.log(error);
-    }
+  const eliminaImprevisto = async () => {
+    delImprevisto("speciali", id);
     setIsSaved(true);
   };
 
   return (
     <section className="flex h-full flex-col items-center">
       <button
-        onClick={rimandaImprevisto}
+        onClick={eliminaImprevisto}
         className="hover:[rgb(var(--clr-btn))] peer rounded-full p-2 text-center text-sm font-bold shadow-md transition duration-200 ease-in hover:scale-125 hover:text-[rgb(var(--clr-txt))]"
       >
-        <MdOutlineSnooze size={36} />
+        <MdDeleteForever size={36} />
       </button>
       {!isSaved ? (
         <span className="invisible text-xs transition-all duration-150 ease-in-out peer-hover:visible">
-          Posticipa e salva imprevisto?
+          Eliminare imprevisto?
         </span>
       ) : (
         <span className="text-xs transition-all duration-150 ease-in-out">
-          Imprevisto posticipato e salvato!
+          Imprevisto eliminato!
         </span>
       )}
     </section>
   );
 };
 
-export default RimandaImprevisto;
+export default EliminaImprevisto;

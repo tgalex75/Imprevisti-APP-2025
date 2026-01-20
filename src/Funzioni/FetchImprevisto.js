@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import SecondaEstrazioneDiretta from "../Components/SecondaEstrazioneDiretta";
 import RimandaImprevisto from "./RimandaImprevisto";
-import { supabase } from "../supabaseClient";
+import EliminaImprevisto from "./EliminaImprevisto";
 import capitalize from "lodash.capitalize";
 import pickRandom from "pick-random";
 import { numbers } from "./schemi";
@@ -10,24 +10,17 @@ import { numbers } from "./schemi";
 const FetchImprevisto = (props) => {
   const { casualeCommunity, titolariRosa } = props;
 
-  const [extractedPlayerCM, setExtractedPlayerCM] = useState([])
+  const [extractedPlayerCM, setExtractedPlayerCM] = useState([]);
 
   const { id, titolo, descrizione, ultEstrazione, qtGiocatori } =
     casualeCommunity;
 
-  const delElemento = async () => {
-    const { error } = await supabase.from("speciali").delete().eq("id", id);
-    error && console.log(error);
-  };
-  
-  const numbersCM = numbers(titolariRosa)
+  const numbersCM = numbers(titolariRosa);
 
-  
   useEffect(() => {
-    setExtractedPlayerCM(
-      pickRandom(numbersCM, { count: qtGiocatori }));
+    setExtractedPlayerCM(pickRandom(numbersCM, { count: qtGiocatori }));
     let timeout = setTimeout(() => {
-      id !== 0 && delElemento();
+      //id !== 0 && delImprevisto("speciali", id);
       timeout = null;
     }, 3000);
     // Cleanup del timeout per evitare memory leak
@@ -37,27 +30,30 @@ const FetchImprevisto = (props) => {
   return (
     <section
       id="fetchImprevisto"
-      className="flex h-full w-full xl:w-4/5 flex-col items-center justify-between gap-2"
+      className="flex h-full w-full flex-col items-center justify-between gap-2 xl:w-4/5"
     >
-      <h3
-        className=" text-6xl mt-6 xl:mt-0 xl:text-4xl font-extrabold uppercase"
-      >
+      <h3 className="mt-6 text-xl lg:text-2xl font-extrabold uppercase xl:mt-0 xl:text-4xl">
         {titolo && titolo}
       </h3>
       <p
-        className={`orbitron-regular w-4/5 xl:w-2/3 flex h-fit items-center justify-center overflow-y-auto px-2 xl:px-4 scrollbar ${
-          descrizione && descrizione.length > 200 ? "text-3xl xl:text-lg" : "text-5xl xl:text-2xl"
+        className={`orbitron-regular flex min-h-20 w-full p-2 items-center justify-center overflow-y-auto scrollbar xl:w-2/3 xl:px-4 ${
+          descrizione && descrizione.length > 200
+            ? "text-base xl:text-lg"
+            : "text-lg xl:text-xl"
         }`}
       >
         {capitalize(descrizione)}
       </p>
-      {ultEstrazione && (
+      {ultEstrazione === 1 && (
         <SecondaEstrazioneDiretta
           numbExtrPlayer={qtGiocatori}
           extractedPlayer={extractedPlayerCM}
         />
       )}
-      <RimandaImprevisto id={id} titolo={titolo} descrizione={descrizione} />
+      <div className="mb-2 flex h-1/4 w-5/6 items-center justify-around xl:h-20">
+        <RimandaImprevisto id={id} titolo={titolo} descrizione={descrizione} />
+        <EliminaImprevisto id={id} />
+      </div>
     </section>
   );
 };

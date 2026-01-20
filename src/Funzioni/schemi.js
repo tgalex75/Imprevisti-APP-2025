@@ -13,25 +13,25 @@ export const listaTattiche = [
   { nome: "5-2-1-2", formazione: [1, 6, 8, 9, 11] },
 ];
 
-export const tattiche = listaTattiche.map((el) => el.nome);
+export const tattiche = listaTattiche?.map((el) => el.nome);
 
 export const mySelect = (labelText, ref, func, arr, defaultVal) => {
   return (
     <div className="flex gap-1 flex-col">
       <label
         htmlFor="tattica"
-        className="block text-sm xl:text-xs text-center xl:text-start font-medium text-[rgb(var(--clr-txt))]"
+        className="block text-xs md:text-sm xl:text-xs text-center xl:text-start font-medium text-[rgb(var(--clr-txt))]"
       >
         {labelText}
       </label>
       <select
-        className="text-sm block w-48 rounded-md border border-[rgb(var(--clr-txt))] px-3 py-2 font-semibold bg-[rgb(var(--clr-txt))] text-[rgb(var(--clr-bg))] shadow-sm"
+        className="text-xs md:text-sm block w-28 lg:w-48 rounded-md border border-[rgb(var(--clr-txt))] p-1 lg:p-2 font-semibold bg-[rgb(var(--clr-txt))] text-[rgb(var(--clr-bg))] shadow-sm"
         name="tattica"
         ref={ref}
         onChange={func}
         defaultValue={defaultVal}
       >
-        {arr.map((el, i) => {
+        {arr?.map((el, i) => {
           return (
             <option key={i} value={el}>
               {el}
@@ -52,10 +52,10 @@ export const arrayRange = (start, stop, step) =>
 let titolari = arrayRange(1, 11, 1);
 let interaRosa = arrayRange(1, 30, 1);
 
-export const extrTitolari = titolari.map((el) => {
+export const extrTitolari = titolari?.map((el) => {
   return { id: el, nome: el };
 });
-export const extrRosa = interaRosa.map((el) => {
+export const extrRosa = interaRosa?.map((el) => {
   return { id: el, nome: el };
 });
 

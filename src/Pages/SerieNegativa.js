@@ -13,24 +13,25 @@ import DatiImprevistiContext from "../context/datiImprevisti";
 import Spinner from "../Components/Spinner";
 
 const SerieNegativa = () => {
-  const { serieNegativa } = useContext(DatiImprevistiContext);
+  const { serieNegativa, dbReady } = useContext(DatiImprevistiContext);
 
   const [casuale, setCasuale] = useState(null);
   const [count, setCount] = useState(0);
   const [extractedPlayer, setExtractedPlayer] = useState(null);
-  const [isLoading, setIsLoading] = useState(true); // Nuovo stato isLoading
 
   // Prima Estrazione
 
   const estraiNumeroCasuale = useCallback(() => {
-    const estratto = rnd(serieNegativa, (i) => i.weight);
+    if (!serieNegativa || serieNegativa.length === 0) return;
+    const estratto =
+      Array.isArray(serieNegativa) && rnd(serieNegativa, (i) => i.weight);
     setCasuale(estratto);
     setCount(uuidv4());
   }, []);
 
   const {
-    title,
-    description,
+    titolo,
+    descrizione,
     isImprev,
     ultEstrazione,
     baseEstrazione,
@@ -44,33 +45,18 @@ const SerieNegativa = () => {
     }, 50);
     return () => clearTimeout(timeout);
   }, [numbExtrPlayer]);
-  const numbers = (baseEstrazione === 11 ? extrTitolari : extrRosa).map(
+  const numbers = (baseEstrazione === 11 ? extrTitolari : extrRosa)?.map(
     (player) => player.id,
   );
 
-  useEffect(() => {
-    // Controlla se serieNegativa ha dati
-    if (serieNegativa && serieNegativa.length > 0) {
-      setIsLoading(false); // Imposta isLoading a false quando i dati sono disponibili
-    } else if (serieNegativa === null || serieNegativa === undefined) {
-      setIsLoading(true); // Mantieni isLoading a true se serieNegativa è null o undefined
-    } else if (serieNegativa && serieNegativa.length === 0 && isLoading) {
-      // Se serieNegativa è un array vuoto ma stavamo ancora caricando (es. primo render)
-      // decidiamo se considerarlo "caricato" (array vuoto è uno stato valido)
-      // o se aspettare ulteriormente (dipende dalla logica dell'app)
-      // In questo caso, lo considero caricato.
-      setIsLoading(false);
-    }
-  }, [serieNegativa, isLoading]); // Aggiungi isLoading alle dipendenze di useEffect
-
-  if (isLoading) {
-    return <Spinner />; // Mostra lo spinner se isLoading è true
+  if (!dbReady || serieNegativa === undefined) {
+    return <Spinner />; // Mostra lo spinner se dbReady non è true
   }
 
   // Se settimana è un array vuoto dopo il caricamento e vuoi mostrare un messaggio specifico
-  if (!isLoading && serieNegativa.length === 0) {
+  if (dbReady && serieNegativa?.length === 0) {
     return (
-      <div className=" absolute text-3xl left-1/2 top-1/2 -translate-x-1/2 transform text-center">
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 transform text-center text-3xl">
         Nessun dato disponibile. Controlla l'Editor.
       </div>
     );
@@ -87,7 +73,7 @@ const SerieNegativa = () => {
         transition={{ delay: 0.4, duration: 0.4, type: "spring" }}
         key={count}
         id="containerPrimaEstrazione"
-        style={isImprev ? { color: "rgb(var(--clr-ter))" } : {}}
+        style={isImprev === 1 ? { color: "rgb(var(--clr-ter))" } : {}}
         className="flex h-full w-full select-none flex-col items-center justify-evenly gap-4 rounded-xl px-4 py-2 text-center shadow-lg ring ring-inset ring-[rgb(var(--clr-txt))] xl:gap-0 xl:px-10"
       >
         {!casuale ? (
@@ -99,35 +85,37 @@ const SerieNegativa = () => {
             <div className="flex h-full w-full flex-col items-center justify-start pb-24 xl:w-3/4 xl:justify-around xl:self-end xl:py-2">
               <h2
                 className={
-                  isImprev
-                    ? "text-3xl font-extrabold uppercase md:flex-1 md:text-7xl"
+                  isImprev === 1
+                    ? "text-3xl font-extrabold uppercase md:flex-1 md:text-6xl"
                     : "hidden"
                 }
               >
                 imprevisto!
               </h2>
-              <h3 className="flex items-center justify-center text-3xl font-extrabold uppercase md:flex-1 md:text-5xl">
-                {title}
+              <h3 className="flex items-center justify-center text-3xl font-extrabold uppercase lg:flex-1 lg:text-4xl">
+                {titolo}
               </h3>
-              {isImprev && (
+              {isImprev === 1 && (
                 <p
                   style={{
                     filter: "drop-shadow(.05rem .05rem 0.1rem #000)",
                   }}
-                  className="text-md orbitron-regular px-2 md:w-5/6 md:flex-1 md:text-2xl"
+                  className="text-md orbitron-regular px-2 lg:w-5/6 lg:flex-1 lg:text-2xl"
                 >
-                  {description}
+                  {descrizione}
                 </p>
               )}
 
-              {ultEstrazione && (
+              {ultEstrazione === 1 && (
                 <SecondaEstrazioneDiretta
                   numbExtrPlayer={numbExtrPlayer}
                   extractedPlayer={extractedPlayer}
                 />
               )}
-              {ultEstrazione && <UploadRegistro title={title} />}
-              <RegistroSerieNegativa />
+              {ultEstrazione === 1 && <UploadRegistro titolo={titolo} />}
+              <RegistroSerieNegativa
+                dbReady={dbReady}
+              />
             </div>
           </>
         )}

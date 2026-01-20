@@ -69,3 +69,10 @@ h1 {
   -webkit-animation-iteration-count: 3;
   animation-iteration-count: 3;
 }
+
+.ticker {
+  font-family: "Inconsolata", monospace !important;
+  font-optical-sizing: auto;
+  font-weight: 800 !important;
+  font-style: normal;
+}

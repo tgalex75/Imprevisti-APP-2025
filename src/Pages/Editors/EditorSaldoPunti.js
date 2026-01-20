@@ -1,13 +1,13 @@
 import { useContext, useEffect, useState, useRef } from "react";
-import { supabase } from "../../supabaseClient";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { v4 as uuidv4 } from "uuid";
 import { MdDeleteForever } from "react-icons/md";
 import DatiImprevistiContext from "../../context/datiImprevisti";
+import { db } from "../../Db/db";
 
 const EditorSaldoPunti = () => {
-  const { bonusMalus, fetchBonusMalus } = useContext(DatiImprevistiContext);
+  const { bonusMalus } = useContext(DatiImprevistiContext);
 
   // Stato per memorizzare l'elemento attualmente in modifica (null se nessuno)
   const [editingItem, setEditingItem] = useState(null);
@@ -56,25 +56,25 @@ const EditorSaldoPunti = () => {
       valoreSerieMinoreOver,
     } = data;
 
-    const { error } = await supabase
-      .from("bonus-malus-punti")
-      .upsert({
+    try {
+      const idPunti = await db.bonusMalus.put({
         id: isListaVuota ? uuidv4() : id,
         tipo: selectRefState,
         nome: nome,
-        valore: valore,
+        valore: parseFloat(valore),
         nomeUnder: nomeUnder,
         nomeOver: nomeOver,
         nomeSerieMinore: nomeSerieMinore,
         nomeSerieMinoreOver: nomeSerieMinoreOver,
-        valoreUnder: valoreUnder,
-        valoreOver: valoreOver,
-        valoreSerieMinore: valoreSerieMinore,
-        valoreSerieMinoreOver: valoreSerieMinoreOver,
-      })
-      .select();
-    error && console.log(error);
-    fetchBonusMalus();
+        valoreUnder: parseFloat(valoreUnder),
+        valoreOver: parseFloat(valoreOver),
+        valoreSerieMinore: parseFloat(valoreSerieMinore),
+        valoreSerieMinoreOver: parseFloat(valoreSerieMinoreOver),
+      });
+      console.log(idPunti);
+    } catch (error) {
+      console.log(error);
+    }
 
     // *** QUI FINISCE LA LOGICA DI AGGIORNAMENTO PER SUPABASE ***
 
@@ -89,12 +89,14 @@ const EditorSaldoPunti = () => {
   };
 
   const rmVoceDB = async (element) => {
-    const { error } = await supabase
-      .from("bonus-malus-punti")
-      .delete()
-      .eq("id", element);
-    error && console.log(error);
-    fetchBonusMalus();
+    try {
+      const idPunti = await db.bonusMalus.delete(
+        element,
+      );
+      console.log(idPunti, element);
+    } catch (error) {
+      error && console.log(error);
+    }
   };
 
   const selectRef = useRef(null);

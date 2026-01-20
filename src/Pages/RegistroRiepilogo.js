@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useContext } from "react";
 import { motion } from "framer-motion";
 import { MdClear } from "react-icons/md";
@@ -18,7 +19,7 @@ const RegistroRiepilogo = () => {
       >
         <h4 className="text-[rgb(var(--clr-txt))] font-semibold">Imprevisti Serie Negativa</h4>
         <ul className="flex h-full w-full flex-col gap-1 overflow-y-auto border px-2 pb-2">
-          {cartItems.map((el) => (
+          {cartItems?.map((el) => (
             <li
               key={el.id}
               className="flex items-center justify-between py-1 ps-2 text-left text-sm uppercase"

@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import { supabase } from "../supabaseClient";
+import { db } from "../Db/db";
 import { GrPowerReset } from "react-icons/gr";
 import { LuArrowUpWideNarrow, LuArrowDownWideNarrow } from "react-icons/lu";
 import { IoMdTrendingDown, IoMdTrendingUp, IoMdPodium } from "react-icons/io";
@@ -14,40 +14,24 @@ const SaldoPunti = () => {
   const [isOver32, setIsOver32] = useState(false);
   const [isSerieMinore, setIsSerieMinore] = useState(false);
   const isSerieMinoreOver = isOver32 && isSerieMinore;
-  const [isLoading, setIsLoading] = useState(true); // Nuovo stato isLoading
 
-  const { bonusMalus, saldoPunti, fetchSaldoPunti } = useContext(
-    DatiImprevistiContext,
-  );
+  const { bonusMalus, saldoPunti, dbReady } = useContext(DatiImprevistiContext);
 
-    useEffect(() => {
-    // Controlla se bonusMalus ha dati
-    if (bonusMalus && bonusMalus.length > 0) {
-      setIsLoading(false); // Imposta isLoading a false quando i dati sono disponibili
-    } else if (bonusMalus === null || bonusMalus === undefined) {
-      setIsLoading(true); // Mantieni isLoading a true se bonusMalus è null o undefined
-    } else if (bonusMalus && bonusMalus.length === 0 && isLoading) {
-        // Se bonusMalus è un array vuoto ma stavamo ancora caricando (es. primo render)
-        // decidiamo se considerarlo "caricato" (array vuoto è uno stato valido)
-        // o se aspettare ulteriormente (dipende dalla logica dell'app)
-        // In questo caso, lo considero caricato.
-        setIsLoading(false);
-    }
-  }, [bonusMalus, isLoading]); // Aggiungi isLoading alle dipendenze di useEffect
-
-  if (isLoading) {
-    return <Spinner />; // Mostra lo spinner se isLoading è true
+  if (!dbReady || bonusMalus === undefined || SaldoPunti === undefined) {
+    return <Spinner />; // Mostra lo spinner se dbReady non è true
   }
 
   // Se bonusMalus è un array vuoto dopo il caricamento e vuoi mostrare un messaggio specifico
-  if (!isLoading && bonusMalus.length === 0) {
+  if (
+    (dbReady && bonusMalus.length === 0) ||
+    (dbReady && saldoPunti.length === 0)
+  ) {
     return (
-      <div className=" absolute text-3xl left-1/2 top-1/2 -translate-x-1/2 transform text-center">
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 transform text-center text-3xl">
         Nessun dato disponibile. Controlla l'Editor.
       </div>
     );
   }
-
 
   const { id, punti } = saldoPunti[0];
 
@@ -59,25 +43,27 @@ const SaldoPunti = () => {
   };
 
   const updateSaldoPunti = async (val) => {
-    const { error } = await supabase
-      .from("saldo-punti")
-      .update({
+    try {
+      const idPunti = await db.saldoPunti.put({
+        id: id,
         punti: punti + val,
-      })
-      .eq("id", id)
-      .select();
-    error && console.log("error: ", error);
-    fetchSaldoPunti();
+      });
+      console.log(idPunti, val);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const resetPunti = async () => {
-    const { error } = await supabase
-      .from("saldo-punti")
-      .update({ punti: 10 })
-      .eq("id", id)
-      .select();
-    error && console.log("error: ", error);
-    fetchSaldoPunti();
+    try {
+      const idPunti = await db.saldoPunti.put({
+        id: id,
+        punti: 10,
+      });
+      console.log(idPunti);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const bonusMalusStyle =
@@ -87,7 +73,7 @@ const SaldoPunti = () => {
     .filter((el) => el.tipo === "cessioni")
     .sort((a, b) => a.id - b.id);
 
-  const mappedCessioni = bonusCessioni.map((el) => (
+  const mappedCessioni = bonusCessioni?.map((el) => (
     <div
       key={el.id}
       onClick={() => updateSaldoPunti(el.valore)}
@@ -101,7 +87,7 @@ const SaldoPunti = () => {
     .filter((el) => el.tipo === "acquisti")
     .sort((a, b) => a.id - b.id);
 
-  const mappedAcquisti = malusAcquisti.map((el) => (
+  const mappedAcquisti = malusAcquisti?.map((el) => (
     <div
       key={el.id}
       onClick={() =>
@@ -139,7 +125,7 @@ const SaldoPunti = () => {
     .filter((el) => el.tipo === "trofei")
     .sort((a, b) => a.id - b.id);
 
-  const mappedTrofei = bonusTrofei.map((el) => (
+  const mappedTrofei = bonusTrofei?.map((el) => (
     <div
       key={el.id}
       onClick={() => updateSaldoPunti(el.valore)}
@@ -153,7 +139,7 @@ const SaldoPunti = () => {
     .filter((el) => el.tipo === "trend")
     .sort((a, b) => a.id - b.id);
 
-  const mappedTrend = trendPrestazioni.map((el) => (
+  const mappedTrend = trendPrestazioni?.map((el) => (
     <div
       key={el.id}
       onClick={() => updateSaldoPunti(el.valore)}
@@ -167,7 +153,7 @@ const SaldoPunti = () => {
     .filter((el) => el.tipo === "fine-camp")
     .sort((a, b) => a.id - b.id);
 
-  const mappedPiazzamento = fineCampionato.map((el) => (
+  const mappedPiazzamento = fineCampionato?.map((el) => (
     <div
       key={el.id}
       onClick={() => updateSaldoPunti(el.valore)}

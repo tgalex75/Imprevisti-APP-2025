@@ -22,7 +22,7 @@ const EditorImprevisti = () => {
       >
         <h2>Scegli quale lista di imprevisti modificare</h2>
         <main className="grid h-full w-full grid-cols-2 gap-2 p-4 xl:grid-cols-3">
-          {menu.map((voce) => (
+          {menu?.map((voce) => (
             <Link to={voce.linkTo} key={voce.id} className="border border-[rgb(var(--clr-btn))] p-2 text-bold uppercase flex items-center justify-center text-center text-xl xl:text-5xl hover:bg-[rgb(var(--clr-btn)/.7)]">
               <h3>{voce.nome}</h3>
             </Link>

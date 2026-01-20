@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { supabase } from "../supabaseClient";
+import { db } from "../Db/db"; // Importa l'istanza di Dexie
 
 function ImageUploader(props) {
-  const { id, nome, urlName } = props;
+  const { id, nome } = props; // urlName non è più strettamente necessario per il path storage
   const [fileError, setFileError] = useState(null);
-  const [uploadProgress, setUploadProgress] = useState(0);
   const [uploadCompleteMessage, setUploadCompleteMessage] = useState("");
   const [eliminaImgDaListaDb, setEliminaImgDaListaDb] = useState("");
 
@@ -20,57 +19,45 @@ function ImageUploader(props) {
       return;
     }
 
-    const fileType = file.type === "image/jpeg" ? ".jpg" : ".png";
-
-    const nomeUrl = `bg/${urlName}${fileType}`;
+    // Verifica dimensione (opzionale, es. 4MB come nel tuo testo)
+    if (file.size > 4 * 1024 * 1024) {
+      setFileError("Il file è troppo grande. Massimo 4MB.");
+      return;
+    }
 
     try {
-      const { data, error } = await supabase.storage
-        .from("immagini")
-        .update(nomeUrl, file, {
-          cacheControl: "3600",
-          upsert: true,
-          onUploadProgress: (progressEvent) => {
-            const percentCompleted = Math.round(
-              (progressEvent.loaded * 100) / progressEvent.total,
-            );
-            setUploadProgress(percentCompleted);
-          },
-        });
+      // Usiamo .put() che agisce come un "upsert" (aggiorna se l'id esiste, altrimenti crea)
+      // Salviamo direttamente l'oggetto file nel campo 'url' (Dexie supporta i Blob)
+      await db.preferenzeImmagini.put({
+        id: id,
+        nome: nome,
+        url: file, // Salviamo il file binario direttamente
+      });
 
-      const { data: preferenze, error: prefError } = await supabase
-        .from("preferenze-immagini")
-        .upsert({ id: id, nome: nome, url: nomeUrl })
-        .select();
-
-      console.log(preferenze);
-      prefError && console.log(prefError);
-
-      if (error) throw error;
-
-      console.log("Immagine caricata con successo:", data.path);
+      console.log("Immagine salvata localmente con successo");
       setFileError(null);
-      setUploadCompleteMessage("File caricato con successo!");
+      setUploadCompleteMessage("File salvato nel database locale!");
+
+      // Reset dei messaggi di errore precedenti
+      setEliminaImgDaListaDb("");
     } catch (error) {
-      console.error(
-        "Errore durante il caricamento dell'immagine:",
-        error.message,
-      );
-      setFileError(error.message);
+      console.error("Errore durante il salvataggio in Dexie:", error);
+      setFileError("Errore nel salvataggio locale.");
     }
   };
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
   const remUrlFromImgList = async () => {
-    const { error } = await supabase
-      .from("preferenze-immagini")
-      .update({ url: null })
-      .eq("id", id);
-    setEliminaImgDaListaDb("Immagine eliminata con successo dal Database");
-    error && console.log(error);
-    error &&
-      setEliminaImgDaListaDb("Errore durante l'eliminazione dal Database");
+    try {
+      // Aggiorniamo il record settando il campo url a null
+      await db.preferenzeImmagini.update(id, { url: null });
+      setEliminaImgDaListaDb("Immagine rimossa con successo");
+      setUploadCompleteMessage("");
+    } catch (error) {
+      console.error("Errore durante l'eliminazione:", error);
+      setEliminaImgDaListaDb("Errore durante l'eliminazione locale");
+    }
   };
 
   return (
@@ -81,18 +68,13 @@ function ImageUploader(props) {
       >
         <input {...getInputProps()} />
 
-        <p className="flex h-full w-full cursor-pointer flex-col items-start rounded-lg p-4 text-center font-sans hover:bg-[rgb(var(--clr-btn)/.5)] xl:w-2/3 xl:items-center">
-          Clicca QUI e carica una immagine
+        <div className="flex h-full w-full cursor-pointer flex-col items-start rounded-lg p-4 text-center font-sans hover:bg-[rgb(var(--clr-btn)/.5)] xl:w-2/3 xl:items-center">
+          <p>Clicca QUI e carica una immagine</p>
           <small className="block">( JPEG o PNG inferiore ai 4 MB ) </small>
-          <small className="invisible last:visible">
-            {" "}
-            Attenzione! Le immagini caricate sovrascriveranno quelle
-            eventualmente già presenti.
+          <small className="block font-bold">
+            Nota: I dati verranno salvati localmente in questo browser.
           </small>
-          <small className="block">
-            Se subito dopo il caricamento non vedi l'immagine aggiornata nella
-            rispettiva posizione, ricarica la pagina premendo CTRL + F5
-          </small>
+
           {fileError && (
             <small className="font-semibold text-red-500">{fileError}</small>
           )}
@@ -101,13 +83,9 @@ function ImageUploader(props) {
               {uploadCompleteMessage}
             </small>
           )}
-          {uploadProgress > 0 && (
-            <progress value={uploadProgress} max="100">
-              {uploadProgress}%
-            </progress>
-          )}
-        </p>
+        </div>
       </div>
+
       <div className="flex h-auto w-full flex-col items-center justify-center">
         <button
           className="mt-4 flex h-12 w-full items-center justify-center rounded-lg border-2 border-red-700 py-1 text-center font-semibold hover:bg-red-700 xl:w-52"

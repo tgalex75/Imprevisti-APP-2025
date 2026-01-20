@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { supabase } from "../../supabaseClient";
+import { db } from "../../Db/db";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { v4 as uuidv4 } from "uuid";
@@ -8,7 +8,7 @@ import { MdDeleteForever } from "react-icons/md";
 import DatiImprevistiContext from "../../context/datiImprevisti";
 
 const EditorSettimana = () => {
-  const { settimana, fetchSettimana } = useContext(DatiImprevistiContext);
+  const { settimana } = useContext(DatiImprevistiContext);
 
   // Stato per memorizzare l'elemento attualmente in modifica (null se nessuno)
   const [editingItem, setEditingItem] = useState(null);
@@ -43,20 +43,20 @@ const EditorSettimana = () => {
   const handleUpdateSubmit = async (data) => {
     console.log("Dati aggiornati dal form:", data);
 
-    const { error } = await supabase
-      .from("settimana")
-      .upsert({
+    try {
+      const idPunti = await db.settimana.put({
         id: isListaVuota ? uuidv4() : data.id,
-        title: data.title,
-        description: data.description,
-        isImprev: data.isImprev,
-        weight: data.weight,
-      })
-      .select();
-    error && console.log(error);
-    fetchSettimana();
+        titolo: data.titolo,
+        descrizione: data.descrizione,
+        isImprev: parseInt(data.isImprev),
+        weight: parseFloat(data.weight),
+      });
+      console.log(idPunti, data);
+    } catch (error) {
+      error && console.log(error);
+    }
 
-    // *** QUI FINISCE LA LOGICA DI AGGIORNAMENTO PER SUPABASE ***
+    // *** QUI FINISCE LA LOGICA DI AGGIORNAMENTO PER DATABASE ***
 
     // Dopo l'aggiornamento, resettiamo lo stato di modifica per tornare alla lista
     setEditingItem(null);
@@ -69,19 +69,20 @@ const EditorSettimana = () => {
   };
 
   const rmVoceDB = async (element) => {
-    const { error } = await supabase
-      .from("settimana")
-      .delete()
-      .eq("id", element);
-    error && console.log(error);
-    fetchSettimana();
+    try {
+      const idPunti = await db.settimana.delete(element);
+      console.log(idPunti, element);
+    } catch (error) {
+      error && console.log(error);
+    }
   };
 
   return (
     <section className="flex h-full w-full flex-col items-center overflow-y-auto p-2 font-semibold xl:overflow-y-hidden xl:font-bold">
       <h1 className="h-fit">Editor Settimana</h1>
       <h2 className="w-full text-center">
-        Seleziona una voce per modificarla nell'editor. Oppure inseriscine uno da Zero.
+        Seleziona una voce per modificarla nell'editor. Oppure inseriscine uno
+        da Zero.
       </h2>
       <motion.div
         initial={{ opacity: 0 }}
@@ -97,13 +98,19 @@ const EditorSettimana = () => {
               onClick={() => handleEditClick(item)} // Al click, imposta l'elemento in modifica
               className="group relative m-2 cursor-pointer rounded border-[rgb(var(--clr-txt))] px-2 py-4 hover:bg-[rgb(var(--clr-btn)/.7)]"
             >
-              <h3 className="text-[rgb(var(--clr-ter))]" >{item.title}</h3>
-              <p> {item.description}</p>
+              <h3 className="text-[rgb(var(--clr-ter))]">{item.titolo}</h3>
+              <p> {item.descrizione}</p>
               <span className="pe-2 xl:pe-8">
-                Imprevisto: <strong className="text-[rgb(var(--clr-ter))]">{item.isImprev ? "SI" : "NO"}</strong>
+                Imprevisto:{" "}
+                <strong className="text-[rgb(var(--clr-ter))]">
+                  {item.isImprev === 1 ? "SI" : "NO"}
+                </strong>
               </span>
               <span className="pe-2 xl:pe-8">
-                "Peso" dell'estrazione: <strong className="text-[rgb(var(--clr-ter))]">{item.weight}</strong>
+                "Peso" dell'estrazione:{" "}
+                <strong className="text-[rgb(var(--clr-ter))]">
+                  {item.weight}
+                </strong>
               </span>
               <MdDeleteForever
                 size={28}
@@ -132,33 +139,39 @@ const EditorSettimana = () => {
             className="flex h-full w-full flex-col items-center justify-around rounded-md font-normal xl:justify-between"
           >
             <div className="flex h-2/3 w-full flex-col items-start justify-between gap-2 px-2 xl:flex-row">
-              <label htmlFor="title" className="my-1 flex w-full flex-col items-start self-start text-sm font-semibold xl:gap-4">
+              <label
+                htmlFor="titolo"
+                className="my-1 flex w-full flex-col items-start self-start text-sm font-semibold xl:gap-4"
+              >
                 Titolo Imprevisto
-                {errors.title && (
+                {errors.titolo && (
                   <span className="font-normal italic text-red-600">
                     Il campo "Titolo" è obbligatorio - max 60 caratteri
                   </span>
                 )}
                 <input
-                  name="title"
-                  id="title"
-                  {...register("title", { required: true, maxLength: 60 })}
+                  name="titolo"
+                  id="titolo"
+                  {...register("titolo", { required: true, maxLength: 60 })}
                   className="block w-2/3 self-start rounded p-1 text-sm font-semibold uppercase text-black placeholder:normal-case placeholder:italic"
                   placeholder="Titolo dell'imprevisto"
                 />
               </label>
-              <label htmlFor="description" className="my-1 flex w-full flex-col items-start self-start text-sm font-semibold xl:gap-4">
+              <label
+                htmlFor="descrizione"
+                className="my-1 flex w-full flex-col items-start self-start text-sm font-semibold xl:gap-4"
+              >
                 Descrizione Imprevisto
-                {errors.description && (
+                {errors.descrizione && (
                   <span className="font-normal italic text-red-600">
                     Il campo "Descrizione" è obbligatorio
                   </span>
                 )}
                 <textarea
-                  name="description"
-                  {...register("description", { required: true })}
+                  name="descrizione"
+                  {...register("descrizione", { required: true })}
                   rows={4}
-                  id="description"
+                  id="descrizione"
                   placeholder="Descrizione dell'imprevisto"
                   className="w-full rounded p-1 text-sm font-semibold text-black placeholder:italic"
                 />
@@ -182,7 +195,7 @@ const EditorSettimana = () => {
                     id="isImprevYES"
                     name="isImprev"
                     type="radio"
-                    value={true}
+                    value={1}
                     className="ms-2 h-4 w-4 rounded border-[rgb(var(--clr-txt))] text-[rgb(var(--clr-btn))] focus:ring-2 focus:ring-[rgb(var(--clr-btn))] md:m-0 dark:border-[rgb(var(--clr-txt))] dark:bg-[rgb(var(--clr-txt))] dark:ring-offset-[rgb(var(--clr-txt))] dark:focus:ring-[rgb(var(--clr-btn))]"
                   />
                   <label htmlFor="isImprevNO">No</label>
@@ -191,7 +204,7 @@ const EditorSettimana = () => {
                     id="isImprevNO"
                     name="isImprev"
                     type="radio"
-                    value={false}
+                    value={0}
                     className="ms-2 h-4 w-4 rounded border-[rgb(var(--clr-txt))] text-[rgb(var(--clr-btn))] focus:ring-2 focus:ring-[rgb(var(--clr-btn))] md:m-0 dark:border-[rgb(var(--clr-txt))] dark:bg-[rgb(var(--clr-txt))] dark:ring-offset-[rgb(var(--clr-txt))] dark:focus:ring-[rgb(var(--clr-btn))]"
                   />
                 </div>
@@ -213,6 +226,8 @@ const EditorSettimana = () => {
                   id="weight"
                   name="weight"
                   type="number"
+                  step="any"
+                  defaultValue={1.0}
                   placeholder="Inserisci un numero"
                   className="ms-4 min-w-20 rounded p-1 text-sm font-semibold text-black placeholder:italic xl:w-48"
                 ></input>

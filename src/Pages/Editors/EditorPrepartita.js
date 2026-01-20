@@ -1,13 +1,13 @@
 import { useContext, useEffect, useState } from "react";
-import { supabase } from "../../supabaseClient";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { v4 as uuidv4 } from "uuid";
 import { MdDeleteForever } from "react-icons/md";
 import DatiImprevistiContext from "../../context/datiImprevisti";
+import { db } from "../../Db/db";
 
 const EditorPrepartita = () => {
-  const { prepartita, fetchPrepartita } = useContext(DatiImprevistiContext);
+  const { prepartita } = useContext(DatiImprevistiContext);
 
   // Stato per memorizzare l'elemento attualmente in modifica (null se nessuno)
   const [editingItem, setEditingItem] = useState(null);
@@ -42,25 +42,25 @@ const EditorPrepartita = () => {
   const handleUpdateSubmit = async (data) => {
     console.log("Dati aggiornati dal form:", data);
 
-    const { error } = await supabase
-      .from("prepartita")
-      .upsert({
+    try {
+      const idPunti = await db.prepartita.put({
         id: isListaVuota ? uuidv4() : data.id,
-        title: data.isSpecial === false ? "IMPREVISTO SPECIALE" : data.title,
-        description: data.description,
-        isImprev: data.isImprev,
-        isSpecial: data.isSpecial,
-        ultEstrazione: data.ultEstrazione,
-        baseEstrazione: data.baseEstrazione,
-        numbExtrPlayer: data.numbExtrPlayer,
+        titolo: data.isSpecial === false ? "IMPREVISTO SPECIALE" : data.titolo,
+        descrizione: data.descrizione,
+        isImprev: parseInt(data.isImprev),
+        isSpecial: parseInt(data.isSpecial),
+        ultEstrazione: parseInt(data.ultEstrazione),
+        baseEstrazione: parseInt(data.baseEstrazione),
+        numbExtrPlayer: parseInt(data.numbExtrPlayer),
         notaBene: data.notaBene,
-        weight: data.weight,
-      })
-      .select();
-    error && console.log(error);
-    console.log(data.isSpecial, data.title);
-    fetchPrepartita();
-    // *** QUI FINISCE LA LOGICA DI AGGIORNAMENTO PER SUPABASE ***
+        weight: parseFloat(data.weight),
+      });
+      console.log(idPunti, data);
+    } catch (error) {
+      error && console.log(error);
+    }
+
+    // *** QUI FINISCE LA LOGICA DI AGGIORNAMENTO PER DATABASE ***
 
     // Dopo l'aggiornamento, resettiamo lo stato di modifica per tornare alla lista
     setEditingItem(null);
@@ -73,19 +73,20 @@ const EditorPrepartita = () => {
   };
 
   const rmVoceDB = async (element) => {
-    const { error } = await supabase
-      .from("prepartita")
-      .delete()
-      .eq("id", element);
-    error && console.log(error);
-    fetchPrepartita();
+    try {
+      const idPunti = await db.prepartita.delete(element);
+      console.log(idPunti, element);
+    } catch (error) {
+      error && console.log(error);
+    }
   };
 
   return (
     <section className="flex h-full w-full flex-col items-center overflow-y-auto p-2 font-semibold xl:overflow-y-hidden xl:font-bold">
       <h1 className="h-fit">Editor Prepartita</h1>
       <h2 className="w-full text-center">
-        Seleziona una voce per modificarla nell'editor. Oppure inseriscine uno da Zero.
+        Seleziona una voce per modificarla nell'editor. Oppure inseriscine uno
+        da Zero.
       </h2>
       <motion.div
         initial={{ opacity: 0 }}
@@ -94,41 +95,57 @@ const EditorPrepartita = () => {
         className="flex h-full w-full flex-col items-center justify-around gap-2 rounded-lg text-[rgb(var(--clr-txt))]"
       >
         {/* LISTA ELEMENTI */}
-        <div className="h-full w-full overflow-y-auto pb-2 relative">
+        <div className="relative h-full w-full overflow-y-auto pb-2">
           {prepartita?.map((item) => (
             <div
               key={item.id} // Importante per le liste in React
               onClick={() => handleEditClick(item)} // Al click, imposta l'elemento in modifica
-              className="m-2 cursor-pointer border-[rgb(var(--clr-txt))] py-4 px-2 rounded hover:bg-[rgb(var(--clr-btn)/.7)] relative group"
+              className="group relative m-2 cursor-pointer rounded border-[rgb(var(--clr-txt))] px-2 py-4 hover:bg-[rgb(var(--clr-btn)/.7)]"
             >
-              <h3 className="text-[rgb(var(--clr-ter))]">{item.title}</h3>
-              <p className="pe-2 xl:pe-8">{item.description}</p>
+              <h3 className="text-[rgb(var(--clr-ter))]">{item.titolo}</h3>
+              <p className="pe-2 xl:pe-8">{item.descrizione}</p>
               <p className="pe-2 xl:pe-8">
                 {item.notaBene && "Note: " + item.notaBene}
               </p>
               <span className="pe-2 xl:pe-8">
-                Imprevisto: <strong className="text-[rgb(var(--clr-ter))]">{item.isImprev ? "SI" : "NO"}</strong>
+                Imprevisto:{" "}
+                <strong className="text-[rgb(var(--clr-ter))]">
+                  {item.isImprev === 1 ? "SI" : "NO"}
+                </strong>
               </span>
               <span className="pe-2 xl:pe-8">
-                Speciale: <strong className="text-[rgb(var(--clr-ter))]">{item.isSpecial ? "SI" : "NO"}</strong>
+                Speciale:{" "}
+                <strong className="text-[rgb(var(--clr-ter))]">
+                  {item.isSpecial === 1 ? "SI" : "NO"}
+                </strong>
               </span>
               <span className="pe-2 xl:pe-8">
-                Estrazione: <strong className="text-[rgb(var(--clr-ter))]">{item.ultEstrazione ? "SI" : "NO"}</strong>
+                Estrazione:{" "}
+                <strong className="text-[rgb(var(--clr-ter))]">
+                  {item.ultEstrazione === 1 ? "SI" : "NO"}
+                </strong>
               </span>
               <span className="pe-2 xl:pe-8">
                 Numero estratti:{" "}
-                <strong className="text-[rgb(var(--clr-ter))]">{item.numbExtrPlayer && item.numbExtrPlayer}</strong>
+                <strong className="text-[rgb(var(--clr-ter))]">
+                  {item.numbExtrPlayer && item.numbExtrPlayer}
+                </strong>
               </span>
               <span className="pe-2 xl:pe-8">
                 Su quanti giocatori:{" "}
-                <strong className="text-[rgb(var(--clr-ter))]">{item.baseEstrazione && item.baseEstrazione}</strong>
+                <strong className="text-[rgb(var(--clr-ter))]">
+                  {item.baseEstrazione && item.baseEstrazione}
+                </strong>
               </span>
               <span className="pe-2 xl:pe-8">
-                "Peso" dell'estrazione: <strong className="text-[rgb(var(--clr-ter))]">{item.weight}</strong>
+                "Peso" dell'estrazione:{" "}
+                <strong className="text-[rgb(var(--clr-ter))]">
+                  {item.weight}
+                </strong>
               </span>
               <MdDeleteForever
                 size={28}
-                className="absolute right-0 top-1/2 me-0 xl:me-2 h-full w-8 -translate-y-1/2 cursor-pointer transition-all group-hover:fill-red-600 hover:scale-125"
+                className="absolute right-0 top-1/2 me-0 h-full w-8 -translate-y-1/2 cursor-pointer transition-all group-hover:fill-red-600 hover:scale-125 xl:me-2"
                 onClick={() => rmVoceDB(item.id)}
               />
               {/* Mostra altri dettagli dell'elemento */}
@@ -138,13 +155,13 @@ const EditorPrepartita = () => {
 
         {/* EDITING ELEMENTO */}
 
-        <div className="mt-4 h-full w-full border-t-2 border-t-[rgb(var(--clr-btn))] xl:m-0 relative">
+        <div className="relative mt-4 h-full w-full border-t-2 border-t-[rgb(var(--clr-btn))] xl:m-0">
           {editingItem && (
-            <strong className="absolute top-0 w-full text-center italic inline-block text-[rgb(var(--clr-ter))]">
+            <strong className="absolute top-0 inline-block w-full text-center italic text-[rgb(var(--clr-ter))]">
               Fai doppio Click su ANNULLA per resettare i campi di modifica
             </strong>
           )}
-          <h2 className="h-fit text-center font-bold uppercase xl:p-4 mt-2">
+          <h2 className="mt-2 h-fit text-center font-bold uppercase xl:p-4">
             {!editingItem ? "Inserisci" : "Modifica"} Imprevisto
           </h2>
           <form
@@ -152,38 +169,47 @@ const EditorPrepartita = () => {
             className="flex h-full w-full flex-col items-center justify-around rounded-md font-normal xl:justify-between"
           >
             <div className="flex h-2/3 w-full flex-col items-start justify-between gap-2 px-2 xl:flex-row">
-              <label htmlFor="title" className="my-1 flex w-full flex-col items-start self-start text-sm font-semibold xl:gap-4">
+              <label
+                htmlFor="titolo"
+                className="my-1 flex w-full flex-col items-start self-start text-sm font-semibold xl:gap-4"
+              >
                 Titolo Imprevisto
-                {errors.title && (
+                {errors.titolo && (
                   <span className="font-normal italic text-red-600">
                     Il campo "Titolo" è obbligatorio - max 60 caratteri
                   </span>
                 )}
                 <input
-                id="title"
-                  name="title"
-                  {...register("title", { required: true, maxLength: 60 })}
+                  id="titolo"
+                  name="titolo"
+                  {...register("titolo", { required: true, maxLength: 60 })}
                   className="block w-2/3 self-start rounded p-1 text-sm font-semibold uppercase text-black placeholder:normal-case placeholder:italic"
                   placeholder="Titolo dell'imprevisto"
-                  />
+                />
               </label>
-              <label htmlFor="description" className="my-1 flex w-full flex-col items-start self-start text-sm font-semibold xl:gap-4">
+              <label
+                htmlFor="descrizione"
+                className="my-1 flex w-full flex-col items-start self-start text-sm font-semibold xl:gap-4"
+              >
                 Descrizione Imprevisto
-                {errors.description && (
+                {errors.descrizione && (
                   <span className="font-normal italic text-red-600">
                     Il campo "Descrizione" è obbligatorio
                   </span>
                 )}
                 <textarea
-                  name="description"
-                  {...register("description")}
+                  name="descrizione"
+                  {...register("descrizione")}
                   rows={4}
-                  id="description"
+                  id="descrizione"
                   placeholder="Descrizione dell'imprevisto"
                   className="w-full rounded p-1 text-sm font-semibold text-black placeholder:italic"
-                  />
+                />
               </label>
-              <label htmlFor="notaBene" className="my-1 flex w-full flex-col self-start text-sm font-semibold xl:items-end xl:gap-4">
+              <label
+                htmlFor="notaBene"
+                className="my-1 flex w-full flex-col self-start text-sm font-semibold xl:items-end xl:gap-4"
+              >
                 Nota bene... compilare se è un caso particolare
                 {errors.notaBene && (
                   <span className="font-normal italic text-red-600">
@@ -196,14 +222,14 @@ const EditorPrepartita = () => {
                   id="notaBene"
                   placeholder="Scrivi una nota"
                   className="block w-2/3 rounded p-1 text-sm font-semibold uppercase text-black placeholder:normal-case placeholder:italic xl:self-end"
-                  />
+                />
               </label>
             </div>
             <div className="flex h-1/3 w-full flex-col items-start justify-between px-2 xl:grid xl:grid-cols-2 xl:items-center xl:gap-4 xl:px-4">
               <label
                 htmlFor="isImprevYES"
-                className="my-1 flex w-full items-center justify-between xl:justify-start gap-2 text-sm font-semibold xl:ms-4 xl:self-start"
-                >
+                className="my-1 flex w-full items-center justify-between gap-2 text-sm font-semibold xl:ms-4 xl:justify-start xl:self-start"
+              >
                 È un imprevisto?
                 {errors.isImprev && (
                   <span className="font-normal italic text-red-600">
@@ -217,23 +243,23 @@ const EditorPrepartita = () => {
                     id="isImprevYES"
                     name="isImprev"
                     type="radio"
-                    value={true}
+                    value={1}
                     className="ms-2 h-4 w-4 rounded border-[rgb(var(--clr-txt))] text-[rgb(var(--clr-btn))] focus:ring-2 focus:ring-[rgb(var(--clr-btn))] md:m-0 dark:border-[rgb(var(--clr-txt))] dark:bg-[rgb(var(--clr-txt))] dark:ring-offset-[rgb(var(--clr-txt))] dark:focus:ring-[rgb(var(--clr-btn))]"
-                    />
+                  />
                   <label htmlFor="isImprevNO">No</label>
                   <input
                     {...register("isImprev", { required: true })}
                     id="isImprevNO"
                     name="isImprev"
                     type="radio"
-                    value={false}
+                    value={0}
                     className="ms-2 h-4 w-4 rounded border-[rgb(var(--clr-txt))] text-[rgb(var(--clr-btn))] focus:ring-2 focus:ring-[rgb(var(--clr-btn))] md:m-0 dark:border-[rgb(var(--clr-txt))] dark:bg-[rgb(var(--clr-txt))] dark:ring-offset-[rgb(var(--clr-txt))] dark:focus:ring-[rgb(var(--clr-btn))]"
                   />
                 </div>
               </label>
               <label
                 htmlFor="isSpecialYES"
-                className="my-1 flex w-full items-center justify-between xl:justify-start gap-2 text-sm font-semibold xl:ms-4 xl:self-start"
+                className="my-1 flex w-full items-center justify-between gap-2 text-sm font-semibold xl:ms-4 xl:justify-start xl:self-start"
               >
                 È un imprevisto SPECIALE?
                 {errors.isSpecial && (
@@ -248,7 +274,7 @@ const EditorPrepartita = () => {
                     id="isSpecialYES"
                     name="isSpecial"
                     type="radio"
-                    value={true}
+                    value={1}
                     className="ms-2 h-4 w-4 rounded border-[rgb(var(--clr-txt))] text-[rgb(var(--clr-btn))] focus:ring-2 focus:ring-[rgb(var(--clr-btn))] md:m-0 dark:border-[rgb(var(--clr-txt))] dark:bg-[rgb(var(--clr-txt))] dark:ring-offset-[rgb(var(--clr-txt))] dark:focus:ring-[rgb(var(--clr-btn))]"
                   />
                   <label htmlFor="isSpecialNO">No</label>
@@ -257,14 +283,14 @@ const EditorPrepartita = () => {
                     id="isSpecialNO"
                     name="isSpecial"
                     type="radio"
-                    value={false}
+                    value={0}
                     className="ms-2 h-4 w-4 rounded border-[rgb(var(--clr-txt))] text-[rgb(var(--clr-btn))] focus:ring-2 focus:ring-[rgb(var(--clr-btn))] md:m-0 dark:border-[rgb(var(--clr-txt))] dark:bg-[rgb(var(--clr-txt))] dark:ring-offset-[rgb(var(--clr-txt))] dark:focus:ring-[rgb(var(--clr-btn))]"
                   />
                 </div>
               </label>
               <label
                 htmlFor="ultEstrazioneYES"
-                className="my-1 flex w-full items-center justify-between xl:justify-start gap-2 text-sm font-semibold xl:ms-4 xl:self-start"
+                className="my-1 flex w-full items-center justify-between gap-2 text-sm font-semibold xl:ms-4 xl:justify-start xl:self-start"
               >
                 Bisogna estrarre uno o più giocatori?
                 {errors.ultEstrazione && (
@@ -279,7 +305,7 @@ const EditorPrepartita = () => {
                     id="ultEstrazioneYES"
                     name="ultEstrazione"
                     type="radio"
-                    value={true}
+                    value={1}
                     defaultChecked={editingItem?.ultEstrazione === true}
                     className="ms-2 h-4 w-4 rounded border-[rgb(var(--clr-txt))] text-[rgb(var(--clr-btn))] focus:ring-2 focus:ring-[rgb(var(--clr-btn))] md:m-0 dark:border-[rgb(var(--clr-txt))] dark:bg-[rgb(var(--clr-txt))] dark:ring-offset-[rgb(var(--clr-txt))] dark:focus:ring-[rgb(var(--clr-btn))]"
                   />
@@ -289,7 +315,7 @@ const EditorPrepartita = () => {
                     id="ultEstrazioneNO"
                     name="ultEstrazione"
                     type="radio"
-                    value={false}
+                    value={0}
                     defaultChecked={editingItem?.ultEstrazione === false}
                     className="ms-2 h-4 w-4 rounded border-[rgb(var(--clr-txt))] text-[rgb(var(--clr-btn))] focus:ring-2 focus:ring-[rgb(var(--clr-btn))] md:m-0 dark:border-[rgb(var(--clr-txt))] dark:bg-[rgb(var(--clr-txt))] dark:ring-offset-[rgb(var(--clr-txt))] dark:focus:ring-[rgb(var(--clr-btn))]"
                   />
@@ -297,7 +323,7 @@ const EditorPrepartita = () => {
               </label>
               <label
                 htmlFor="numbExtrPlayer"
-                className="my-1 flex w-full items-center justify-between xl:justify-start gap-2 text-sm font-semibold xl:ms-4 xl:self-start"
+                className="my-1 flex w-full items-center justify-between gap-2 text-sm font-semibold xl:ms-4 xl:justify-start xl:self-start"
               >
                 Quanti giocatori saranno estratti?
                 {errors.numbExtrPlayer && (
@@ -320,7 +346,7 @@ const EditorPrepartita = () => {
               </label>
               <label
                 htmlFor="baseEstrazione"
-                className="my-1 flex w-full items-center justify-between xl:justify-start gap-2 text-sm font-semibold xl:ms-4 xl:self-start"
+                className="my-1 flex w-full items-center justify-between gap-2 text-sm font-semibold xl:ms-4 xl:justify-start xl:self-start"
               >
                 Su quanti giocatori effettuare l'estrazione?
                 {errors.baseEstrazione && (
@@ -343,7 +369,7 @@ const EditorPrepartita = () => {
               </label>
               <label
                 htmlFor="weight"
-                className="my-1 flex w-full items-center justify-between xl:justify-start gap-2 text-sm font-semibold xl:ms-4 xl:self-start"
+                className="my-1 flex w-full items-center justify-between gap-2 text-sm font-semibold xl:ms-4 xl:justify-start xl:self-start"
               >
                 Quale è il "peso" di questo imprevisto?
                 {errors.weight && (
@@ -358,6 +384,8 @@ const EditorPrepartita = () => {
                   id="weight"
                   name="weight"
                   type="number"
+                  step="any"
+                  defaultValue={1.0}
                   placeholder="Inserisci un numero"
                   className="ms-4 min-w-20 rounded p-1 text-sm font-semibold text-black placeholder:italic xl:w-48"
                 ></input>

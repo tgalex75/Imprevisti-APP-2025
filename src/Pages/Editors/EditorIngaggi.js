@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { supabase } from "../../supabaseClient";
+import { db } from "../../Db/db";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { v4 as uuidv4 } from "uuid";
@@ -7,9 +7,7 @@ import { MdDeleteForever } from "react-icons/md";
 import DatiImprevistiContext from "../../context/datiImprevisti";
 
 const EditorIngaggi = () => {
-  const { ingaggiMercato, fetchIngaggiMercato } = useContext(
-    DatiImprevistiContext,
-  );
+  const { ingaggiMercato } = useContext(DatiImprevistiContext);
 
   // Stato per memorizzare l'elemento attualmente in modifica (null se nessuno)
   const [editingItem, setEditingItem] = useState(null);
@@ -44,21 +42,21 @@ const EditorIngaggi = () => {
   const handleUpdateSubmit = async (data) => {
     console.log("Dati aggiornati dal form:", data);
 
-    const { error } = await supabase
-      .from("ingaggi-mercato")
-      .upsert({
+    try {
+      const idPunti = await db.ingaggiMercato.put({
         id: isListaVuota ? uuidv4() : data.id,
         tipo: data.tipo,
         titolo: data.titolo,
         descrizione: data.descrizione,
-        isImprev: data.isImprev,
-        weight: data.weight,
-      })
-      .select();
-    error && console.log(error);
-    fetchIngaggiMercato();
+        isImprev: parseInt(data.isImprev),
+        weight: parseFloat(data.weight),
+      });
+      console.log(idPunti, data);
+    } catch (error) {
+      error && console.log(error);
+    }
 
-    // *** QUI FINISCE LA LOGICA DI AGGIORNAMENTO PER SUPABASE ***
+    // *** QUI FINISCE LA LOGICA DI AGGIORNAMENTO PER DATABASE ***
 
     // Dopo l'aggiornamento, resettiamo lo stato di modifica per tornare alla lista
     setEditingItem(null);
@@ -71,19 +69,20 @@ const EditorIngaggi = () => {
   };
 
   const rmVoceDB = async (element) => {
-    const { error } = await supabase
-      .from("ingaggi-mercato")
-      .delete()
-      .eq("id", element);
-    error && console.log(error);
-    fetchIngaggiMercato();
+    try {
+      const idPunti = await db.ingaggiMercato.delete(element);
+      console.log(idPunti, element);
+    } catch (error) {
+      error && console.log(error);
+    }
   };
 
   return (
     <section className="flex h-full w-full flex-col items-center overflow-y-auto p-2 font-semibold xl:overflow-y-hidden xl:font-bold">
       <h1 className="h-fit">Editor Ingaggi e Mercato</h1>
       <h2 className="w-full text-center">
-        Seleziona una voce per modificarla nell'editor. Oppure inseriscine uno da Zero.
+        Seleziona una voce per modificarla nell'editor. Oppure inseriscine uno
+        da Zero.
       </h2>
       <motion.div
         initial={{ opacity: 0 }}
@@ -106,7 +105,7 @@ const EditorIngaggi = () => {
               <span className="pe-2 xl:pe-8">
                 Imprevisto:{" "}
                 <strong className="text-[rgb(var(--clr-ter))]">
-                  {item.isImprev ? "SI" : "NO"}
+                  {item.isImprev === 1 ? "SI" : "NO"}
                 </strong>
               </span>
               <span className="pe-2 xl:pe-8">
@@ -134,7 +133,7 @@ const EditorIngaggi = () => {
               Fai doppio Click su ANNULLA per resettare i campi di modifica
             </strong>
           )}
-          <h2 className="h-fit text-center font-bold uppercase xl:p-4 mt-2">
+          <h2 className="mt-2 h-fit text-center font-bold uppercase xl:p-4">
             {!editingItem ? "Inserisci" : "Modifica"} Imprevisto
           </h2>
           <form
@@ -222,7 +221,7 @@ const EditorIngaggi = () => {
                     id="isImprevYES"
                     name="isImprev"
                     type="radio"
-                    value={true}
+                    value={1}
                     className="ms-2 h-4 w-4 rounded border-[rgb(var(--clr-txt))] text-[rgb(var(--clr-btn))] focus:ring-2 focus:ring-[rgb(var(--clr-btn))] md:m-0 dark:border-[rgb(var(--clr-txt))] dark:bg-[rgb(var(--clr-txt))] dark:ring-offset-[rgb(var(--clr-txt))] dark:focus:ring-[rgb(var(--clr-btn))]"
                   />
                   <label htmlFor="isImprevNO">No</label>
@@ -231,7 +230,7 @@ const EditorIngaggi = () => {
                     id="isImprevNO"
                     name="isImprev"
                     type="radio"
-                    value={false}
+                    value={0}
                     className="ms-2 h-4 w-4 rounded border-[rgb(var(--clr-txt))] text-[rgb(var(--clr-btn))] focus:ring-2 focus:ring-[rgb(var(--clr-btn))] md:m-0 dark:border-[rgb(var(--clr-txt))] dark:bg-[rgb(var(--clr-txt))] dark:ring-offset-[rgb(var(--clr-txt))] dark:focus:ring-[rgb(var(--clr-btn))]"
                   />
                 </div>
@@ -253,6 +252,8 @@ const EditorIngaggi = () => {
                   id="weight"
                   name="weight"
                   type="number"
+                  step="any"
+                  defaultValue={1.0}
                   placeholder="Inserisci un numero"
                   className="ms-4 min-w-20 rounded p-1 text-sm font-semibold text-black placeholder:italic xl:w-48"
                 ></input>

@@ -5,7 +5,7 @@ import Prepartita from "../Pages/Prepartita";
 import Settimana from "../Pages/Settimana";
 import SalvaPerDopo from "../Pages/SalvaPerDopo";
 import IngaggiMercato from "../Pages/IngaggiMercato";
-import MediaOverall from "../Pages/MediaOverall"
+import MediaOverall from "../Pages/MediaOverall";
 import SaldoPunti from "../Pages/SaldoPunti";
 import SerieNegativa from "../Pages/SerieNegativa";
 import ErrorPage from "../Pages/ErrorPage";
@@ -18,6 +18,7 @@ import EditorSpeciali from "../Pages/Editors/EditorSpeciali";
 import EditorSaldoPunti from "../Pages/Editors/EditorSaldoPunti";
 import EditorInterfaccia from "../Pages/EditorInterfaccia";
 import EstrazioneLibera from "../Pages/EstrazioneLibera";
+import Istruzioni from "../Pages/Istruzioni";
 
 const AnimatedRoutes = () => {
   const location = useLocation();
@@ -31,11 +32,15 @@ const AnimatedRoutes = () => {
         <Route path="/editor-imprevisti" element={<EditorImprevisti />} />
         <Route path="/editor-prepartita" element={<EditorPrepartita />} />
         <Route path="/editor-settimana" element={<EditorSettimana />} />
-        <Route path="/editor-serie-negativa" element={<EditorSerieNegativa />} />
+        <Route
+          path="/editor-serie-negativa"
+          element={<EditorSerieNegativa />}
+        />
         <Route path="/editor-ingaggi" element={<EditorIngaggi />} />
         <Route path="/editor-speciali" element={<EditorSpeciali />} />
         <Route path="/editor-saldo-punti" element={<EditorSaldoPunti />} />
         <Route path="/impostazioni-app" element={<EditorInterfaccia />} />
+        <Route path="/istruzioni" element={<Istruzioni />} />
         <Route path="/imprevisti-sospesi" element={<SalvaPerDopo />} />
         <Route path="/media-overall" element={<MediaOverall />} />
         <Route path="/saldo-punti" element={<SaldoPunti />} />
